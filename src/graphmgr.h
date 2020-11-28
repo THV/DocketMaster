@@ -602,7 +602,7 @@ void closeadjacencymatrix (void);
 ****************************************************************************/
 
 /****************************************************************************
-*************************  FUNCTION DECLARATION    **************************
+**************************   FUNCTION DEFINITION   **************************
 * Name: strcmp                                                              *
 *                                                                           *
 * Description: Compares two character strings and returns negative, zero,   *

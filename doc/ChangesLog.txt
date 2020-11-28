@@ -1,3 +1,10 @@
+07 October 2011
+   released version 1.0.14 of DocketMaster
+
+     Change log:
+        -New: Created a new rule processing engine called processhrule.  This function does the hardwork of comparing a date to a rule to see if the date falls on a holiday defined by the rule.
+        -Cleaned: Streamlined the isholiday() function by separating out the processing engine.
+
 06 October 2011
    released version 1.0.14 of DocketMaster
 

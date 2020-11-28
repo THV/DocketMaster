@@ -277,7 +277,6 @@ struct dependency* searchfordependency (struct courteventnode *event1,
 int insertevent (struct courtevent* eventinfo, struct courteventnode *eventlist)
 {
     struct courteventnode *new_event; /* pointer to new court event */
-    struct courteventnode *temphead; /* pointer to head of event list */
 
     new_event = malloc(sizeof(struct courtevent)); /* creates a new node */
 
@@ -313,8 +312,6 @@ int insertevent (struct courtevent* eventinfo, struct courteventnode *eventlist)
     
     
     /* place the new node in the appropriate place in the ordered list */
-    
-    strcmp (char *s1, char *s2)
     
     new_event->nextrule = list; /* makes the new node point to the current
                                     first node */
@@ -497,7 +494,7 @@ of each row. Note the simple pointer arithmetic. */
 
 /****************************************************************************
 *****************************************************************************
-** Function Definitions -- utility functions                               **
+** Function prototypes -- utility functions                                **
 **                                                                         **
 *****************************************************************************
 ****************************************************************************/
@@ -518,10 +515,4 @@ of each row. Note the simple pointer arithmetic. */
 *                                                                           *
 ****************************************************************************/
 
-int strcmp (char *s1, char *s2)
-{
-    for( /* no assignment */; *s1 == *s2; s1++, s2++)
-        if (*s1 == '\0')
-            return 0;
-    return *s1 - *s2;
-}
+int strcmp (char *s1, char *s2);

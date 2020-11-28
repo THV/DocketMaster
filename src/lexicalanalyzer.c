@@ -84,10 +84,7 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 *                                                                           *
 * Algorithm:                                                                *
 *                                                                           *
-* File format: Version 1.0 of the Court Holiday Rules File is an ASCII text *
-* file in a CSV format. The first line contains the file name and version   *
-* information.  The second line contains the table column names: Month;Rule Type	Rule	Holiday	Authority
-
+* File format: Version 1.0 of the *
 ****************************************************************************/
 
 int parseholidays (FILE *holidays)
@@ -312,7 +309,7 @@ int checkfile (FILE *in_file)
                 headers[index] = '\0';
         }
         /* printf("## DEBUG ## Version = %s\n",vers); */
-        if(strcmp(name, "Court Holiday Rules File") != 0)
+        if(strcmp(name, "Court Rules File") != 0)
         {
             printf("ERROR: This is not a court rules file.\n");
             exit(8);

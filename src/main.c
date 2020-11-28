@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
     }
     getrulesfiles(holidays_filename, events_filename, extras_filename);
     testsuite_dates();
-    testsuite_checkholidays();
 
     /* testsuite(); */
     return 0;
@@ -329,24 +328,13 @@ void testsuite_checkholidays(void)
 
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     printf("This function tests our various date algorithms.\n");
-    printf("The first day tests an \)
-    
-    if (isholiday(&end_date)==0)
-        printf("The end date is valid and does not fall on a holiday.\n");
-    else
-        printf("The end date is NOT valid.  It falls on a holiday.\n");
-    printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    
-    
-    printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    printf("Test your own dates.\n");
     printf("please enter the beginning date in the format mm/dd/yyyy");
     printf("\n(Press x to end):\n");
 
     fgets(line, sizeof(line), stdin);
     sscanf(line, "%d/%d/%d", &begin_date.month, &begin_date.day,
            &begin_date.year);
-    printf("\nHow many days out is the deadline?");
+    printf("/nPlease enter the deadline:");
     fgets(line, sizeof(line), stdin);
     sscanf(line, "%d", &day_count);
     date_offset (&begin_date, &end_date,
