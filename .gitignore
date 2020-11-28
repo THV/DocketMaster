@@ -36,7 +36,7 @@ build/
 doc/*.txt
 
 # ignore all .pdf files in the doc/ directory
-doc/**/*.pdf”
+doc/**/*.pdf
 
 .DS_Store
 DocketMaster.xcodeproj/project.xcworkspace/contents.xcworkspacedata

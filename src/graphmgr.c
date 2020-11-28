@@ -280,61 +280,59 @@ struct courtevent* insertevent (struct courtevent* eventinfo,
     struct courteventnode *new_event; /* pointer to new court event */
     struct courteventnode *temphead; /* pointer to head of event list */
 
-    /* Find the appropriate place in the ordered list to place the new node.
+    /* place the new node in the appropriate place in the ordered list.
     if the list is presently NULL, then this item is added in first position. */
     
-    temphead = eventlist;
-    if (temphead = NULL ||
+    if (eventlist = NULL ||
         strcmp(eventinfo->shorttitle, temphead->eventdata.shorttitle) <= 0)
     {
-         /* create a new node */
-        new_event = malloc(sizeof(struct courtevent));
-
-        /* copy the data into the new node */
-        new_event->eventdata.eventflags = eventinfo->eventflags;
-        strcpy(new_event->eventdata.eventitle, eventinfo->eventitle);
-        strcpy(new_event->eventdata.shorttitle, eventinfo->shorttitle);
-        
-        new_event->eventdata.customservicerule.counttypeflags =
-            eventinfo->customservicerule.counttypeflags;
-        new_event->eventdata.customservicerule.in_state_maildays =
-            eventinfo->customservicerule.in_state_maildays;
-        new_event->eventdata.customservicerule.out_of_state_maildays =
-            eventinfo->customservicerule.out_of_state_maildays;
-        new_event->eventdata.customservicerule.out_of_country_maildays =
-            = eventinfo->customservicerule.out_of_country_maildays;
-        new_event->eventdata.customservicerule.express_mail_days =
-            eventinfo->customservicerule.express_mail_days;
-        new_event->eventdata.customservicerule.fax_servicedays =
-            eventinfo->customservicerule.fax_servicedays;
-        new_event->eventdata.customservicerule.electronic_servicedays =
-            eventinfo->customservicerule.electronic_servicedays;
-        
-        new_event->eventdata.countunits = eventinfo->countunits;
-        new_event->eventdata.ntcpd1 = eventinfo->ntcpd1;
-        strcpy(new_event->eventdata.ntc_dependency1,eventinfo->ntc_dependency1);
-        new_event->eventdata.ntcpd2 = eventinfo->ntcpd2;
-        strcpy(new_event->eventdata.ntc_dependency2,eventinfo->ntc_dependency2);
-        new_event->eventdata.late_early = eventinfo->late_early;
-        strcpy(new_event->eventdata.eventcategory,eventinfo->eventcategory);
-        strcpy(new_event->eventdata.authority, eventinfo->authority);
-        strcpy(new_event->eventdata.description, eventinfo->description);
-        
-        /* add the node into the list */        
-        new_event->nextevent = eventlist;
-        eventlist = new_event;
+        new_event->nextevent = eventlist; /* makes the new node point to the
+                                            current first node */
+        eventlist = new_event; /* makes the new node the first node */
+        eventlist->eventposn = 1;
     }
     else
     {
-        temphead = temphead->nextevent;
-        struct courtevent* insertevent (struct courtevent* eventinfo,
-                                struct courteventnode *eventlist)
-        
+        temphead = eventlist; /* point the temporary head to the start of the
+                                event list. */
         
     strcmp (char *s1, char *s2)
     
     strcmp (char *s1, char *s2)
     }
+    
+    
+new_event = malloc(sizeof(struct courtevent)); /* creates a new node */
+
+    /* copy the data into the new node */
+    new_event->eventdata.eventflags = eventinfo->eventflags;
+    strcpy(new_event->eventdata.eventitle, eventinfo->eventitle);
+    strcpy(new_event->eventdata.shorttitle, eventinfo->shorttitle);
+    
+    new_event->eventdata.customservicerule.counttypeflags =
+        eventinfo->customservicerule.counttypeflags;
+    new_event->eventdata.customservicerule.in_state_maildays =
+        eventinfo->customservicerule.in_state_maildays;
+    new_event->eventdata.customservicerule.out_of_state_maildays =
+        eventinfo->customservicerule.out_of_state_maildays;
+    new_event->eventdata.customservicerule.out_of_country_maildays =
+        = eventinfo->customservicerule.out_of_country_maildays;
+    new_event->eventdata.customservicerule.express_mail_days =
+        eventinfo->customservicerule.express_mail_days;
+    new_event->eventdata.customservicerule.fax_servicedays =
+        eventinfo->customservicerule.fax_servicedays;
+    new_event->eventdata.customservicerule.electronic_servicedays =
+        eventinfo->customservicerule.electronic_servicedays;
+    
+    new_event->eventdata.countunits = eventinfo->countunits;
+    new_event->eventdata.ntcpd1 = eventinfo->ntcpd1;
+    strcpy(new_event->eventdata.ntc_dependency1,eventinfo->ntc_dependency1);
+    new_event->eventdata.ntcpd2 = eventinfo->ntcpd2;
+    strcpy(new_event->eventdata.ntc_dependency2,eventinfo->ntc_dependency2);
+    new_event->eventdata.late_early = eventinfo->late_early;
+    strcpy(new_event->eventdata.eventcategory,eventinfo->eventcategory);
+    strcpy(new_event->eventdata.authority, eventinfo->authority);
+    strcpy(new_event->eventdata.description, eventinfo->description);
 
 
 

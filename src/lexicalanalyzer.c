@@ -85,9 +85,7 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 * Algorithm: Function reads the file character by character, inputting the  *
 * parsed data into the appropriate fields of a temporary holiday rule,      *
 * which is of type holiday rule. The temporary variable is then passed to   *
-* the addholiday function, which stores the new rule in the appropriate     *
-* index of the holidaylist array. The temp rule is then zeroed out and the  *
-* loop iterates again until it reaches EOF.                                 *
+* the addholiday
 *                                                                           *
 * File format: Version 1.0 of the Court Holiday Rules File is an ASCII text *
 * file in a CSV format. The first line contains the file name and version   *

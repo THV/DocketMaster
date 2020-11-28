@@ -441,32 +441,26 @@ void testsuite_courtdays(void)
         printf("The end date is valid and does not fall on a holiday.\n");
     else
         printf("The end date is NOT valid.  It falls on a holiday.\n");
-
+        
     printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     printf("Let's calculate the hearing and related dates for a\n");
-    printf("Calfiornia Superior Court motion.\n\n");
-    printf("Please enter the date you will file/serve your motion (in mm/dd/yy format):\n");
+    printf("C")
+    printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+    printf("Please enter the date you will serve your motion (in mm/dd/yy format):\n");
     fgets(line, sizeof(line), stdin);
     sscanf(line, "%d/%d/%d", &begin_date.month, &begin_date.day,
            &begin_date.year);
-    printf("\nThe Hearing is scheduled no earlier than 16 court days after the filing date.\n");
-    day_count = 16;
+    printf("\nHow many court days out is the deadline?");
+    fgets(line, sizeof(line), stdin);
+    sscanf(line, "%d", &day_count);
     courtday_offset (&begin_date, &end_date,
                   day_count);
-    printf("The hearing date is: %d/%d/%d.\n", end_date.month, end_date.day,
+    printf("The deadline is: %d/%d/%d.\n", end_date.month, end_date.day,
            end_date.year);
-    /* test the courtday_difference function */
-    day_count = courtday_difference(&hearing)
-    printf("There are %d court days", day_count);
-    printf("The opposition must be filed/served by ");
-    courtday_offset (&end_date, &begin_date, -9);
-    printf("%d/%d/%d (9 court days before the hearing).\n", begin_date.month, begin_date.day,
-           begin_date.year);
-    printf("The reply must be filed/served by ");
-    courtday_offset (&end_date, &begin_date, -5);
-    printf("%d/%d/%d (5 court days before the hearing).\n", begin_date.month, begin_date.day,
-           begin_date.year);
+    if (isholiday(&end_date)==0)
+        printf("The end date is valid and does not fall on a holiday.\n");
+    else
+        printf("The end date is NOT valid.  It falls on a holiday.\n");
     printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 
     return;
