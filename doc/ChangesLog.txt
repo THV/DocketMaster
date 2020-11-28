@@ -1,4 +1,10 @@
 06 October 2011
+   released version 1.0.14 of DocketMaster
+
+     Change log:
+        -Added: In datetools.h, I added two arrays montharray, which lists the month numbers.  The other array is daysinmonths, which is a 2dimensional array that lists the total days for each month including leap years.
+
+06 October 2011
    released version 1.0.13 of DocketMaster
 
      Change log:

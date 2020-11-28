@@ -86,14 +86,8 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 *                                                                           *
 * File format: Version 1.0 of the Court Holiday Rules File is an ASCII text *
 * file in a CSV format. The first line contains the file name and version   *
-* information.  The second line contains the table column names: Month;     *
-* Rule Type	Rule; Holiday; and Authority. Month is the month to which the   *
-* rule applies.  Currently the number 13 (#defined as ALLMONTHS) is the     *
-* code for a holiday rule that occurs in every month.  For example, in      *
-* California, Saturdays and Sundays are treated as holidays. The file is    *
-* organized by months to facilitate searching.  If a date is being analyzed *
-* to determine if it lands on holiday, the monththere are no holidays    *
-* for a particular
+* information.  The second line contains the table column names: Month;Rule Type	Rule	Holiday	Authority
+
 ****************************************************************************/
 
 int parseholidays (FILE *holidays)

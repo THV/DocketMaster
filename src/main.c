@@ -329,13 +329,14 @@ void testsuite_checkholidays(void)
 
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     printf("This function tests our various date algorithms.\n");
-    printf("The first day tests an \"weekend\" rule.\n");
-    printf("The date is October 8, 2011.\n");
-    begin_date.month = 10;
-    begin_date.day = 8;
-    begin_date.year = 2011;
+    printf("The first day tests an \)
     
-    holidayprinttest(&begin_date);
+    if (isholiday(&end_date)==0)
+        printf("The end date is valid and does not fall on a holiday.\n");
+    else
+        printf("The end date is NOT valid.  It falls on a holiday.\n");
+    printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+    
     
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     printf("Test your own dates.\n");
@@ -358,19 +359,6 @@ void testsuite_checkholidays(void)
         printf("The end date is NOT valid.  It falls on a holiday.\n");
     printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     return;
-}
-
-void holidayprinttest(struct DATETIME *dt)
-{
-    
-    printf("%d/%d/%d ", begin_date.month, begin_date.day, begin_date.year);
-    if (isholiday(&end_date)==0)
-        printf("The end date is valid and does not fall on a holiday.\n\n");
-    else
-        printf("The end date is NOT valid.  It falls on a holiday.\n"\n);
-    
-    return;
-    
 }
 
 #ifdef UNDEF /* presently this entire source file is removed from compilation
