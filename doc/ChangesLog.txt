@@ -1,4 +1,10 @@
 25 September 2011
+   released version 1.0.8 of DocketMaster
+
+     Change log:
+        -Fixed: In ruleprocessor.h struct holidaynode *holidaylist[12] was declared as extern, and the code would not compile.  I commented it out and left a note to research the 'extern" issue.
+
+25 September 2011
    released version 1.0.7 of DocketMaster
 
      Change log:

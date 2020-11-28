@@ -271,9 +271,7 @@ void jdn2greg (int jdn, struct DATETIME *calc_date);
 
 /****************************************************************************
 ***************************   FUNCTION DECLARATION   ************************
-* Name: date_difference                                                     *
-*                                                                           *
-* Description: calculates the number of calendar days between two dates.    *
+* date_difference - calculates the number of days between two dates.        *
 *                                                                           *
 * Arguments: The starting date and ending date, both in the form of         *
 *   pointers to a DATETIME struct.                                          *
@@ -329,33 +327,21 @@ void courtday_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
                   int numdays);
 
 /****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: courtday_difference                                                 *
+**************************  FUNCTION DECLARATION   **************************
+* Name: courtday_count [not programmed yet.]                                *
 *                                                                           *
-* Description: Counts court days between two dates.                         *
+* Description: Counts court days.                                           *
 *                                                                           *
 * Arguments: The starting date and ending date, both in the form of         *
 *   pointers to a DATETIME struct.                                          *
 *                                                                           *
-* Return: Returns an integer which is the result of calculating the number  *
-*   of court days between the two dates. Recall cour days exclude weekends  *
-*   and holidays. The return value is positive if date1 is before date 2,   * 
-*   and negative otherwise.                                                 *
+* Returns: describe the return value of the function                        *
 *                                                                           *
-* Algorithm: Function uses two nested while loops.  The outer one counts    *
-* up or down by numdays.  The inner while-loop cycles through each day      *
-* starting with the day after the end date.  It tests whether the day falls *
-* on a holiday.  If the day falls on a holliday, the inner loop  is         *
-* incremented, but the outerloop is not. Thus, this function could be       *
-* modified to report back not only the resulting court day, but the number  *
-* of actual calendar days between the two dates.                            *
-*                                                                           *
-* NOTE: This function counts forward and backward, so references to         *
-* incrementing can refer to decrementing; references to next day can refer  *
-* to prior day, as the case may be; day after can refer to day before.      *
+* Other sections. algorithms, file formats, references, notes, etc.         *
 ****************************************************************************/
 
-int courtday_difference (struct DATETIME *date1, struct DATETIME *date2);
+void courtday_difference (struct DATETIME *orig_date, struct DATETIME *calc_date,
+                  int numdays);
 
 /****************************************************************************
 ***************************  FUNCTION DECLARATION   *************************
