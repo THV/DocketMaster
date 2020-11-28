@@ -9,7 +9,6 @@
 void usage(char *);
 void testsuite_dates(void);
 void testsuite_checkholidays(void);
-void holidayprinttest(struct DATETIME *dt);
 
 /*******************************************************************************
 ********************************************************************************
@@ -330,30 +329,14 @@ void testsuite_checkholidays(void)
 
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     printf("This function tests our various date algorithms.\n");
-    printf("The first date tests a \"weekend\" rule.\n");
-    printf("The date is October 8, 2011 (Saturday).\n");
+    printf("The first day tests an \"weekend\" rule.\n");
+    printf("The date is October 8, 2011.\n");
     begin_date.month = 10;
     begin_date.day = 8;
     begin_date.year = 2011;
-    holidayprinttest(&begin_date);
-
-    printf("The next date tests a \"weekend\" rule.\n");
-    printf("The date is October 9, 2011 (Sunday).\n");
-    begin_date.month = 10;
-    begin_date.day = 9;
-    begin_date.year = 2011;
-    holidayprinttest(&begin_date);
-
-    printf("The next date tests an \"absolute\" rule.\n");
-    printf("The date is January 1, 2010 (Friday, New Year's Day).\n");
-    begin_date.month = 1;
-    begin_date.day = 1;
-    begin_date.year = 2010;
+    
     holidayprinttest(&begin_date);
     
-    
-
-
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     printf("Test your own dates.\n");
     printf("please enter the beginning date in the format mm/dd/yyyy");
@@ -379,14 +362,15 @@ void testsuite_checkholidays(void)
 
 void holidayprinttest(struct DATETIME *dt)
 {
-    printf("%d/%d/%d ", dt->month, dt->day, dt->year);
-    if (isholiday(dt) !=0)
-        printf("is a holiday.\n\n");
+    
+    printf("%d/%d/%d ", begin_date.month, begin_date.day, begin_date.year);
+    if (isholiday(&end_date)==0)
+        printf("The end date is valid and does not fall on a holiday.\n\n");
     else
-        printf("is NOT a holiday.\n");
-
+        printf("The end date is NOT valid.  It falls on a holiday.\n"\n);
+    
     return;
-
+    
 }
 
 #ifdef UNDEF /* presently this entire source file is removed from compilation

@@ -314,7 +314,7 @@ int insertevent (struct courtevent* eventinfo, struct courteventnode *eventlist)
     /* place the new node in the appropriate place in the ordered list.
     if the list is presently NULL, then this item is added in first position. */
     
-    if (eventlist = NULL || strcmp(eventinfo->shorttitle, ) <= )
+    if (eventlist == NULL)
     {
         new_event->nextevent = eventlist; /* makes the new node point to the
                                             current first node */

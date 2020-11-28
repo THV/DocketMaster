@@ -81,17 +81,11 @@ list for each month of the year + the ALLMONTHS rules */
 extern struct holidaynode *holidayhashtable[13];
 
 /****************************************************************************
-* Data Type Declarations: re service of process "extra day" rules           *
+* Data Type Declarations: re service of proce                                  *
 *                                                                           *
 ****************************************************************************/
 
-struct extraservicedays
-{
-    unsigned char in_state_maildays;
-    unsigned char out_of_state_maildays;
-    unsigned char out_of_country_maildays;
-    unsigned char express
-}
+
 
 
 /****************************************************************************

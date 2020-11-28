@@ -1,3 +1,12 @@
+06 October 2011
+   released version 1.0.13 of DocketMaster
+
+     Change log:
+        -Added: testsuite_dates routine in main to test various date functions.
+        -Fixed: new function in datetools.c called islastxdom() -- to calculate whether a date is the last Xday of the month.
+        -Added: The islastweek() function was not working correctly.  That function was renamed islastxdom.  The problem with islastweek is that it was a confused function.  It was trying to tell us whther a certain day was the last X day (e.g., Tuesday) of the month, but it was programmed as if it were telling us whether some date was in the last week.  I copied the function into a new islastweek, but that function is not coded yet.  It's job will be to tell us if a date is in the last week of the month.
+        -Added: isleapyear function
+
 05 October 2011
    released version 1.0.10 of DocketMaster
 

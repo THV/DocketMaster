@@ -143,11 +143,7 @@ void printwkday (int day);
 ***************************   FUNCTION DECLARATION   ************************
 * Name: isweekend                                                           *
 *                                                                           *
-* Description: calculates whether a certain date falls on a Saturday or     *
-*   Sunday.  This founction was designed early on in development.  Because  *
-*   most courts treat weekends as holidays, this function is not currently  *
-*   used.  The weeked rules are simply part of the Holiday rules processing *
-*   tools                                                                   *
+* Description: calculates whether a certain date falls                      *
 *                                                                           *
 * Arguments: Takes a pointer to a DATETIME structure.                       *
 *                                                                           *
@@ -169,7 +165,7 @@ int isweekend (struct DATETIME *dt);
 * Arguments: Takes a pointer to a DATETIME structure.                       *
 *                                                                           *
 * Return: Returns an integer equal to zero if the year is NOT a leap year,  *
-*   or a 1 if the year IS a leap year.                                      *
+*   or a 1 if the date IS a leap year.                                      *
 *                                                                           *
 *****************************************************************************
 ****************************************************************************/
@@ -285,8 +281,8 @@ int date_difference (struct DATETIME *date1, struct DATETIME *date2);
 *   number days. The algorithm EXCLUDES the first date, but counts the end  *
 *   date.                                                                   *
 *                                                                           *
-* Return: Returns an integer which is the result of calculating the number  *
-*   of days between the two dates.                                          *
+* Return: No return, but the function changes the value of the variable     *
+*   calc_date (the resulting date) through use of the pointer.              *
 ****************************************************************************/
 
 void date_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
@@ -294,25 +290,15 @@ void date_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
 
 /****************************************************************************
 **************************  FUNCTION DECLARATION   **************************
-* Name: courtday_offset                                                     *
+* Name: courtday_offset [not programmed yet.]                               *
 *                                                                           *
-* Description: calculates the number of courtdays between two dates. Court  *
-*   days exclude weekends and holidays.  So the offset does not count those *
-*   days.                                                                   *
+* Description: calculates the number of courtdays between two days.         *
 *                                                                           *
-* Arguments: The starting date, the number of court days to count, and a    *
-*   pointer to another DATETIME struct to store the result.                 *
+* Arguments: Describe the parameters of the function.                       *
 *                                                                           *
-* Return: No return, but the function changes the value of the variable     *
-*   calc_date (the resulting date) through use of the pointer.              *
+* Returns: describe the return value of the function                        *
 *                                                                           *
-* Algorithm: Function uses two nested while loops.  The outer one counts    *
-* up or down by numdays.  The inner while-loop cycles through each day      *
-* starting with the day after the original date.  It tests whether the day  *
-* falls on a holiday.  If the day falls on a holliday, the inner loop  is   *
-* incremented, but the outerloop is not. Thus, this function could be       *
-* modified to report back not only the resulting court day, but the number  *
-* of actual calendar days between the two dates.                            *
+* Other sections. algorithms, file formats, references, notes, etc.         *
 ****************************************************************************/
 
 
