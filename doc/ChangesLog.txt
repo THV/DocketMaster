@@ -1,3 +1,13 @@
+08 October 2011
+   released version 1.0.16 of DocketMaster
+
+     Change log:
+        -Added: New datetools testing functions in main: holidayprinttest() and testsuite_checkholidays().
+        -Fixed: Was having problems in processing weekend and relative rules.  The problem was the datetime struct datatypes for wkday and wknum were chars.  I converted them to int and added a step in parseholidays() to convert an ASCII string read from ascii the holiday file to a decimal number using a paramaterized macro ASCII2DECIMAL().
+        -New: I fully debugged the isholiday() function
+        -Added: added the courtday_offset function.
+        -Added: test function in main to test the courtday_offset function.
+
 07 October 2011
    released version 1.0.14 of DocketMaster
 

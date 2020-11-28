@@ -318,34 +318,7 @@ void testsuite_dates(void)
 
 void testsuite_checkholidays(void)
 {
-    struct DATETIME begin_date; /* date to begin date calculations */
-    struct DATETIME end_date; /* date to use for end calculations */
-    struct DATETIME result_date; /* used to hold new dates resulting from
-                                    calculations */
-    int day_count; /* number of days before or after a particular deadline */
-    char dateinput[11]; /*used to get data from the keyboard */
-    char line[80]; /* keyboard buffer */
-
-    printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    printf("This function tests our various date algorithms.\n");
-    printf("please enter the beginning date in the format mm/dd/yyyy");
-    printf("\n(Press x to end):\n");
-
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d/%d/%d", &begin_date.month, &begin_date.day,
-           &begin_date.year);
-    printf("/nPlease enter the deadline:");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &day_count);
-    date_offset (&begin_date, &end_date,
-                  day_count);
-    printf("The deadline is: %d/%d/%d.\n", end_date.month, end_date.day,
-           end_date.year);
-    if (isholiday(&end_date)==0)
-        printf("The end date is valid and does not fall on a holiday.\n");
-    else
-        printf("The end date is NOT valid.  It falls on a holiday.\n");
-    printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+    int 
     return;
 }
 

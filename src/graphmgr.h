@@ -594,31 +594,6 @@ int initializeadjacencymatrix (struct eventgraph* graph);
 void closeadjacencymatrix (void);
 
 
-/****************************************************************************
-*****************************************************************************
-** Function prototypes -- utility functions                                **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: strcmp                                                              *
-*                                                                           *
-* Description: Compares two character strings and returns negative, zero,   *
-* or positive if s1 is lexicographically less than, equal to, or greater    *
-* than s2.  The value is obtained by subtracting the characters at the      *
-* first position where s1 and s2 disagree. Function copied from K&R 2d at   *
-* 106.                                                                      *
-*                                                                           *
-* Arguments: Two character strings                  .                       *
-*                                                                           *
-* Returns: See description.                                                 *
-*                                                                           *
-****************************************************************************/
-
-int strcmp (char *s1, char *s2);
-
 #ifdef UNDEF /* presently the remainder of source file has been removed from
     compilation for testing. */
 

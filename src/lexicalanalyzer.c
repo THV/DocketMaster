@@ -79,12 +79,9 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 *                                                                           *
 * Arguments: File handle to the holidays file.                              *
 *                                                                           *
-* Returns: Zero if successful.  Function will return a non-zero error code  *
-*   on specified errors, but this functionality has not been coded as yet.  *
+* Returns: ??? return a zero if successful?                                 *
 *                                                                           *
-* Algorithm:                                                                *
-*                                                                           *
-* File format: Version 1.0 of the *
+* Other sections. algorithms, file formats, references, notes, etc.         *
 ****************************************************************************/
 
 int parseholidays (FILE *holidays)
