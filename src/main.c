@@ -48,11 +48,11 @@
 
 FILE *HOLIDAY_FILE;
 
-struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
+/* struct holidaynode *holidayhashtable[13]; !VARIABLE DEFINITION! This is THE
 					      instance of the jurisdiction's set
 					      of holiday rules. */
 
-EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
+/* EventGraph jurisdevents;  !VARIABLE DEFINITION! This is THE instance of the
 			    EventGraph for the particular jurisdiction's list
 			    of events.  */ 
 

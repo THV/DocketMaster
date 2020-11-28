@@ -1,3 +1,10 @@
+22 October 2011
+   released version 1.0.19 of DocketMaster
+
+     Change log:
+        -Added: Began coding the courtevent data type.
+        -Added: Courtevent flags, countunits flags, and macros to set, clear, and test bits.  Tested the macros in a separate programming project saved under skills building, practical C, Chapter 11 exercises.
+
 20 October 2011
    released version 1.0.19 of DocketMaster
 

@@ -248,4 +248,5 @@ void resetfile (FILE *infile)
   clearerr(infile);
 
   return;
+    
 }		/* -----  end of function resetfile  ----- */
