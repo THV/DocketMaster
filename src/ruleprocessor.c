@@ -31,13 +31,13 @@
 
 #include "ruleprocessor.h"
 
-void initializelist(struct holidaynode *holidaylist[])
+void initializelist(struct holidaynode *holidayhashtable[])
 {
     int monthctr; /* counter to loop through months */
 
     for(monthctr = 0; monthctr < MONTHS; monthctr++)
     {
-        holidaylist[monthctr] = NULL;
+        holidayhashtable[monthctr] = NULL;
     }
     return;
 }
@@ -62,35 +62,36 @@ struct holidaynode * addholidayrule(struct holidaynode *list,
 
     return list;
 }
-void closerules(struct holidaynode *holidaylist[])
+void closerules(struct holidaynode *holidayhashtable[])
 {
     struct holidaynode *tempnode;
     int monthctr; /* counter to loop through months */
 
     for(monthctr = 0; monthctr < MONTHS; monthctr++)
     {
-        while (holidaylist[monthctr] != NULL)
+        while (holidayhashtable[monthctr] != NULL)
             /* checks to see if list is empty */
         {
-            tempnode = holidaylist[monthctr];
+            tempnode = holidayhashtable[monthctr];
             /* sets a temporary pointer to the first node so we don't
                 lose it. */
-            holidaylist[monthctr] = holidaylist[monthctr]->nextrule;
+            holidayhashtable[monthctr] = holidayhashtable[monthctr]->nextrule;
             /* makes the next node the new first node */
-            free(tempnode); /* frees the memory allocated to the former first node */
+            free(tempnode); /* frees the memory allocated to the former first
+                                node */
         }
     }
     return;
 }
 
-void printholidayrules(struct holidaynode *holidaylist[])
+void printholidayrules(struct holidaynode *holidayhashtable[])
 {
     struct holidaynode *tempnode;
     int monthctr; /* counter to loop through months */
 
     for(monthctr = 0; monthctr < MONTHS; monthctr++)
     {
-        tempnode = holidaylist[monthctr];
+        tempnode = holidayhashtable[monthctr];
         /* sets a temporary pointer to the first node so we traverse
             the list. */
 
@@ -201,9 +202,9 @@ void printholidayrules(struct holidaynode *holidaylist[])
             if ((tempnode->rule.ruletype != 'a') &&
                     (tempnode->rule.ruletype != 'A'))
             {
-                printf("The applicable weekday is %c.\n",
+                printf("The applicable weekday is %d.\n",
                        tempnode->rule.wkday);
-                printf("The applicable weeknumber is %c.\n",
+                printf("The applicable weeknumber is %d.\n",
                        tempnode->rule.wknum);
             }
             else
@@ -223,7 +224,7 @@ void printholidayrules(struct holidaynode *holidaylist[])
 
 /****************************************************************************
 ***************************   FUNCTION DEFINITION   *************************
-* Name: processhrule                                                         *
+* Name: processhrule                                                        *
 *                                                                           *
 * Description: describe what the function does.                             *
 *                                                                           *
@@ -243,7 +244,7 @@ void printholidayrules(struct holidaynode *holidaylist[])
 *****************************************************************************
 ****************************************************************************/
 
-int processhrule (struct DATETIME dt, struct holidaynode *rulenode)
+int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
 {
 
     switch (rulenode->rule.ruletype)
@@ -256,13 +257,14 @@ int processhrule (struct DATETIME dt, struct holidaynode *rulenode)
             case 'r': /* fall through */
             case 'R':
                 if (rulenode->rule.wkday == dt->day_of_week)
+                {
                     /* previous line tests to see if day of week matches. */
-                    if (rulenode->weeknum = LASTWEEK && islastxdom(dt))
+                    if ((rulenode->rule.wknum == LASTWEEK) && islastxdom(dt))
                     {
                         return 1;
                     }
-                    else if (dt->day >= ((rulenode->wknum-1)*WEEKDAYS+1) &&
-                            dt->day <= (rulenode->wknum*WEEKDAYS))
+                    else if (dt->day >= ((rulenode->rule.wknum-1)*WEEKDAYS+1) &&
+                            dt->day <= (rulenode->rule.wknum*WEEKDAYS))
                     {
                         /* Prev. line tests to see if the day is in the
                         proper week. The formula "(wknum-1)*7+1" gets the
@@ -273,10 +275,7 @@ int processhrule (struct DATETIME dt, struct holidaynode *rulenode)
                     }
                     else
                         return 0;
-
-
-                   rulenode->rule.wkday;
-                   rulenode->rule.wknum;
+                }
                 break;
             case 'w': /* fall through */
             case 'W':
@@ -317,31 +316,33 @@ int isholiday (struct DATETIME *dt)
 {
     struct holidaynode *tempnode;
 
-    /* First calculate whether a weekend rule applies and whether this date
+    /* First, calculate whether an ALLMONTHS rule applies and whether this date
     falls on a weekend */
 
     dt->day_of_week = wkday_sakamoto (dt);
-    tempnode = holidaylist[ALLMONTHS];
+    tempnode = holidayhashtable[ALLMONTHS-1];
     while(tempnode != NULL)
         {
-            if (processhrule(dt,&tempnode) == 1)
+            if (processhrule(dt,tempnode) == 1)
                 return 1;
             tempnode = tempnode->nextrule;
         }
 
-    dt->day_of_week = wkday_sakamoto (dt);
-    tempnode = holidaylist[ALLMONTHS];
+    /* Second, calculate whether there are any holidays on the month of the
+        argument's date */
+
+    tempnode = holidayhashtable[dt->month-1];
     while(tempnode != NULL)
         {
-            if (processhrule(dt,&tempnode) == 1)
+            if (processhrule(dt,tempnode) == 1)
                 return 1;
             tempnode = tempnode->nextrule;
         }
-        
+
     return 0;
 }
 
-#ifdef UNDEF /* presently the remainder of source file has bee removed from
+#ifdef UNDEF /* presently the remainder of source file has been removed from
     compilation for testing. */
 
 
@@ -372,12 +373,12 @@ int loadholidays (struct holidaynode current_holidays, char holiday_file[])
     if (isempty(current_holidays) !=0)
         return -1; /* indicates holidays already loaded */
 
-    /*------------------>            WARNING                   <---------------*/
-    /*  this function does not does not re-read the file if the binary tree    */
-    /*  for current_holidays contains data.  If the court or jurisdiction      */
-    /*  changes and the holidays need to be re-read and processed, the binary  */
-    /*  tree must be initialized before calling this function.                 */
-    /*-------------------------------------------------------------------------*/
+    /*------------------>            WARNING                  <---------------*/
+    /*  this function does not does not re-read the file if the binary tree   */
+    /*  for current_holidays contains data.  If the court or jurisdiction     */
+    /*  changes and the holidays need to be re-read and processed, the binary */
+    /*  tree must be initialized before calling this function.                */
+    /*------------------------------------------------------------------------*/
 
     /* TODO (Thomas#1#): Address the issue of re-reading the file
     if the court jurisdiction changes, etc. */
@@ -508,7 +509,8 @@ int loadholidays (struct holidaynode current_holidays, char holiday_file[])
         printf("The rule is: %s\n",subrule);
         printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n");
     }
-    endoffile = fgets(file_buffer, sizeof(file_buffer), holiday_file); /* read next line */
+    endoffile = fgets(file_buffer, sizeof(file_buffer), holiday_file);
+        /* read next line */
 }
 while (endoffile != NULL);
 

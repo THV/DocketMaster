@@ -1,3 +1,9 @@
+20 October 2011
+   released version 1.0.19 of DocketMaster
+
+     Change log:
+        -Updated: I Changed the name holidaylist to the name holidayhashtable.  This is, after all, a chained hash table. The hash function corresponds to the months of the year.
+
 09 October 2011
    released version 1.0.18 of DocketMaster
 

@@ -12,7 +12,7 @@
  *
  *        Version: 1.0
  *        Created: 10/24/2011
- *  Last Modified: Wed 01 Feb 2012 08:24:27 PM PST
+ *  Last Modified: Fri 03 Feb 2012 08:28:12 AM PST
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -38,7 +38,8 @@
 #ifndef _GRAPHMGR_H_INCLUDED_
 #define _GRAPHMGR_H_INCLUDED_
 
-#include "../rule processor/ruleprocessor.h"
+/* #include "../rule processor/ruleprocessor.h"
+ */
 
 /****************************************************************************
 * Macros                                                                    *
@@ -414,75 +415,6 @@ int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto);
 
 /****************************************************************************
 *************************   FUNCTION DECLARATION   **************************
-* Name: numberofevents                                                      *
-*                                                                           *
-* Description: Counts the number of events in the event list.               *
-*                                                                           *
-* Arguments: Takes a pointer to an EventGraph.                              *
-*                                                                           *
-* Returns: The number of events in the EventGraph.                          *
-*                                                                           *
-****************************************************************************/
-
-int numberofevents (CourtEventNode *list);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: numberofdependencies                                                *
-*                                                                           *
-* Description: Counts the number of dependencies in the Adjacencymatrix.    *
-*                                                                           *
-* Arguments: Takes a pointer to an adjacency matris.                        *
-*                                                                           *
-* Returns: The number of dependencies (arcs) in the EventGraph.             *
-*                                                                           *
-****************************************************************************/
-
-int numberofdependencies (Adjacencymatrix* dependencies);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: searchforevent                                                      *
-*                                                                           *
-* Description: Determines whether a particular event (vertex) is in the     *
-* event list.                                                               *
-*                                                                           *
-* Arguments: Takes a string pointer containing the vertex to search for,    *
-* and pointer to the court event list to search.                             *
-*                                                                           *
-* Returns: If the graph contains a vertex that is equal to the serch string,*
-* the function returns a pointer to the position of the event. Otherwise,   *
-* function returns NULL.                                                    *
-*                                                                           *
-* Note: function is currently keyed to search only the shorttitle member of *
-* the eventnode.                                                            *
-****************************************************************************/
-
-CourtEventNode* searchforevent (char *eventname, CourtEventNode* list);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: searchfordependency                                                 *
-*                                                                           *
-* Description: Determines whether a particular dependency relationship      *
-* exists.                                                                   *
-*                                                                           *
-* Arguments: Takes pointers to two vertices and a pointer to the EventGraph *
-* to search.                                                                *
-*                                                                           *
-* Returns: If the graph contains an a dependency relationship between       *
-* event1 and event2, the function returns a pointer to the position of the  *
-* dependency. Otherwise, function returns NULL.                             *
-*                                                                           *
-* Note: The order of vertices is important. It will determine whether       *
-* vertex1 (event1) is triggeredby vertex2 (event2).                         *
-****************************************************************************/
-
-Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode *event2,
-                                 EventGraph *graph);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
 * Name: insertevent                                                         *
 *                                                                           *
 * Description: Adds new court event (vertex) to the list of events.         *
@@ -583,22 +515,6 @@ void traverse (EventGraph* graph); /* breadth first */
 /* consider adding: isconnected */
 
 /* consider adding: findshortestpath */
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: followchain                                                         *
-*                                                                           *
-* Description: Function starts at a certain vertex and traverses through    *
-* all events along the chain.  In the context of the CourtEvents, it starts *
-* with a triggering event and visits all the events triggered by that event.*
-*                                                                           *
-* Arguments: Takes a pointer to the starting vertex and the EventGraph      *
-*                                                                           *
-* Returns: None.                                                            *
-*                                                                           *
-****************************************************************************/
-
-void followchain (CourtEvent* startingvertex, EventGraph* graph);
 
 /****************************************************************************
 *****************************************************************************

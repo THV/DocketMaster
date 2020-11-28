@@ -7,7 +7,7 @@
  *
  *        Version:  1.0
  *        Created:  August 2011
- *       Revision:  none
+ *  Last Modified: Wed 01 Feb 2012 09:19:18 PM PST
  *       Compiler:  gcc
  *
  *         Author:  Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -45,6 +45,17 @@
 /* #####   DATA TYPES  -  LOCAL TO THIS SOURCE FILE   ####################### */
 
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ######################## */
+
+FILE *HOLIDAY_FILE;
+
+struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
+					      instance of the jurisdiction's set
+					      of holiday rules. */
+
+EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
+			    EventGraph for the particular jurisdiction's list
+			    of events.  */ 
+
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ####################### */
 
@@ -131,4 +142,3 @@ void usage(char *program_name)
             program_name);
     exit(8);
 }
-

@@ -80,6 +80,10 @@ struct holidaynode
 list for each month of the year + the ALLMONTHS rules */
 extern struct holidaynode *holidayhashtable[13];
 
+ /* :WARNING:01/29/2012 02:19:07 PM:THV: FOR DATA-HIDING PURPOSES MAKE SURE
+  * THE holidayhashtable IS ONLY ACCESSIBLE TO FUNCTIONS THAT HAVE A RIGHT
+  * TO ACCESS IT.  AS DECLARED HERE, IT MAY BE ACCESSIBLE EVERYWHERE. */
+
 /****************************************************************************
 * Data Type Definitions                                                     *
 *                                                                           *

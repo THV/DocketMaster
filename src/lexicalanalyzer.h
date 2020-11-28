@@ -94,49 +94,6 @@ extern FILE *EXTRAS_FILE;
 int parseholidays (FILE *holidays);
 
 /****************************************************************************
-**************************   FUNCTION DECLARATION   *************************
-* Name: getfile                                                             *
-*                                                                           *
-* Description: Opens a file for reading.                                    *
-*                                                                           *
-* Arguments: Character string representing the file name.                   *
-*                                                                           *
-* Returns: File handle (pointer to the file).                               *
-*                                                                           *
-****************************************************************************/
-
-FILE * getfile(char *file_name);
-
-/****************************************************************************
-**************************   FUNCTION DECLARATION   *************************
-* Name: checkfile                                                           *
-*                                                                           *
-* Description: Verifies the name and version of an opened file.             *
-*                                                                           *
-* Arguments: File handle.                                                   *
-*                                                                           *
-* Returns: Nothing right now, but may change to return an int or char       *
-*   reflecting the type of opened filed.                                    *
-*                                                                           *
-****************************************************************************/
-
-int checkfile (FILE *in_file);
-
-/****************************************************************************
-**************************   FUNCTION DECLARATION   *************************
-* Name: closefile                                                           *
-*                                                                           *
-* Description: Closes a file.                                               *
-*                                                                           *
-* Arguments: File handle (pointer to the file).                             *
-*                                                                           *
-* Returns: NULL pointer.                                                    *
-*                                                                           *
-****************************************************************************/
-
-FILE * closefile(FILE *close_file);
-
-/****************************************************************************
 *****************************************************************************
 ********** WARNING: UNDEVELOPED "DRAFT" FUNCTIONS                     *******
 **********                                                            *******
