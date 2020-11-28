@@ -1,0 +1,25 @@
+25 September 2011
+   released version 1.0.7 of DocketMaster
+
+     Change log:
+        -Cleaned: Commented the parseholidays() function to recognize the issue with subtracing one from the month when calling the addholidayrule() function.
+ 
+25 September 2011
+   released version 1.0.5 of DocketMaster
+
+     Change log:
+        -Added: printholidayrules() function to the rule processing module so I could test whether the array of linked lists was working.  It appears to be working fine.
+
+24 September 2011
+   released version 1.0.3 of DocketMaster
+
+     Change log:
+        -Fixed: modified insertions into array of linked lists for holiday rules. Two fixes.  First #define MONTHS was increased from 12 to 13 (to accommodate the code for "all months").  Second the call to the addholidayrule() function was updated to subtract one from the rule that was read in.  The rules file recognizes months counting from 1 to 13.  The array counts from 0 to 12.  I am considering a more elegant way to deal with this issue.
+
+
+24 September 2011
+   released version 1.0.1 of DocketMaster
+
+     Change log:
+        -Updated: Changed from binary tree data type to array of linked lists for holiday rules.
+
