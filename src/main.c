@@ -8,6 +8,7 @@
 
 void usage(char *);
 void testsuite_dates(void);
+void testsuite_checkholidays(void);
 
 /*******************************************************************************
 ********************************************************************************
@@ -264,7 +265,7 @@ void testsuite_dates(void)
     else
         printf("No, %d is not a leap year.\n", testdate.year);
 
-    jdncnvrt(&testdate);
+    testdate.jdn = jdncnvrt(&testdate);
     printf("\n\n#test# 1/1/2000 has a JDN of %d", testdate.jdn);
 
     testdate.day = 1;
@@ -315,6 +316,11 @@ void testsuite_dates(void)
         printf("No, %d is not a leap year.\n", testdate.year);
 }
 
+void testsuite_checkholidays(void)
+{
+    int 
+    return;
+}
 
 #ifdef UNDEF /* presently this entire source file is removed from compilation
                 for testing. */

@@ -243,7 +243,7 @@ void printholidayrules(struct holidaynode *holidaylist[])
 *****************************************************************************
 ****************************************************************************/
 
-int processhrule (struct DATETIME dt, struct holidaynode *rulenode)
+int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
 {
 
     switch (rulenode->rule.ruletype)
@@ -257,12 +257,12 @@ int processhrule (struct DATETIME dt, struct holidaynode *rulenode)
             case 'R':
                 if (rulenode->rule.wkday == dt->day_of_week)
                     /* previous line tests to see if day of week matches. */
-                    if (rulenode->weeknum = LASTWEEK && islastxdom(dt))
+                    if (rulenode->rule.wknum = LASTWEEK && islastxdom(dt))
                     {
                         return 1;
                     }
-                    else if (dt->day >= ((rulenode->wknum-1)*WEEKDAYS+1) &&
-                            dt->day <= (rulenode->wknum*WEEKDAYS))
+                    else if (dt->day >= ((rulenode->rule.wknum-1)*WEEKDAYS+1) &&
+                            dt->day <= (rulenode->rule.wknum*WEEKDAYS))
                     {
                         /* Prev. line tests to see if the day is in the
                         proper week. The formula "(wknum-1)*7+1" gets the
@@ -273,10 +273,6 @@ int processhrule (struct DATETIME dt, struct holidaynode *rulenode)
                     }
                     else
                         return 0;
-
-
-                   rulenode->rule.wkday;
-                   rulenode->rule.wknum;
                 break;
             case 'w': /* fall through */
             case 'W':
@@ -317,7 +313,7 @@ int isholiday (struct DATETIME *dt)
 {
     struct holidaynode *tempnode;
 
-    /* First calculate whether a weekend rule applies and whether this date
+    /* First, calculate whether an ALLMONTHS rule applies and whether this date
     falls on a weekend */
 
     dt->day_of_week = wkday_sakamoto (dt);
@@ -329,15 +325,17 @@ int isholiday (struct DATETIME *dt)
             tempnode = tempnode->nextrule;
         }
 
-    dt->day_of_week = wkday_sakamoto (dt);
-    tempnode = holidaylist[ALLMONTHS];
+    /* Second, calculate whether there are any holidays on the month of the
+        argument's date */
+
+    tempnode = holidaylist[dt->month];
     while(tempnode != NULL)
         {
             if (processhrule(dt,&tempnode) == 1)
                 return 1;
             tempnode = tempnode->nextrule;
         }
-        
+
     return 0;
 }
 
