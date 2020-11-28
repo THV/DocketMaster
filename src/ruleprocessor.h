@@ -11,8 +11,8 @@
 #ifndef _RULEPROCESSOR_H_INCLUDED_
 #define _RULEPROCESSOR_H_INCLUDED_
 
-#include "..\datetime\datetools.h"
-#include "..\graph manager\graphmgr.h"
+#include "datetools.h"
+
 
 /****************************************************************************
 * Symbolic Constants                                                        *

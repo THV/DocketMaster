@@ -1,4 +1,10 @@
 09 October 2011
+   released version 1.0.18 of DocketMaster
+
+     Change log:
+        -New: coded and partially tested the courtday_difference function.
+
+09 October 2011
    released version 1.0.17 of DocketMaster
 
      Change log:
