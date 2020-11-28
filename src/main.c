@@ -10,7 +10,6 @@ void usage(char *);
 void testsuite_dates(void);
 void testsuite_checkholidays(void);
 void holidayprinttest(struct DATETIME *dt);
-void testsuite_courtdays(void);
 
 /*******************************************************************************
 ********************************************************************************
@@ -60,7 +59,6 @@ int main(int argc, char *argv[])
     getrulesfiles(holidays_filename, events_filename, extras_filename);
     testsuite_dates();
     testsuite_checkholidays();
-    testsuite_courtdays();
 
     /* testsuite(); */
     return 0;
@@ -352,27 +350,8 @@ void testsuite_checkholidays(void)
     begin_date.day = 1;
     begin_date.year = 2010;
     holidayprinttest(&begin_date);
-
-    printf("The next date tests an \"absolute\" rule.\n");
-    printf("The date is December 25, 2014 (Thursday, Christmas Day).\n");
-    begin_date.month = 12;
-    begin_date.day = 25;
-    begin_date.year = 2014;
-    holidayprinttest(&begin_date);
-
-    printf("The next date tests a \"relative\" rule.\n");
-    printf("The date is November 24, 2011 (Thursday, Thanksgiving Day).\n");
-    begin_date.month = 11;
-    begin_date.day = 24;
-    begin_date.year = 2011;
-    holidayprinttest(&begin_date);
-
-    printf("The next date tests a \"relative\" rule.\n");
-    printf("The date is May 28, 2011 (Memorial Day).\n");
-    begin_date.month = 5;
-    begin_date.day = 28;
-    begin_date.year = 2012;
-    holidayprinttest(&begin_date);
+    
+    
 
 
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
@@ -409,45 +388,6 @@ void holidayprinttest(struct DATETIME *dt)
     return;
 
 }
-
-void testsuite_courtdays(void)
-{
-    struct DATETIME begin_date; /* date to begin date calculations */
-    struct DATETIME end_date; /* date to use for end calculations */
-    struct DATETIME result_date; /* used to hold new dates resulting from
-                                    calculations */
-    int day_count; /* number of days before or after a particular deadline */
-    char dateinput[11]; /*used to get data from the keyboard */
-    char line[80]; /* keyboard buffer */
-
-    printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    printf("This function tests the courtday counter.\n");
-    printf("please enter the beginning date in the format mm/dd/yyyy");
-    printf("\n(Press x to end):\n");
-
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d/%d/%d", &begin_date.month, &begin_date.day,
-           &begin_date.year);
-    printf("\nHow many court days out is the deadline?");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &day_count);
-    courtday_offset; (&begin_date, &end_date,
-                  day_count);
-    printf("The deadline is: %d/%d/%d.\n", end_date.month, end_date.day,
-           end_date.year);
-    if (isholiday(&end_date)==0)
-        printf("The end date is valid and does not fall on a holiday.\n");
-    else
-        printf("The end date is NOT valid.  It falls on a holiday.\n");
-    printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    
-    
-    
-    
-    
-    return;
-}
-
 
 #ifdef UNDEF /* presently this entire source file is removed from compilation
                 for testing. */

@@ -87,13 +87,10 @@ extern struct holidaynode *holidayhashtable[13];
 
 struct extraservicedays
 {
-    unsigned char counttype; /* count t
     unsigned char in_state_maildays;
     unsigned char out_of_state_maildays;
     unsigned char out_of_country_maildays;
-    unsigned char express_mail_days;
-    unsigned char fax_servicedays;
-    unsigned char electronic_servicedays;
+    unsigned char express
 }
 
 

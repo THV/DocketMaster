@@ -100,15 +100,7 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 * weekend rule are rules for Saturdays and Sundays.  Absolute rules are     *
 * those that apply to a specific day of the month: January 1; July 4;       *
 * December 25; etc.  Relative rules are those that happen according to a    *
-* specific formula: the last Thursday of November; the last Monday of May;  *
-* the first Monday in September; etc.                                       *
-*                                                                           *
-* The Rule is a code that consists of two digits in the case of an absolute *
-* rule.  The two digits reflect the day on which the holiday falls: 01; 11; *
-* 31; etc.  For weekend or relative rules, the code is two single digits    *
-* separated by a hyphen.  The first number is the day of the week (Sunday=  *
-* 0, Saturday = 6); the second number is the week number. The week number   *
-* has two special values: 
+* specific formula: the 
 ****************************************************************************/
 
 int parseholidays (FILE *holidays)

@@ -1,3 +1,12 @@
+05 October 2011
+   released version 1.0.10 of DocketMaster
+
+     Change log:
+        -Added: I added the islastweek function in the datetools.c file and the prototype in the datetools.h file.
+        -Updated: I started working on the isholiday function, but have commented it out for the moment.
+        -Added: Several new #defines in the datetools.h and ruleprocessor.h files to deal with "magic" numbers for weeks and other codes.
+        -Applied: I re-opened the datetools.c file for compliation.
+
 02 October 2011
    released version 1.0.9 of DocketMaster
 
