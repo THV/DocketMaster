@@ -85,22 +85,9 @@ extern struct holidaynode *holidayhashtable[13];
 *                                                                           *
 ****************************************************************************/
 
-/* The following flags are TRUE if the count type is court days, FALSE if the
-count type is calendar days. */
-
-const unsigned char IN_STATE_MAIL_COURT = (1<<0);
-const unsigned char OUT_OF_STATE_MAIL_COURT = (1<<0);
-const unsigned char OUT_OF_COUNTRY_MAIL_COURT = (1<<0);
-const unsigned char EXPRESS_MAIL_COURT = (1<<0);
-const unsigned char FAX_SERVICE_COURT = (1<<0);
-const unsigned char ELECTRONIC_SERVICE_COURT = (1<<0);
-
 struct extraservicedays
 {
-    unsigned char counttype; /* count type is a series of flags that indicates
-        whether the particular service-type's extra days are calendar days or
-        court days. */
-        
+    unsigned char counttype; /* count t
     unsigned char in_state_maildays;
     unsigned char out_of_state_maildays;
     unsigned char out_of_country_maildays;

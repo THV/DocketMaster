@@ -477,8 +477,8 @@ struct dependency* searchfordependency (struct courteventnode *event1,
 *                                                                           *
 ****************************************************************************/
 
-struct courtevent* insertevent (struct courtevent* eventinfo,
-                                struct courteventnode *eventlist);
+int insertevent (struct courtevent* eventinfo,
+                 struct courteventnode *eventlist);
 
 /****************************************************************************
 *************************   FUNCTION DECLARATION   **************************

@@ -274,35 +274,12 @@ struct dependency* searchfordependency (struct courteventnode *event1,
 *                                                                           *
 ****************************************************************************/
 
-struct courtevent* insertevent (struct courtevent* eventinfo,
-                                struct courteventnode *eventlist)
+int insertevent (struct courtevent* eventinfo, struct courteventnode *eventlist)
 {
     struct courteventnode *new_event; /* pointer to new court event */
     struct courteventnode *temphead; /* pointer to head of event list */
 
-    /* place the new node in the appropriate place in the ordered list.
-    if the list is presently NULL, then this item is added in first position. */
-    
-    if (eventlist = NULL ||
-        strcmp(eventinfo->shorttitle, temphead->eventdata.shorttitle) <= 0)
-    {
-        new_event->nextevent = eventlist; /* makes the new node point to the
-                                            current first node */
-        eventlist = new_event; /* makes the new node the first node */
-        eventlist->eventposn = 1;
-    }
-    else
-    {
-        temphead = eventlist; /* point the temporary head to the start of the
-                                event list. */
-        
-    strcmp (char *s1, char *s2)
-    
-    strcmp (char *s1, char *s2)
-    }
-    
-    
-new_event = malloc(sizeof(struct courtevent)); /* creates a new node */
+    new_event = malloc(sizeof(struct courtevent)); /* creates a new node */
 
     /* copy the data into the new node */
     new_event->eventdata.eventflags = eventinfo->eventflags;
@@ -333,12 +310,29 @@ new_event = malloc(sizeof(struct courtevent)); /* creates a new node */
     strcpy(new_event->eventdata.eventcategory,eventinfo->eventcategory);
     strcpy(new_event->eventdata.authority, eventinfo->authority);
     strcpy(new_event->eventdata.description, eventinfo->description);
-
-
-
-
-
-
+    
+    /* place the new node in the appropriate place in the ordered list.
+    if the list is presently NULL, then this item is added in first position. */
+    
+    if (eventlist = NULL ||
+        strcmp(eventinfo->shorttitle, temphead->eventdata.shorttitle) <= 0)
+    {
+        new_event->nextevent = eventlist; /* makes the new node point to the
+                                            current first node */
+        eventlist = new_event; /* makes the new node the first node */
+        eventlist->eventposn = 1;
+    }
+    else
+    {
+        temphead = eventlist; /* point the temporary head to the start of the
+                                event list. */
+        
+    strcmp (char *s1, char *s2)
+    
+    strcmp (char *s1, char *s2)
+    }
+    
+    
     
     
     

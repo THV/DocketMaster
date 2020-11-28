@@ -82,10 +82,7 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 * Returns: Zero if successful.  Function will return a non-zero error code  *
 *   on specified errors, but this functionality has not been coded as yet.  *
 *                                                                           *
-* Algorithm: Function reads the file character by character, inputting the  *
-* parsed data into the appropriate fields of a temporary holiday rule,      *
-* which is of type holiday rule. The temporary variable is then passed to   *
-* the addholiday
+* Algorithm:                                                                *
 *                                                                           *
 * File format: Version 1.0 of the Court Holiday Rules File is an ASCII text *
 * file in a CSV format. The first line contains the file name and version   *
@@ -111,11 +108,7 @@ int getrulesfiles(char *holiday, char *events, char *extras)
 * 31; etc.  For weekend or relative rules, the code is two single digits    *
 * separated by a hyphen.  The first number is the day of the week (Sunday=  *
 * 0, Saturday = 6); the second number is the week number. The week number   *
-* has two special values: 8, which means the holiday occurs every week; 9,  *
-* which means the holiday occurs on the very last week of the month.        *
-*                                                                           *
-* The holiday field contains the holiday name.  The authority field         *
-* identifies the statutory (or other) legal authority for the rule.         *
+* has two special values: 
 ****************************************************************************/
 
 int parseholidays (FILE *holidays)

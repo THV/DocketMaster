@@ -376,7 +376,6 @@ void testsuite_checkholidays(void)
 
 
     printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    /* commented out ...
     printf("Test your own dates.\n");
     printf("please enter the beginning date in the format mm/dd/yyyy");
     printf("\n(Press x to end):\n");
@@ -396,7 +395,6 @@ void testsuite_checkholidays(void)
     else
         printf("The end date is NOT valid.  It falls on a holiday.\n");
     printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    end commented out section. */
     return;
 }
 
@@ -433,27 +431,7 @@ void testsuite_courtdays(void)
     printf("\nHow many court days out is the deadline?");
     fgets(line, sizeof(line), stdin);
     sscanf(line, "%d", &day_count);
-    courtday_offset (&begin_date, &end_date,
-                  day_count);
-    printf("The deadline is: %d/%d/%d.\n", end_date.month, end_date.day,
-           end_date.year);
-    if (isholiday(&end_date)==0)
-        printf("The end date is valid and does not fall on a holiday.\n");
-    else
-        printf("The end date is NOT valid.  It falls on a holiday.\n");
-        
-    printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    printf("Let's calculate the hearing and related dates for a\n");
-    printf("C")
-    printf("\n\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-    printf("Please enter the date you will serve your motion (in mm/dd/yy format):\n");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d/%d/%d", &begin_date.month, &begin_date.day,
-           &begin_date.year);
-    printf("\nHow many court days out is the deadline?");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &day_count);
-    courtday_offset (&begin_date, &end_date,
+    courtday_offset; (&begin_date, &end_date,
                   day_count);
     printf("The deadline is: %d/%d/%d.\n", end_date.month, end_date.day,
            end_date.year);
@@ -462,7 +440,11 @@ void testsuite_courtdays(void)
     else
         printf("The end date is NOT valid.  It falls on a holiday.\n");
     printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-
+    
+    
+    
+    
+    
     return;
 }
 
