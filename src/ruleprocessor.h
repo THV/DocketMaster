@@ -1,12 +1,46 @@
-/****************************************************************************
-* Header File Title: - ruleprocessor.h                                      *
-*                                                                           *
-* Author: Thomas Vidal (c) 2011                                             *
-*                                                                           *
-* Purpose: This header file contines the data structures and prototypes for *
-*          the datetools module.                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * =============================================================================
+ *
+ *       Filename: ruleprocessor.h
+ *    Description: This module processes the court holiday rules, and
+ *                 litigation events.  It creates two balanced binary search
+ *                 trees to hold the data for the court rules and court events.
+ *
+ *        Version: 1.0.20
+ *        Created: 08/18/2011
+ *  Last Modified: Sat Nov 28 22:42:22 2020
+ *       Compiler: gcc
+ * 
+ *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ *   Organization: Dark Matter Computing
+ *  
+ *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
+ *        License: This file is part of DocketMaster.
+ *
+ *                 DocketMaster is free software: you can redistribute it
+ *                 and/or modify it under the terms of the GNU General
+ *                 Public License as published by the Free Software Foundation,
+ *                 version 2 of the License.
+ *
+ *                 DocketMaster is distributed in the hope that it will be
+ *                 useful,but WITHOUT ANY WARRANTY; without even the implied
+ *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *                 PURPOSE.  See the GNU General Public License for
+ *                 more details.
+ *
+ *                 You should have received a copy of the GNU General Public
+ *                 License along with DocketMaster.  If not, see
+ *                 <https://www.gnu.org/licenses/>.
+ *	        Usage:  
+ *    File Format: 
+ *   Restrictions: 
+ * Error Handling: 
+ *     References: 
+ *          Notes: 
+ * 
+ * SPDX-License-Identifier: GPL-2.0-only
+ ===============================================================================
+ */
 
 #ifndef _RULEPROCESSOR_H_INCLUDED_
 #define _RULEPROCESSOR_H_INCLUDED_

@@ -1,12 +1,47 @@
-/****************************************************************************
-* Header File Title: - lexicalanalyzer.h                                    *
-*                                                                           *
-* Author: Thomas Vidal (c) 2011                                             *
-*                                                                           *
-* Purpose: This header file contines the data structures and prototypes for *
-*          the lexical analyzer module.                                     *
-*                                                                           *
-****************************************************************************/
+/*
+ * =============================================================================
+ *
+ *       Filename: lexicalanalyzer.h
+ *
+ *    Description: This module processes all the file data for the docketmaster
+ *                 program.  It converts a stream of characters into the
+ *                 various tokens.
+ *        
+ *        Version: 1.0.20
+ *        Created: 08/18/2011 
+ *  Last Modified: Sat Nov 28 22:43:37 2020
+ *       Compiler: gcc
+ *
+ *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ *   Organization: Dark Matter Computing
+ *  
+ *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
+ *        License: This file is part of DocketMaster.
+ *
+ *                 DocketMaster is free software: you can redistribute it
+ *                 and/or modify it under the terms of the GNU General
+ *                 Public License as published by the Free Software Foundation,
+ *                 version 2 of the License.
+ *
+ *                 DocketMaster is distributed in the hope that it will be
+ *                 useful,but WITHOUT ANY WARRANTY; without even the implied
+ *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *                 PURPOSE.  See the GNU General Public License for
+ *                 more details.
+ *
+ *                 You should have received a copy of the GNU General Public
+ *                 License along with DocketMaster.  If not, see
+ *                 <https://www.gnu.org/licenses/>.
+ *	        Usage:  
+ *    File Format: 
+ *   Restrictions: 
+ * Error Handling: 
+ *     References: 
+ *          Notes: 
+ * 
+ * SPDX-License-Identifier: GPL-2.0-only
+ ===============================================================================
+ */
 
 #ifndef _LEXICALANALYZER_H_INCLUDED_
 #define _LEXICALANALYZER_H_INCLUDED_
@@ -92,6 +127,49 @@ extern FILE *EXTRAS_FILE;
 ****************************************************************************/
 
 int parseholidays (FILE *holidays);
+
+/****************************************************************************
+**************************   FUNCTION DECLARATION   *************************
+* Name: getfile                                                             *
+*                                                                           *
+* Description: Opens a file for reading.                                    *
+*                                                                           *
+* Arguments: Character string representing the file name.                   *
+*                                                                           *
+* Returns: File handle (pointer to the file).                               *
+*                                                                           *
+****************************************************************************/
+
+FILE * getfile(char *file_name);
+
+/****************************************************************************
+**************************   FUNCTION DECLARATION   *************************
+* Name: checkfile                                                           *
+*                                                                           *
+* Description: Verifies the name and version of an opened file.             *
+*                                                                           *
+* Arguments: File handle.                                                   *
+*                                                                           *
+* Returns: Nothing right now, but may change to return an int or char       *
+*   reflecting the type of opened filed.                                    *
+*                                                                           *
+****************************************************************************/
+
+int checkfile (FILE *in_file);
+
+/****************************************************************************
+**************************   FUNCTION DECLARATION   *************************
+* Name: closefile                                                           *
+*                                                                           *
+* Description: Closes a file.                                               *
+*                                                                           *
+* Arguments: File handle (pointer to the file).                             *
+*                                                                           *
+* Returns: NULL pointer.                                                    *
+*                                                                           *
+****************************************************************************/
+
+FILE * closefile(FILE *close_file);
 
 /****************************************************************************
 *****************************************************************************

@@ -1,37 +1,52 @@
-/****************************************************************************
-* Module Title: - lexical analyzer                                          *
-*                                                                           *
-* Author: Thomas Vidal (c) 2011                                             *
-*                                                                           *
-* Purpose: This module processes all the file data for the docketmaster     *
-*   program.  It converts a stream of characters into the various tokens.   *
-*                                                                           *
-* Usage: [Short explanation of how to run the program.]                     *
-*                                                                           *
-*                                                                           *
-* File Format:                                                              *
-*                                                                           *
-* Restrictions:  List any limits or restrictions that apply to the program. *
-*                   E.g., "the data file must be formatted correctly," or   *
-*                   the "program does not check for input errors."          *
-*                                                                           *
-* Revision History: Section contains a list indicating who modified the     *
-*                   program, when, and what changes were made. (Unless      *
-*                   source control software is used.                        *
-*                                                                           *
-* Error Handling: If the program detects errors, describe what the program  *
-*                   does with them.                                         *
-*                                                                           *
-* Notes:    insert any additional notes.                                    *
-****************************************************************************/
+/*
+ * =============================================================================
+ *
+ *       Filename: lexical analyzer
+ *
+ *    Description: This module processes all the file data for the docketmaster
+ *                 program.  It converts a stream of characters into the
+ *                 various tokens.
+ *        
+ *        Version: 1.0.20
+ *        Created: 08/18/2011 
+ *  Last Modified: Sat Nov 28 22:32:30 2020
+ *       Compiler: gcc
+ *
+ *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ *   Organization: Dark Matter Computing
+ *  
+ *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
+ *        License: This file is part of DocketMaster.
+ *
+ *                 DocketMaster is free software: you can redistribute it
+ *                 and/or modify it under the terms of the GNU General
+ *                 Public License as published by the Free Software Foundation,
+ *                 version 2 of the License.
+ *
+ *                 DocketMaster is distributed in the hope that it will be
+ *                 useful,but WITHOUT ANY WARRANTY; without even the implied
+ *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *                 PURPOSE.  See the GNU General Public License for
+ *                 more details.
+ *
+ *                 You should have received a copy of the GNU General Public
+ *                 License along with DocketMaster.  If not, see
+ *                 <https://www.gnu.org/licenses/>.
+ *	        Usage:  
+ *    File Format: 
+ *   Restrictions: 
+ * Error Handling: 
+ *     References: 
+ *          Notes: 
+ * 
+ * SPDX-License-Identifier: GPL-2.0-only
+ ===============================================================================
+ */
 
 #include "lexicalanalyzer.h"
 #include "ruleprocessor.h"
 #include <string.h>
 
-int main()
-{
-  
 
 /****************************************************************************
 **************************   FUNCTION DEFINITION   **************************

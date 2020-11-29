@@ -4,24 +4,41 @@
  *       Filename: graphmgr.h
  *
  *    Description: This is the module manages the data type that handles
- *    		   processing the court events for the DocketMaster application
- *    		   program for attorneys.  The events are stored in a directed
- *    		   network graph type.  This module and the associated header
- *    		   file contain the various functions required to create,
- *    		   maintain, modify, and search the database of court events.  
+ *    		       processing the court events for the DocketMaster application
+ *    		       program for attorneys.  The events are stored in a directed
+ *    		       network graph type.  This module and the associated header
+ *    		       file contain the various functions required to create,
+ *    		       maintain, modify, and search the database of court events.  
  *
- *        Version: 1.0
+ *        Version: 1.0.20
  *        Created: 10/24/2011
- *  Last Modified: Fri 03 Feb 2012 08:28:12 AM PST
+ *  Last Modified: Sat Nov 28 22:46:19 2020
  *       Compiler: gcc
  *
- *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization: Dark Matter Software
- *      Copyright: Copyright (c) 2012, Thomas H. Vidal
+ *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ *   Organization: Dark Matter Computing
+ *  
+ *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
+ *        License: This file is part of DocketMaster.
  *
- *	    Usage: Used by the DocketMaster application to create a searchable
- *	           database of court events and dependencies that can be
- *	           scheduled on a trial calendar. 
+ *                 DocketMaster is free software: you can redistribute it
+ *                 and/or modify it under the terms of the GNU General
+ *                 Public License as published by the Free Software Foundation,
+ *                 version 2 of the License.
+ *
+ *                 DocketMaster is distributed in the hope that it will be
+ *                 useful,but WITHOUT ANY WARRANTY; without even the implied
+ *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *                 PURPOSE.  See the GNU General Public License for
+ *                 more details.
+ *
+ *                 You should have received a copy of the GNU General Public
+ *                 License along with DocketMaster.  If not, see
+ *                 <https://www.gnu.org/licenses/>.
+ *
+ *	        Usage: Used by the DocketMaster application to create a searchable
+ *	               database of court events and dependencies that can be
+ *	               scheduled on a trial calendar. 
  *    File Format: 
  *   Restrictions: 
  * Error Handling: 
@@ -32,14 +49,15 @@
  *          	   scheduling rules) and manage information.  All calculations
  *          	   performed on the court event information are declared in the
  *          	   eprocessor.h file.
+ * 
+ * SPDX-License-Identifier: GPL-2.0-only
  * =============================================================================
  */
 
 #ifndef _GRAPHMGR_H_INCLUDED_
 #define _GRAPHMGR_H_INCLUDED_
 
-/* #include "../rule processor/ruleprocessor.h"
- */
+#include "../rule processor/ruleprocessor.h"
 
 /****************************************************************************
 * Macros                                                                    *
@@ -415,6 +433,75 @@ int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto);
 
 /****************************************************************************
 *************************   FUNCTION DECLARATION   **************************
+* Name: numberofevents                                                      *
+*                                                                           *
+* Description: Counts the number of events in the event list.               *
+*                                                                           *
+* Arguments: Takes a pointer to an EventGraph.                              *
+*                                                                           *
+* Returns: The number of events in the EventGraph.                          *
+*                                                                           *
+****************************************************************************/
+
+int numberofevents (CourtEventNode *list);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: numberofdependencies                                                *
+*                                                                           *
+* Description: Counts the number of dependencies in the Adjacencymatrix.    *
+*                                                                           *
+* Arguments: Takes a pointer to an adjacency matris.                        *
+*                                                                           *
+* Returns: The number of dependencies (arcs) in the EventGraph.             *
+*                                                                           *
+****************************************************************************/
+
+int numberofdependencies (Adjacencymatrix* dependencies);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: searchforevent                                                      *
+*                                                                           *
+* Description: Determines whether a particular event (vertex) is in the     *
+* event list.                                                               *
+*                                                                           *
+* Arguments: Takes a string pointer containing the vertex to search for,    *
+* and pointer to the court event list to search.                             *
+*                                                                           *
+* Returns: If the graph contains a vertex that is equal to the serch string,*
+* the function returns a pointer to the position of the event. Otherwise,   *
+* function returns NULL.                                                    *
+*                                                                           *
+* Note: function is currently keyed to search only the shorttitle member of *
+* the eventnode.                                                            *
+****************************************************************************/
+
+CourtEventNode* searchforevent (char *eventname, CourtEventNode* list);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: searchfordependency                                                 *
+*                                                                           *
+* Description: Determines whether a particular dependency relationship      *
+* exists.                                                                   *
+*                                                                           *
+* Arguments: Takes pointers to two vertices and a pointer to the EventGraph *
+* to search.                                                                *
+*                                                                           *
+* Returns: If the graph contains an a dependency relationship between       *
+* event1 and event2, the function returns a pointer to the position of the  *
+* dependency. Otherwise, function returns NULL.                             *
+*                                                                           *
+* Note: The order of vertices is important. It will determine whether       *
+* vertex1 (event1) is triggeredby vertex2 (event2).                         *
+****************************************************************************/
+
+Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode *event2,
+                                 EventGraph *graph);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
 * Name: insertevent                                                         *
 *                                                                           *
 * Description: Adds new court event (vertex) to the list of events.         *
@@ -515,6 +602,22 @@ void traverse (EventGraph* graph); /* breadth first */
 /* consider adding: isconnected */
 
 /* consider adding: findshortestpath */
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: followchain                                                         *
+*                                                                           *
+* Description: Function starts at a certain vertex and traverses through    *
+* all events along the chain.  In the context of the CourtEvents, it starts *
+* with a triggering event and visits all the events triggered by that event.*
+*                                                                           *
+* Arguments: Takes a pointer to the starting vertex and the EventGraph      *
+*                                                                           *
+* Returns: None.                                                            *
+*                                                                           *
+****************************************************************************/
+
+void followchain (CourtEvent* startingvertex, EventGraph* graph);
 
 /****************************************************************************
 *****************************************************************************
