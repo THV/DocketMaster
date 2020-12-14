@@ -6,7 +6,7 @@
  *
  * Version: 1.0.20
  * Created: 02/16/2012 08:46:39 PM
- * Last Modified: Sun Dec 13 22:26:46 2020
+ * Last Modified: Mon Dec 14 00:06:46 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -165,7 +165,7 @@ int processevent(struct DATETIME *dt, struct *eventnode);
 
 /* 
  * Description:  displays the scheduled chain of events
- * Arguments:  pointer to eventnode
+ * Parameters:  pointer to eventnode
  * Returns:  No return value
  */
 

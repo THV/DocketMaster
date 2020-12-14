@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 10/24/2011
- * Last Modified: Sun Dec 13 20:21:25 2020
+ * Last Modified: Mon Dec 14 00:05:50 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -57,7 +57,7 @@
 /*
  * Description: Initializes the vertex list (court events).
  *
- * Arguments: Takes a pointer to EventGraph.
+ * Parameters: Takes a pointer to EventGraph.
  *
  * Returns: No return value.  This function initializes the court events
  * list only.  It does not need to initialize the matrix because entries are
@@ -87,7 +87,7 @@ void init_eventgraph(EventGraph* graph, int numofevents)
  * Description: Determines whether the vertex list contains values or is
  * empty.
  *
- * Arguments: Takes a pointer to EventGraph.
+ * Parameters: Takes a pointer to EventGraph.
  *
  * Returns: If the vertex list is empty, function returns zero.  Otherwise,
  * it returns a nonnegative number.
@@ -105,7 +105,7 @@ int isemptygraph(EventGraph* graph)
  * Description: Copies the graph of court events into a new EventGraph.
  * copyto graph contains a distinct copy of the graph.
  *
- * Arguments: Takes pointers to two EventGraphs: one existing; the other     
+ * Parameters: Takes pointers to two EventGraphs: one existing; the other     
  * empty.
  *
  * Returns: 1 if the copy is successful, zero if it fails.
@@ -119,7 +119,7 @@ int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto)
 /*
  * Description: Adds new court event (vertex) to the list of events.
  *
- * Arguments: Takes a pointer to CourtEvent and a pointer to the EventGraph  
+ * Parameters: Takes a pointer to CourtEvent and a pointer to the EventGraph  
  * in which the new event is to be added.
  *
  * Returns: Zero if the insert fails, or a nonnegative number if the insert
@@ -190,7 +190,7 @@ CourtEventNode* insertevent (CourtEvent* eventinfo,
  * Description: Adds new Dependency between two events to the Dependency
  * matrix.
  *
- * Arguments: Takes a pointer to Dependency and a pointer to the EventGraph
+ * Parameters: Takes a pointer to Dependency and a pointer to the EventGraph
  * in which the new Dependency is to be added.
  *
  * Returns: Zero if the insert fails, or a nonnegative number if the insert
@@ -205,7 +205,7 @@ int insertdependency (Dependency newdep, EventGraph* graph)
 /*
  * Description: Removes a court event (vertex) from the list of events.
  *
- * Arguments: Takes a pointer to CourtEvent that is already in the list and
+ * Parameters: Takes a pointer to CourtEvent that is already in the list and
  * a pointer to the EventGraph itself.
  *
  * Returns: Zero if the delete fails, or a nonnegative number if the delete
@@ -220,7 +220,7 @@ int deleteevent  (CourtEvent* delevent, EventGraph* graph)
 /*
  * Description: Removes a Dependency (edge) from the list of events.
  *
- * Arguments: Takes a pointer to Dependency that is already in the matrix
+ * Parameters: Takes a pointer to Dependency that is already in the matrix
  * and a pointer to the EventGraph itself.
  *
  * Returns: Zero if the delete fails, or a nonnegative number if the delete
@@ -238,7 +238,7 @@ int deletedependency (Dependency* deldep, EventGraph* graph)
  * Description: Replaces one event already in this list of events with a
  * different event.
  *
- * Arguments: Takes a pointer to CourtEvent to be added to the EventGraph
+ * Parameters: Takes a pointer to CourtEvent to be added to the EventGraph
  * and a pointer to the old event to be replaced.
  *
  * Returns: Zero if the replace fails, or a nonnegative number if the
@@ -255,7 +255,7 @@ int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex)
  * Description: Function visits all the nodes in the EventGraph in a breadth
  * first manner. [WHAT WILL FUNCTION DO WHEN IT VISITS THE NODES?]
  *
- * Arguments: Takes a pointer to the EventGraph
+ * Parameters: Takes a pointer to the EventGraph
  *
  * Returns: None.
  */
@@ -273,7 +273,7 @@ void traverse (EventGraph* graph)
 /*
  * Description: describe what the function does.
  *
- * Arguments: Describe the parameters of the function.
+ * Parameters: Describe the parameters of the function.
  *
  * Returns: describe the return value of the function
  *
@@ -327,7 +327,7 @@ of each row. Note the simple pointer arithmetic. */
  * first position where s1 and s2 disagree. Function copied from K&R 2d at
  * 106.
  *
- * Arguments: Two character strings
+ * Parameters: Two character strings
  *
  * Returns: See description.
  */

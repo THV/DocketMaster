@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: 8/18/2011
- * Last Modified: Sun Dec 13 21:18:47 2020
+ * Last Modified: Mon Dec 14 00:05:25 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -84,7 +84,7 @@ void usage(char *);
 
 /* 
  * Description:  
- * Arguments:  Commandline arguments: argc, *argv[] 
+ * Parameters:  Commandline arguments: argc, *argv[] 
  * Returns:  0 on success, error otherwise 
  */
 
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 
 /* 
  * Description:  Called when there is an error on the commandline
- * Arguments:  Char pointer to the program's name
+ * Parameters:  Char pointer to the program's name
  * Returns:  Exit 8
  * Algorithm:  
  * References:   

@@ -3,8 +3,8 @@
  *                 rule and event files.
  *
  * Version: 1.0.20
- * Created: 01/29/2012 01:07:58 PM
- * Last Modified: Sun Dec 13 22:55:36 2020
+ * Created: Created: 08/18/2011
+ * Last Modified: Mon Dec 14 00:02:34 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -56,7 +56,7 @@ EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
  *  Description:  This function builds the applicable rules and
  *  events for the chosen jurisdiction.
  *
- * Arguments:  Presently, the names of the three rules files are passed as
+ * Parameters:  Presently, the names of the three rules files are passed as
  * parameters: Holiday File, Events File, and Extras File. 
  *
  * Returns:  returns 0 if the files were open, -1 if the holiday file could
@@ -81,13 +81,8 @@ int buildre(char *holiday, char *events, char *extras)
     /* open the holiday file */
     HOLIDAY_FILE = getfile(holiday);  
 
-    HOLIDAY_FILE = getfile(holiday); 
-    /* check filetype, version, and row headers */
-    if (checkfile(HOLIDAY_FILE) == H_FILE) {
-	    initializelist(holidayhashtable);
-    	parseholidays(HOLIDAY_FILE); 	
-	    closefile(HOLIDAY_FILE); 
-    } else {
+    /* initialize the array of linked lists for the holidays */
+    initializelist(holidayhashtable);
 
     /* lexically analyze the rules and build the array of linked lists. */
     parsefile(HOLIDAY_FILE, holiday, ftype, fields, holidayhashtable);
@@ -110,13 +105,12 @@ int buildre(char *holiday, char *events, char *extras)
     return 0;
 }
 
-
 /*
  * Name: getfile
  *
  * Description: Opens a file for reading.
  *
- * Arguments: Character string representing the file name.
+ * Parameters: Character string representing the file name.
  *
  * Returns: File handle (pointer to the file).
  */
@@ -139,7 +133,7 @@ FILE * getfile(char *file_name)
  *
  * Description:  Verifies the name and version of an opened file.
  *
- * Arguments:  File handle, name of the file, and char * which the field
+ * Parameters:  File handle, name of the file, and char * which the field
  * names will be copied into.
  *
  * Returns:  Returns an enum FILETYPE, which is an integer whose value is
@@ -227,7 +221,7 @@ enum FILETYPE checkfile (FILE *in_file, const char *filename,
  *
  * Description: Closes a file.
  *
- * Arguments: File handle (pointer to the file).
+ * Parameters: File handle (pointer to the file).
  *
  * Returns: NULL pointer.
  *                                                                           
@@ -245,13 +239,9 @@ int closefile(FILE *close_file)
 
 /* 
  * Name:  resetfile
- *
  * Description:  returns the file pointer to the beginning of the file.
- *
- * Arguments:  FILE *
- *
+ * Parameters:  FILE *
  * Returns:  Nothing
- *
  * Algorithm:   
  * References:   
  * Notes:   

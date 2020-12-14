@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: 
- * Last Modified: Sun Dec 13 21:30:30 2020
+ * Last Modified: Mon Dec 14 00:06:09 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -240,7 +240,7 @@ void printholidayrules(struct holidaynode *holidayhashtable[])
 /*
  * Description: describe what the function does.
  *
- * Arguments: Describe the parameters of the function.
+ * Parameters: Describe the parameters of the function.
  *
  * Returns: describe the return value of the function
  *
@@ -301,7 +301,7 @@ int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
 /*
  * Description: describe what the function does.
  *
- * Arguments: Describe the parameters of the function.
+ * Parameters: Describe the parameters of the function.
  *
  * Returns: describe the return value of the function
  *
