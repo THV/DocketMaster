@@ -9,7 +9,7 @@
  *
  *        Version: 1.0
  *        Created: 09/29/2011
- *  Last Modified: Sun 11 Mar 2012 01:33:27 PM PDT
+ *  Last Modified: Sun 26 Aug 2012 09:14:59 PM PDT
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -43,7 +43,7 @@
 #include <stdlib.h>
 #include "utilities.h"
 #include "errorhandler.h"
-
+/* todo: include ruleprocessor.h and graphmgr.h ??? */
 
 /* #####   EXPORTED MACROS   ################################################ */
 
@@ -177,7 +177,11 @@ extern EventNode eventlist;
 
 int parsefile (FILE *infile, const char *filename, FILETYPE ftype, const
                char *fields[], void *datastruct);
-
+/* 
+ * ELIMINATE void *datastruct, lexical analyzer has no need to access
+ * this variable.
+ *
+ * */
 
 /* 
  * ===  FUNCTION  ==============================================================
@@ -204,6 +208,6 @@ int parseevents(FILE *events);
 ****************************************************************************/
 
 /* closerules (frees the memory allocated to the rule trees)
-loadholidays(); */
+loadholidays(); THIS FUNCTION BELONGS IN THE BUILDER MODULE. */
 
 #endif	/* _LEXICALANALYZER_H_INCLUDED_ */
