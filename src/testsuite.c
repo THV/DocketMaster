@@ -1,29 +1,44 @@
 /*
- * =============================================================================
+ * Filename:  testsuite.c
  *
- *       Filename:  testsuite.c
+ * Description:  Testsuite.c creates a number of functions for testing the
+ * docuketmaster program's functionality and quality.
  *
- *    Description:  Testsuite.c creates a number of functions for testing the
- *    		    docuketmaster program's functionality and quality.
+ * Version: 1.0.20
+ * Created:  01/29/2012 11:13:22 AM
+ * Last Modified: Sun Dec 13 21:33:21 2020
  *
- *        Version:  1.0
- *        Created:  01/29/2012 11:13:22 AM
- *       Revision:  none
- *       Compiler:  gcc
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
+ *  
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *         Author:  Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization:  Dark Matter Software
- *      Copyright:  Copyright (c) 2012, Thomas H. Vidal
+ * License: This file is part of DocketMaster.
  *
- *	    Usage:   Currently the testsuite functions are called from main.
- *    File Format:   None
- *   Restrictions:   --
- * Error Handling:   --
- *     References:   --
- *          Notes:   --
- * =============================================================================
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
+ *
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: Currently the testsuite functions are called from main.
+ * File Format: None
+ * Restrictions: --
+ * Error Handling: --
+ * References: --
+ * Notes: --
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
  */
-
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 #include <stdlib.h>

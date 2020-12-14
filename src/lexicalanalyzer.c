@@ -1,30 +1,45 @@
 /*
- * =============================================================================
+ * Filename: lexicalanalyzer.c
  *
- *       Filename: lexicalanalyzer.c
- *
- *    Description: This module processes all the file data for the docketmaster
+ * Description: This module processes all the file data for the docketmaster
  *    		   program.  It converts a stream of characters into the various
  *    		   tokens. 
  *
- *        Version: 1.0
- *        Created: 0x/xx/2011 09:56:56 PM
- *  Last Modified: Sun Dec 13 17:56:05 2020
- *       Compiler: gcc
+ * Version: 1.0.20
+ * Created: 0x/xx/2011 09:56:56 PM
+ * Last Modified: Sun Dec 13 21:15:26 2020
  *
- *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization: Dark Matter Software
- *      Copyright: Copyright (c) 2012, Thomas H. Vidal
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
+ *  
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *	        Usage: 
- *    File Format: 
- *   Restrictions: 
+ * License: This file is part of DocketMaster.
+ *
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
+ *
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: 
+ * File Format: 
+ * Restrictions: 
  * Error Handling: 
- *     References: 
- *          Notes: 
- * =============================================================================
+ * References: 
+ * Notes: 
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
  */
-
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 
@@ -55,66 +70,52 @@ char * ftotok (char *string, char fdelim, char tdelim);
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  parseholidays
+ * Description:  This function parses the holiday file and creates the array
+ * of linked lists. Each array element represents the holidays
+ * of a particular month.  The holidays are "attached" to the
+ * array via a linked list. 
  *
- *   Description:  This function parses the holiday file and creates the array
- *   		   of linked lists. Each array element represents the holidays
- *   		   ofa particular month.  The holidays are "attached" to the
- *   		   array via a linked list. 
+ * Parameters:  File handle to the holidays file.
  *
- *     Arguments:  File handle to the holidays file.
+ * Returns:  Zero if successful.  Function will return a non-zero error
+ * code on specified errors, but this functionality has not been
+ * coded as yet.
  *
- *       Returns:  Zero if successful.  Function will return a non-zero error
- *       	   code on specified errors, but this functionality has not been
- *       	   coded as yet.
+ * Algorithm:  Function reads the file character by character, inputting the
+ * parsed data into the appropriate fields of a temporary holiday rule, which
+ * is of type holiday rule. The temporary variable is then passed to the
+ * addholiday function, which stores the new rule in the appropriate index
+ * of the holidayhashtable array. The temp rule is then zeroed out and
+ * the loop iterates again until it reaches EOF.
  *
- *     Algorithm:  Function reads the file character by character, inputting the
- *     		   parsed data into the appropriate fields of a temporary
- *     		   holiday rule, which is of type holiday rule. The temporary
- *     		   variable is then passed to the addholiday function, which
- *     		   stores the new rule in the appropriate index of the
- *     		   holidayhashtable array. The temp rule is then zeroed out and
- *     		   the loop iterates again until it reaches EOF.
+ * File format: Version 1.0 of the Court Holiday Rules File is an ASCII text
+ * file in a CSV format. The first line contains the file name and version
+ * information.  The second line contains the table column names: Month; Rule
+ * Type; Rule; Holiday; and Authority.  Month is the month to which the rule
+ * applies.  Currently the * number 13 (#defined as ALLMONTHS) is the code for
+ * a holiday * rule that occurs in every month.  For example, in California,
+ * Saturdays and Sundays are treated as holidays. The file is organized by
+ * months to facilitate searching.  If a date is being analyzed to determine if
+ * it lands on holiday, the month is checked first. If there are no holidays
+ * for a particular * month, the checking function can exit early.
  *
- *    File format: Version 1.0 of the Court Holiday Rules File is an ASCII text
- *    		   file in a CSV format. The first line contains the file name
- *    		   and version information.  The second line contains the table
- *    		   column names: Month; Rule Type; Rule; Holiday; and Authority.
- *    		   Month is the month to which the rule applies.  Currently the
- *    		   number 13 (#defined as ALLMONTHS) is the code for a holiday
- *    		   rule that occurs in every month.  For example, in California,
- *    		   Saturdays and Sundays are treated as holidays. The file is
- *    		   organized by months to facilitate searching.  If a date is
- *    		   being analyzed to determine if it lands on holiday, the month
- *    		   is checked first. If there are no holidays for a particular
- *    		   month, the checking function can exit early.
+ * Rule type is a letter code: W = weekend; A = absolute; R = relative.  A
+ * weekend rule are rules for Saturdays and * Sundays. Absolute rules are
+ * those that apply to a specific day of the month: January 1; July 4;
+ * December 25; etc. Relative rules are those that happen according to a
+ * specific formula: the last Thursday of November; the last Monday of
+ * May; the first Monday in September; etc.
  *
- *    		   Rule type is a letter code: W = weekend; A = absolute;
- *    		   R = relative.  A weekend rule are rules for Saturdays and
- *    		   Sundays. Absolute rules are those that apply to a specific
- *    		   day of the month: January 1; July 4; December 25; etc.
- *    		   Relative rules are those that happen according to a specific
- *    		   formula: the last Thursday of November; the last Monday of
- *    		   May; the first Monday in September; etc.
+ * The Rule is a code that consists of two digits in the case of an absolute
+ * rule.  The two digits reflect the day on which * the holiday falls: 01;
+ * 11; 31; etc.  For weekend or relative rules, the code is two single digits
+ * separated by a hyphen. The first number is the day of the week (Sunday= 0, 
+ * Saturday = 6); the second number is the week number. The week number has two
+ * special values: 8, which means the holiday occurs every week; 9, which means
+ * the holiday occurs on the very last week of the month.
  *
- *    		   The Rule is a code that consists of two digits in the case of
- *    		   an absolute rule.  The two digits reflect the day on which
- *    		   the holiday falls: 01; 11; 31; etc.  For weekend or relative
- *    		   rules, the code is two single digits separated by a hyphen.
- *    		   The first number is the day of the week (Sunday= 0,
- *    		   Saturday = 6); the second number is the week number. The week
- *    		   number has two special values: 8, which means the holiday
- *    		   occurs every week; 9, which means the holiday occurs on the
- *    		   very last week of the month.
- *
- *    		   The holiday field contains the holiday name.  The authority
- *    		   field identifies the statutory (or other) legal authority for
- *    		   the rule.
- *    References:  
- *
- *  	   Notes:  
- * =============================================================================
+ * The holiday field contains the holiday name.  The authority field identifies
+ * the statutory (or other) legal authority for the rule.
  */
 
 
@@ -157,15 +158,12 @@ int parsefile (FILE *infile, const char *filename,
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  gettokens
- *   Description:  Parses CSV record into fields
- *     Arguments:  
- *       Returns:  
- *     Algorithm:  
- *    References:  
- * 	   Notes:  
- * =============================================================================
+ * Description:  Parses CSV record into fields
+ * Parameters:  
+ * Returns:  
+ * Algorithm:  
+ * References:  
+ * Notes:  
  */
 
 void gettokens (char *record, char* fieldn, (*tokenize)(void *, void *, void *))
@@ -212,32 +210,28 @@ void gettokens (char *record, char* fieldn, (*tokenize)(void *, void *, void *))
 }		/* -----  end of function gettokens  ----- */
 
 /*
- * ===  FUNCTION  ==============================================================
- *          Name:  ftotok
- *   Description:  Convert field to token
- *     Arguments:  Takes a character string, a field delimiter, and a text
- *                 string delimiter.
- *       Returns:  a pointer to a string containing the token or a null pointer.
+ * Description:  Convert field to token
  *
- *     Algorithm:  The function first clears a set of token status flags.  Then
- *                 the function checks to determine whether this is the first
- *                 time it was called with a particular string.  If so, cur_char
- *                 and prevpsn are set to the beginnigng of the string.
- *                 Otherwise, cur_car is set to prevpsn.
+ * Parameters:  Takes a character string, a field delimiter, and a text string
+ * delimiter.
  *
- *                 Next, the function starts a while loop that iterates until
- *                 the flag TOKEN_FOUND has been set.  As the loop iterates,
- *                 cur_char is advanced along the string.  The guts of the while
- *                 loop is a case statement that processes the tokens.
+ * Returns:  a pointer to a string containing the token or a null pointer.
+ *
+ * Algorithm:  The function first clears a set of token status flags.  Then the
+ * function checks to determine whether this is the first time it was called
+ * with a particular string.  If so, cur_char and prevpsn are set to the
+ * beginnigng of the string.  Otherwise, cur_car is set to prevpsn.
+ *
+ * Next, the function starts a while loop that iterates until the flag
+ * TOKEN_FOUND has been set.  As the loop iterates, cur_char is advanced along
+ * the string.  The guts of the while loop is a case statement that processes
+ * the tokens.
  *
  *
- *    References:
- * 	       Notes: On the first call of the function on a particular record the
- * 	              user must pass the string containing the record to tokenize.
- * 	              On subsequent calls, only a null string should be passed.  The
- * 	              function sets up a static pointer to the next token in the
- * 	              record.
- * =============================================================================
+ * Notes: On the first call of the function on a particular record the user
+ * must pass the string containing the record to tokenize.  On subsequent
+ * calls, only a null string should be passed.  The function sets up a static
+ * pointer to the next token in the record.
  */
 
 char * ftotok (char *string, char fdelim, char tdelim)
@@ -349,18 +343,17 @@ return tokenptr;
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  htokens
- *   Description:  Extract holiday-rule tokens from a record and populate
- *   		   the holiday hash table with the parsed rules.
- *     Arguments:  A string containing a record filled with input fields used
- *     		   to populate the hash table; a string containing the list of
- *     		   field names, and a pointer to the holiday hash table. 
- *       Returns:  Nothing.
- *     Algorithm:  
- *    References:  
- *  	   Notes:  
- * =============================================================================
+ * Description:  Extract holiday-rule tokens from a record and populate the
+ * holiday hash table with the parsed rules.
+ *
+ * Parameters:  A string containing a record filled with input fields used to
+ * populate the hash table; a string containing the list of field names, and a
+ * pointer to the holiday hash table. 
+ *
+ * Returns:  Nothing.
+ * Algorithm:  
+ * References:  
+ * Notes:  
  */
 
 void gethtokens (char *field, char *fieldname, struct holidayrule *hstruct) {
@@ -454,18 +447,17 @@ void getevtokens (char *r, struct holidayrule *hstruct);
 }
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  parseevents
- *   Description:  This function parses the holiday file and creates a linked
- *   		   list, each node is a court event.
- *     Arguments:  File handle to events file 
- *       Returns:  Zero if successful.  Function will return a non-zero error
- *       	   code on specified errors, but this functionality has not been
- *       	   coded as yet. 
- *     Algorithm:   
- *    References:   
- * 	   Notes:   
- * =============================================================================
+ * Description:  This function parses the holiday file and creates a linked
+ * list, each node is a court event.
+ *
+ * Parameters:  File handle to events file 
+ *
+ * Returns:  Zero if successful.  Function will return a non-zero error code on
+ * specified errors, but this functionality has not been coded as yet. 
+ *
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 int parseevents(FILE *events)
@@ -588,14 +580,9 @@ int parseevents(FILE *events)
 /* #####   FUNCTION DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ############# */
 
 
-
-/****************************************************************************
-*****************************************************************************
-********** WARNING: UNDEVELOPED "DRAFT" FUNCTIONS                     *******
-**********                                                            *******
-**********                                                            *******
-*****************************************************************************
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * WARNING: UNDEVELOPED "DRAFT" FUNCTIONS 
+ *----------------------------------------------------------------------------*/
 
 /*
 

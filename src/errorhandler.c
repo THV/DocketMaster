@@ -1,30 +1,45 @@
 /*
- * =============================================================================
+ * Filename: errorhandler.c
  *
- *       Filename: errorhandler.c
+ * Description: 
  *
- *    Description: 
+ * Version: 1.0.20
+ * Created: 03/11/2012 12:49:17 PM
+ * Last Modified: Sun Dec 13 20:21:20 2020
  *
- *        Version: 1.0
- *        Created: 03/11/2012 12:49:17 PM
- *  Last Modified: Sun Dec 13 17:55:59 2020
- *       Compiler: gcc
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
+ *  
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization: Dark Matter Software
- *      Copyright: Copyright (c) 2012, Thomas H. Vidal
+ * License: This file is part of DocketMaster.
  *
- *	        Usage: 
- *    File Format: 
- *   Restrictions: 
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
+ *
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: 
+ * File Format: 
+ * Restrictions: 
  * Error Handling: 
- *     References: 
- *          Notes: 
- * =============================================================================
+ * References: 
+ * Notes: 
+ * 
+ * SPDX-License-Identifier: GPL-2.0-only
  */
 
 #include <stdlib.h>
-
 
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
@@ -44,16 +59,16 @@
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   #################### */
 
 /*
- * ===  FUNCTION  ==============================================================
- *          Name: usage
- *   Description: If the program is invoked with commandline arguments, this
- *                function is called if the arguments are incorrect.
- *     Arguments: A sting containing the program's name.
- *       Returns: Nothing; exits the program.
- *     Algorithm:
- *    References:
- *  	   Notes:
- * =============================================================================
+ * Description: If the program is invoked with commandline arguments, this
+ * function is called if the arguments are incorrect.
+ *
+ * Arguments: A sting containing the program's name.
+ *
+ * Returns: Nothing; exits the program.
+ *
+ * Algorithm:
+ * References:
+ * Notes:
  */
 void usage(char *program_name)
 {
@@ -65,15 +80,12 @@ void usage(char *program_name)
 
 
 /*
- * ===  FUNCTION  ==============================================================
- *          Name: errorprocessor
- *   Description: Receives an error code and processes it.
- *     Arguments:
- *       Returns:
- *     Algorithm:
- *    References:
- * 	       Notes:
- * =============================================================================
+ * Description: Receives an error code and processes it.
+ * Arguments:
+ * Returns:
+ * Algorithm:
+ * References:
+ * Notes:
  */
 void errorprocessor(int errcode)
 {

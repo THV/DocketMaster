@@ -1,35 +1,54 @@
 /*
- * =============================================================================
+ * Filename: exportmgr.c
  *
- *       Filename:  exportmgr.h
+ * Description:  This module contains the functions that control exporting
+ * calendar items to Outlook or other calendar programs.
  *
- *    Description:  This module contains the functions that control exporting 
- *    		    calendar items to Outlook or other calendar programs.
+ * Version: 1.0.20
+ * Created: 01/16/2012 07:16:53 PM
+ * Last Modified: Sun Dec 13 20:21:52 2020
  *
- *        Version:  1.0
- *        Created:  01/16/2012 07:16:53 PM
- *       Revision:  none
- *       Compiler:  gcc
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
+ *  
+ * Copyright: Copyright (c) 2012-2020, Thomas H. Vidal
  *
- *         Author:  Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization:  Dark Matter Software
+ * License: This file is part of DocketMaster.
  *
- *      Copyright:  Copyright (c) 2012, Thomas H. Vidal
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *	    Usage:   Used by DocketMaster Program
- *    File Format:   Saves calendar data in outlook iCalendar format.
- *   Restrictions:   
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage:   Used by DocketMaster Program
+ *
+ * File Format:   Saves calendar data in outlook iCalendar format.
+ *
+ * Restrictions:   
+ *
  * Error Handling:   
- *     References:  Refer to internet mail consortium website re materials re
- *     		    personal data interchange:
- *     		    	http://www.imc.org/pdi/pdiproddev.html,
- *     		    	iCalendar obj std: http://www.rfc-editor.org/info/rfc5545
- *     		    	iCalendar TIP: RFC # 5546: http://www.rfc-editor.org/info/rfc5546  
  *
- *          Notes:
- * =====================================================================================
+ * References: Refer to internet mail consortium website re materials re
+ * personal data interchange: http://www.imc.org/pdi/pdiproddev.html,iCalendar
+ * obj std: http://www.rfc-editor.org/info/rfc5545
+ * iCalendar TIP: RFC # 5546: http://www.rfc-editor.org/info/rfc5546  
+ *
+ * Notes:  This module will be expanded as necessary to cover other calendar
+ * formats, if necessary.  At present, it appears most computer calendars and
+ * smartphone (android, iPhone, and Blackberry) support iCalendar.
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
  */
-
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 #include <stdio.h>

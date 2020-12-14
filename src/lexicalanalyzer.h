@@ -1,49 +1,61 @@
 /*
- * =============================================================================
+ * Filename: lexicalanalyzer.h
  *
- *       Filename: lexicalanalyzer.h
+ * Description: The lexical analyzer module reads a data file and adds the
+ * tokens derived from the file into the rules, holidays, and events data
+ * structures.
  *
- *    Description: This module processes all the file data for the docketmaster
- *                 program.  It converts a stream of characters into the
- *                 various tokens.
- *        
- *        Version: 1.0.20
- *        Created: 08/18/2011 
- *  Last Modified: Sun Dec 13 17:55:29 2020
- *       Compiler: gcc
+ * Version: 1.0.20
+ * Created: 10/24/2011
+ * Last Modified: Sun Dec 13 22:14:50 2020
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
  *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ * License: This file is part of DocketMaster.
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *	        Usage:  
- *    File Format: 
- *   Restrictions: 
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: The calling module kicks off the routines in this module by sending
+ * the data file, file name, filetype, field names, and the appropriate data
+ * structure.
+ *
+ * File Format: All the data files read in as of now are CSV files.
+ *
+ * Restrictions: This module does not handle the opening, closing, or checking
+ * the data files.  That work is done in the builder module.  This module
+ * expects to receive a proper file type, with proper fields, and the
+ * appropriate data structure to store the tokens in.
+ *
  * Error Handling: 
- *     References: 
- *          Notes: TODO Instead of passing one data structure type, pass a
+ *
+ * Notes: TODO Instead of passing one data structure type, pass a
  *                 a void pointer to the data type??? 
- * =============================================================================
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
  */
 
 #ifndef _LEXICALANALYZER_H_INCLUDED_
 #define _LEXICALANALYZER_H_INCLUDED_
+
+
+/* #####   HEADER FILE INCLUDES   ########################################### */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "utilities.h"
@@ -128,21 +140,19 @@ extern EventNode eventlist;
 
 /* #####   EXPORTED FUNCTION DECLARATIONS   ################################# */
 
-/****************************************************************************
-**************************   FUNCTION DECLARATION   *************************
-* Name: parseholidays                                                       *
-*                                                                           *
-* Description: This function parses the holiday file and creates the array  *
-*   of linked lists. Each array element represents the holidays of a        *
-*   a particular month.  The holidays are "attached" to the array via a     *
-*   linked list.                                                            *
-*                                                                           *
-* Parameters: File handle to the holidays file.                             *
-*                                                                           *
-* Returns: Zero if successful.  Function will return a non-zero error code  *
-*   on specified errors, but this functionality has not been coded as yet.  *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: This function parses the holiday file and creates the array of
+ * linked lists. Each array element represents the holidays of a a particular
+ * month.  The holidays are "attached" to the array via a linked list.
+ *
+ * Parameters: File handle to the holidays file.
+ *
+ * Returns: Zero if successful.  Function will return a non-zero error code on
+ * specified errors, but this functionality has not been coded as yet.
+ *
+ * Notes The holiday field contains the holiday name.  The authority field
+ * identifies the statutory (or other) legal authority for the rule.
+ */
 
 int parsefile (FILE *infile, const char *filename, FILETYPE ftype, const
                char *fields[], void *datastruct);
@@ -150,32 +160,25 @@ int parsefile (FILE *infile, const char *filename, FILETYPE ftype, const
  * ELIMINATE void *datastruct, lexical analyzer has no need to access
  * this variable.
  *
- * */
+ */
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  parseevents
- *   Description:  This function parses the holiday file and creates a linked
- *   		   list, each node is a court event.
- *     Parameters:  File handle to events file 
- *       Returns:  Zero if successful.  Function will return a non-zero error
- *       	   code on specified errors, but this functionality has not been
- *       	   coded as yet. 
- *     Algorithm:   
- *    References:   
- * 	   Notes:   
- * =============================================================================
+ * Description: This function parses the holiday file and creates a linked
+ * list, each node is a court event.
+ * 
+ * Parameters: File handle to events file 
+ *
+ * Returns: Zero if successful.  Function will return a non-zero error code on
+ * specified errors, but this functionality has not been coded as yet. 
+ *
+ * Notes:   
  */
+
 int parseevents(FILE *events);
 
-/****************************************************************************
-*****************************************************************************
-********** WARNING: UNDEVELOPED "DRAFT" FUNCTIONS                     *******
-**********                                                            *******
-**********                                                            *******
-*****************************************************************************
-****************************************************************************/
-
+/*-----------------------------------------------------------------------------
+ * WARNING: UNDEVELOPED "DRAFT" FUNCTIONS 
+ *----------------------------------------------------------------------------*/
 /* closerules (frees the memory allocated to the rule trees)
 loadholidays(); THIS FUNCTION BELONGS IN THE BUILDER MODULE. */
 

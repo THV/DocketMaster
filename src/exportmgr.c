@@ -1,39 +1,57 @@
 /*
- * ============================================================================
+ * Filename: exportmgr.c
  *
- *       Filename:  exportmgr.c
+ * Description:  This module contains the functions that control exporting
+ * calendar items to Outlook or other calendar programs.
  *
- *    Description:  This module contains the functions that control exporting 
- *    		    calendar items to Outlook or other calendar programs.
+ * Version: 1.0.20
+ * Created: 01/14/2012 08:40:58 PM
+ * Last Modified: Sun Dec 13 20:21:22 2020
  *
- *        Version:  1.0
- *        Created:  01/14/2012 08:40:58 PM
- *       Revision:  none
- *       Compiler:  gcc
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
+ *  
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *         Author:  Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization:  Dark Matter Software
- *      Copyright:  Copyright (c) 2012, Thomas H. Vidal
+ * License: This file is part of DocketMaster.
  *
- *	    Usage:   Used by DocketMaster Program
- *    File Format:   Saves calendar data in outlook iCalendar format.
- *   Restrictions:   
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
+ *
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage:   Used by DocketMaster Program
+ *
+ * File Format:   Saves calendar data in outlook iCalendar format.
+ *
+ * Restrictions:   
+ *
  * Error Handling:   
- *     References:  Refer to internet mail consortium website re materials re
- *     		    personal data interchange:
- *     		    	http://www.imc.org/pdi/pdiproddev.html,
- *     		    	iCalendar obj std: http://www.rfc-editor.org/info/rfc5545
- *     		    	iCalendar TIP: RFC # 5546: http://www.rfc-editor.org/info/rfc5546  
  *
- *          Notes:  This module will be expanded as necessary to cover other
- *          	    calendar formats, if necessary.  At present, it appears
- *          	    most computer calendars and smartphone (android, iPhone,
- *          	    and Blackberry) support iCalendar.
- * ============================================================================
+ * References: Refer to internet mail consortium website re materials re
+ * personal data interchange: http://www.imc.org/pdi/pdiproddev.html,iCalendar
+ * obj std: http://www.rfc-editor.org/info/rfc5545
+ * iCalendar TIP: RFC # 5546: http://www.rfc-editor.org/info/rfc5546  
+ *
+ * Notes:  This module will be expanded as necessary to cover other calendar
+ * formats, if necessary.  At present, it appears most computer calendars and
+ * smartphone (android, iPhone, and Blackberry) support iCalendar.
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
  */
 
-
 /* #####   HEADER FILE INCLUDES   ########################################## */
+
 #include <stdlib.h>
 #include <errno.h>
 #include "exportmgr.h"
@@ -75,16 +93,13 @@ int write_cal_items (FILE exp_file);
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  newexportfile
  *   Description:  opens a new text file to store and save the exported
  *   		   calendar entries.
- *     Arguments:  None at present (perhaps update the function to save the file
+ *     Parameters:  None at present (perhaps update the function to save the file
  *     		   with a customized name and/or path)
  *       Returns:  FILE pointer
  *    References:   
  *  	   Notes:   
- * =============================================================================
  */
 FILE * newexportfile (void)
 {
@@ -124,15 +139,12 @@ FILE * newexportfile (void)
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  writeheaders
- *   Description:  
- *     Arguments:   
- *       Returns:   
- *     Algorithm:   
- *    References:   
- *  	   Notes:   
- * =============================================================================
+ * Description:  
+ * Parameters:   
+ * Returns:   
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 int writeheaders (FILE exp_file)
@@ -147,15 +159,12 @@ int writeheaders (FILE exp_file)
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  addtz
- *   Description:  Add timezone to vcalendar file.
- *     Arguments:   
- *       Returns:   
- *     Algorithm:   
- *    References:   
- *  	   Notes:   
- * =============================================================================
+ * Description:  Add timezone to vcalendar file.
+ * Parameters:   
+ * Returns:   
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 int addtz(FILE exp_file)
@@ -182,15 +191,12 @@ int addtz(FILE exp_file)
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  getuid
- *   Description:  Create a unique UID
- *     Arguments:   
- *       Returns:   
- *     Algorithm:   
- *    References:   
- *  	   Notes:   
- * =============================================================================
+ * Description:  Create a unique UID
+ * Parameters:   
+ * Returns:   
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 int getuid(void)
@@ -199,15 +205,12 @@ int getuid(void)
 }
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  writeenders
- *   Description:  
- *     Arguments:   
- *       Returns:   
- *     Algorithm:   
- *    References:   
- *  	   Notes:   
- * =============================================================================
+ * Description:  
+ * Parameters:   
+ * Returns:   
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 int writeenders (FILE exp_file)
@@ -219,17 +222,13 @@ int writeenders (FILE exp_file)
 
 }
 
-
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  closeexportfile
- *   Description:  
- *     Arguments:   
- *       Returns:   
- *     Algorithm:   
- *    References:   
- *  	   Notes:   
- * =============================================================================
+ * Description:  
+ * Parameters:   
+ * Returns:   
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 int closexportfile (FILE exp_file)

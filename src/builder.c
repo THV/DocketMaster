@@ -1,67 +1,72 @@
 /*
- *       Filename: builder.c
- *
- *    Description: This module manages the opening, verifying, and closing of
+ * Description: This module manages the opening, verifying, and closing of
  *                 rule and event files.
  *
- *        Version: 1.0.20
- *        Created: 08/18/2011
- *  Last Modified: Sun Dec 13 17:55:54 2020
+ * Version: 1.0.20
+ * Created: 01/29/2012 01:07:58 PM
+ * Last Modified: Sun Dec 13 22:55:36 2020
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
  *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ * License: This file is part of DocketMaster.
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
  *
- *	        Usage:  
- *    File Format: 
- *   Restrictions: 
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage:  
+ * File Format: 
+ * Restrictions: 
  * Error Handling: 
- *     References: 
- *          Notes: 
+ * References: 
+ * Notes: 
  * 
  * SPDX-License-Identifier: GPL-2.0-only
  */
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 #include <stdio.h>
-#include <string.h>
-#include "builder.h"
-/*  #include "ruleprocessor.h" --> this is included in the header file */ 
+#include "ruleprocessor.h"
 #include "graphmgr.h"
 #include "eprocessor.h"
 
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ######################## */
 
-EventGraph jurisdevents; /* declared in builder.h */
+EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
+			    EventGraph for the particular jurisdiction's list
+			    of events.  */ 
 
-/* #####   FUNCTION DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ############# */
+/* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   #################### */
 
 /* 
- *          Name:  buildre
+ *  Description:  This function builds the applicable rules and
+ *  events for the chosen jurisdiction.
  *
- *   Description:  This function builds the applicable rules and
- *   events for the chosen jurisdiction.
+ * Arguments:  Presently, the names of the three rules files are passed as
+ * parameters: Holiday File, Events File, and Extras File. 
  *
- *     Algorithm:  
- *    References:  
- *  	   Notes:  
+ * Returns:  returns 0 if the files were open, -1 if the holiday file could
+ * not be opened or found, -2 if the Events File could not be opened or found,
+ * or -3 if the Extras File cound not be opened or found. 
+ *
+ * Algorithm:  
+ * References:  
+ * Notes:  
+ *
  */
 
 int buildre(char *holiday, char *events, char *extras)
@@ -70,8 +75,11 @@ int buildre(char *holiday, char *events, char *extras)
     char fields[MAXNUMFIELDS][MAXFIELDLEN]; /* the list of field names */
     extern FILE *HOLIDAY_FILE;
     extern FILE *EVENT_FILE;
-
+    
     /* Build Holiday Rules */
+
+    /* open the holiday file */
+    HOLIDAY_FILE = getfile(holiday);  
 
     HOLIDAY_FILE = getfile(holiday); 
     /* check filetype, version, and row headers */
@@ -81,15 +89,17 @@ int buildre(char *holiday, char *events, char *extras)
 	    closefile(HOLIDAY_FILE); 
     } else {
 
-    	/* TODO: code what happens on failure */
+    /* lexically analyze the rules and build the array of linked lists. */
+    parsefile(HOLIDAY_FILE, holiday, ftype, fields, holidayhashtable);
 
-    }
+    /* close the file */
+	closefile(HOLIDAY_FILE); 
 
     /*  Build the Court Events */
-    EVENT_FILE = getfile(events); 
-    checkfile(EVENT_FILE); 
-    init_eventgraph(&jurisdevents);
-    parseevents(EVENT_FILE); 
+    EVENT_FILE = getfile(events); /* open the events file */
+    checkfile(EVENT_FILE); /* check filetype, version, and row headers */
+    init_eventgraph(jurisdevents); /* initialize the directed network graph */ 
+    parseevents(EVENT_FILE); /* process the events */ 
     closefile(EVENT_FILE);
 
     /* Build the Other Rules: Local Rules, Local-Local Rules, Etc. */
@@ -101,10 +111,21 @@ int buildre(char *holiday, char *events, char *extras)
 }
 
 
+/*
+ * Name: getfile
+ *
+ * Description: Opens a file for reading.
+ *
+ * Arguments: Character string representing the file name.
+ *
+ * Returns: File handle (pointer to the file).
+ */
+
 FILE * getfile(char *file_name)
 {
     FILE *in_file;
-    if ((in_file = fopen(file_name, "r")) == NULL) {
+    if ((in_file = fopen(file_name, "r")) == NULL)
+    {
         fprintf(stderr, "ERROR: File Name: %s does not exist ", file_name);
         fprintf(stderr, "or cannot be opened!\n\n\n");
         /* usage(); */
@@ -114,10 +135,20 @@ FILE * getfile(char *file_name)
 
 
 /* 
- *   Description:  Verifies the name and version of an opened file.
- *     Algorithm:  
- *    References:  
- *  	   Notes:  
+ * Name:  checkfile
+ *
+ * Description:  Verifies the name and version of an opened file.
+ *
+ * Arguments:  File handle, name of the file, and char * which the field
+ * names will be copied into.
+ *
+ * Returns:  Returns an enum FILETYPE, which is an integer whose value is
+ * 0 if the file is a holiday rules file, 1 if the file is an events file,
+ * and a 2 if the file is a local rules file.
+ *
+ * Algorithm:  
+ * References:  
+ * Notes:  
  */
 
 enum FILETYPE checkfile (FILE *in_file, const char *filename,
@@ -135,7 +166,8 @@ enum FILETYPE checkfile (FILE *in_file, const char *filename,
     {
         printf("ERROR: %s is EMPTY\n", filename);
         exit(8);
-    } else {
+    } else
+    {
         name = &headers[0];
         index = 1;
         while (headers[index] != '\n')
@@ -150,7 +182,7 @@ enum FILETYPE checkfile (FILE *in_file, const char *filename,
                     /* printf("## DEBUG ## Version = %s\n",vers); */
                 }
             }
-            index++; 
+            index++; /* increase the index */
             if ((headers[index] == FIELDDELIM) &&
                     (headers[index+1] == FIELDDELIM))
                 headers[index] = '\0';
@@ -190,9 +222,20 @@ enum FILETYPE checkfile (FILE *in_file, const char *filename,
     return 0;
 }
 
+/*
+ * Name: closefile
+ *
+ * Description: Closes a file.
+ *
+ * Arguments: File handle (pointer to the file).
+ *
+ * Returns: NULL pointer.
+ *                                                                           
+ */
+
 int closefile(FILE *close_file)
 {
-    if( fclose(infile) == EOF ) { 
+    if( fclose(infile) == EOF ) { /* close input file   */
     fprintf ( stderr, "Couldn't close file '%s'; %s\n",
 	    infile_file_name, strerror(errno) );
     exit (EXIT_FAILURE);
@@ -201,10 +244,17 @@ int closefile(FILE *close_file)
 }		/* -----  end of function closefile  ----- */
 
 /* 
- *   Description:  returns the file pointer to the beginning of the file.
- *     Algorithm:   
- *    References:   
- * 	   Notes:   
+ * Name:  resetfile
+ *
+ * Description:  returns the file pointer to the beginning of the file.
+ *
+ * Arguments:  FILE *
+ *
+ * Returns:  Nothing
+ *
+ * Algorithm:   
+ * References:   
+ * Notes:   
  */
 
 void resetfile (FILE *infile)
@@ -213,5 +263,4 @@ void resetfile (FILE *infile)
   clearerr(infile);
 
   return;
-    
 }		/* -----  end of function resetfile  ----- */
