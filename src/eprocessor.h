@@ -2,51 +2,35 @@
  * =============================================================================
  *
  *       Filename: eprocessor.h / "Event Processor Module"
+
  *
  *    Description: Processes court events. (1) this module takes input from
- *    		       the lexical analyzer to build the EventGraph.  (2) it takes
- *    		       input from the input manager to (a) report back the number of
- *    		       events and/or the number of depedencies; (b) search for
- *    		       events; (c) to compute the date for a particular event; or to
- *    		       compute the date for a chain of events.
+ *    		   the lexical analyzer to build the EventGraph.  (2) it takes
+ *    		   input from the input manager to (a) report back the number of
+ *    		   events and/or the number of depedencies; (b) search for
+ *    		   events; (c) to compute the date for a particular event; or to
+ *    		   compute the date for a chain of events.
  *
- *        Version: 1.0.20
+ *        Version: 1.0
  *        Created: 02/03/2012 07:05:40 AM
- *  Last Modified: Sat Nov 28 22:50:25 2020
+ *  Last Modified: Fri 03 Feb 2012 08:27:49 AM PST
  *       Compiler: gcc
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
- *  
- *      Copyright: Copyright (c) 2012-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
+ *   Organization: Dark Matter Software
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ *      Copyright: Copyright (c) 2012, Thomas H. Vidal
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
- *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *
- *	        Usage: included in, and called from, the lexical analyzer and input
- *	    	       manager.
+ *	    Usage: included in, and called from, the lexical analyzer and input
+ *	    	   manager.
  *    File Format: At this time, the event processor does not access any files.
  *   Restrictions: 
  * Error Handling: 
  *     References: 
  *          Notes: 
- *
- * SPDX-License-Identifier: GPL-2.0-only
  * =============================================================================
  */
+
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 #include "graphmgr.h"
