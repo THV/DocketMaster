@@ -1,68 +1,63 @@
 /*
- * =============================================================================
+ * Filename: graphmgr.h
  *
- *       Filename: graphmgr.h
+ * Description: This is the module manages the data type that handles
+ * processing the court events for the DocketMaster application program for
+ * attorneys.  The events are stored in a directed network graph type.  This
+ * module and the associated header file contain the various functions required
+ * to create, maintain, modify, and search the database of court events.  
  *
- *    Description: This is the module manages the data type that handles
- *    		       processing the court events for the DocketMaster application
- *    		       program for attorneys.  The events are stored in a directed
- *    		       network graph type.  This module and the associated header
- *    		       file contain the various functions required to create,
- *    		       maintain, modify, and search the database of court events.  
+ * Version: 1.0.20
+ * Created: 10/24/2011
+ * Last Modified: Sun Dec 13 22:05:53 2020
  *
- *        Version: 1.0.20
- *        Created: 10/24/2011
- *  Last Modified: Sat Nov 28 22:46:19 2020
- *       Compiler: gcc
- *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
  *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ * License: This file is part of DocketMaster.
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
  *
- *	        Usage: Used by the DocketMaster application to create a searchable
- *	               database of court events and dependencies that can be
- *	               scheduled on a trial calendar. 
- *    File Format: 
- *   Restrictions: 
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: Used by the DocketMaster application to create a searchable database
+ * of court events and dependencies that can be scheduled on a trial calendar. 
+ *
+ * File Format: 
+ * Restrictions: 
  * Error Handling: 
- *     References: 
- *          Notes: This header file contains the data structures and prototypes
- *          	   for the graph data-type manager, which is used to store all
- *          	   court event information (such as event deadlines and
- *          	   scheduling rules) and manage information.  All calculations
- *          	   performed on the court event information are declared in the
- *          	   eprocessor.h file.
- * 
+ * References: 
+ *
+ * Notes: This header file contains the data structures and prototypes for the
+ * graph data-type manager, which is used to store all court event information
+ * (such as event deadlines and scheduling rules) and manage information.  All
+ * calculations performed on the court event information are declared in the
+ * eprocessor.h file.
+ *
  * SPDX-License-Identifier: GPL-2.0-only
- * =============================================================================
  */
-
 #ifndef _GRAPHMGR_H_INCLUDED_
 #define _GRAPHMGR_H_INCLUDED_
 
-#include "../rule processor/ruleprocessor.h"
+/* #include "../rule processor/ruleprocessor.h"
+ */
 
-/****************************************************************************
-* Macros                                                                    *
-*                                                                           *
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Parameterized macros 
+ *----------------------------------------------------------------------------*/
 
 #define SET_FLAG(x,y) ((x) |= (y))
     /* SET_BIT sets the bit in x corresponding to the event flag passed by
@@ -81,11 +76,9 @@
     /* TEST_MULTIPLEFLAGS tests whether bits IN ADDITION TO the relevant bit
     are set */
 
-
-/****************************************************************************
-* Symbolic Constants                                                        *
-*                                                                           *
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Symbolic Constants 
+ *----------------------------------------------------------------------------*/
 
 /* Magic number used in the Dependency data type to indicate that a
 countperiod_deft is invalid.  Count periods will always be positive so any
@@ -94,10 +87,7 @@ a legitimate countperiod.  */
 
 const char NOT_PARTY_SENSITIVE = -126;
 
-/****************************************************************************
-* Symbolic Constants: Event Flags                                           *
-*                                                                           *
-****************************************************************************/
+/* Event Flags */
 
 /* True if the event is the beginning of a chain of events. */
 const int CHAINHEAD = (1<<0);
@@ -130,10 +120,7 @@ const int MOTIONEVENT = (1<<6);
 const int AUTORECOMPUTES = (1<<7);
 
 
-/****************************************************************************
-* Symbolic Constants: Count Units Flags                                     *
-*                                                                           *
-****************************************************************************/
+/* Symbolic Constants: Count Units Flags */
 
 /* True if the counting unit is week days. */
 const unsigned char COUNT_DAYS = (1<<0);
@@ -150,10 +137,7 @@ const unsigned char COUNT_QUARTERS = (1<<3);
 /* True if the counting unit is calendar years. */
 const unsigned char COUNT_YEARS = (1<<4);
 
-/****************************************************************************
-* Symbolic Constants: Dependency Flags (for the edge data type)             *
-*                                                                           *
-****************************************************************************/
+/* Symbolic Constants: Dependency Flags (for the edge data type) */ 
 
 /* True if Dependency event TRIGGERS this event; false if the Dependency event
 is TRIGGERED BY this event. */
@@ -184,11 +168,9 @@ setting conference or 70 days before trial, which ever is closest to the trial
 date. */
 const unsigned char CLOSEST = (1<<5);
 
-
-/****************************************************************************
-* Data Type Declarations: re service of process "extra day" rules           *
-*                                                                           *
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Data Type Declarations: re service of process "extra day" rules 
+ *----------------------------------------------------------------------------*/
 
 /* The following flags are TRUE if the count type is court days, FALSE if the
 count type is calendar days. */
@@ -200,8 +182,7 @@ const unsigned char EXPRESS_MAIL_COURT = (1<<3);
 const unsigned char FAX_SERVICE_COURT = (1<<4);
 const unsigned char ELECTRONIC_SERVICE_COURT = (1<<5);
 
-typedef struct ExtraServiceDays
-{
+typedef struct{
     unsigned char counttypeflags; /* count type is a series of flags that
     indicate whether the particular service-type's extra days are calendar days
     or court days. */
@@ -211,40 +192,37 @@ typedef struct ExtraServiceDays
     unsigned char express_mail_days;
     unsigned char fax_servicedays;
     unsigned char electronic_servicedays;
-};
+} ExtraServiceDays;
 
 
-/****************************************************************************
-*****************************************************************************
-** Data Type Declarations: the court-events directed network graph type.   **
-**                                                                         **
-** Court events will be stored in a directed graph.  The verticies will be **
-** the events, the edges will be the Dependency events (the (a) "triggered **
-** by" events and (b) "triggers" events. A "triggered by" event is one     **
-** that is triggered by another.  A "triggers" event is one that triggers  **
-** one or more events.)                                                    **
-**                                                                         **
-** The data type is built up by its components.  Ultimately, the directed  **
-** graph is a struct containing a linked list of court events, and a 2D    **
-** matrix of dependencies.  The rows of the matrix identify events that    **
-** trigger the events in each of the cols of that row.  The cols identify  **
-** events that are triggered by the events identified at each row in the   **
-** col.                                                                    **
-**                                                                         **
-** The first declaration is of the vertex data type.  Second is the edge   **
-** data type.  After that, the node data-type for the linked list of court **
-** events is declared.  Third, the matrix data type for the adjacency      **
-** matrix of dependencies is declared.  Finally, the graph is declared     **
-** as a struct containing a court-event list and a Dependency matrix.      **
-*****************************************************************************
-****************************************************************************/
+/*
+ * Data Type Declarations: the court-events directed network graph type.
+ *
+ * Court events will be stored in a directed graph.  The verticies will be
+ * the events, the edges will be the Dependency events (the (a) "triggered
+ * by" events and (b) "triggers" events. A "triggered by" event is one
+ * that is triggered by another.  A "triggers" event is one that triggers
+ * one or more events.)
+ *
+ * The data type is built up by its components.  Ultimately, the directed
+ * graph is a struct containing a linked list of court events, and a 2D
+ * matrix of dependencies.  The rows of the matrix identify events that
+ * trigger the events in each of the cols of that row.  The cols identify
+ * events that are triggered by the events identified at each row in the
+ * col.
+ *
+ * The first declaration is of the vertex data type.  Second is the edge
+ * data type.  After that, the node data-type for the linked list of court
+ * events is declared.  Third, the matrix data type for the adjacency
+ * matrix of dependencies is declared.  Finally, the graph is declared
+ * as a struct containing a court-event list and a Dependency matrix.
+ */
 
-/****************************************************************************
-* Vertex data type - Court Events.                                          *
-*                                                                           *
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Vertex data type - Court Events. 
+ *----------------------------------------------------------------------------*/
 
-typedef struct CourtEvent {
+typedef struct{
     unsigned char eventflags; /* the possible values are defined above as
     symbolic flag constants. */
 
@@ -298,14 +276,12 @@ typedef struct CourtEvent {
                             and changed to be an edge of the directed graph data
                             type.  MAY NOT BE NECESSARY BECAUSE THIS INFORMATION
                             MAY BE STORED IN THE MATRIX ALREADY.  */
-};
+} CourtEvent;
 
-/****************************************************************************
-* Edge data type - Dependency Events.                                       *
-*                                                                           *
-****************************************************************************/
-
-typdef struct Dependency {
+/*-----------------------------------------------------------------------------
+ * Edge data type - Dependency Events. 
+ *----------------------------------------------------------------------------*/
+typdef struct {
     CourtEvent *dependencyhandle; /* pointer to dependent event */
 
     CourtEvent *dependencyhandle_deft; /* pointer to dependent event if
@@ -330,28 +306,26 @@ typdef struct Dependency {
     LAWSUITS? ADD MEMBERS TO ADDRESS THAT ISSUE. IN THE CASE OF MULTIPLE
     DEPENDENCIES, SHOULD THIS HAVE A POINTER OR A LINKED LIST TO ALL OF THEM...
     OR WILL IT BE COVERED "ORGANICALLY" BY THE MATRIX OF DEPENDENCIES? */
-};
+} Dependency;
 
-/****************************************************************************
-* List data type to store all the verticies (court events)                  *
-*                                                                           *
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * List data type to store all the verticies (court events) 
+ *----------------------------------------------------------------------------*/
 
-typedef struct CourtEventNode {
+typedef struct{
     CourtEvent eventdata; /* the event information contained in this
                                     node */
     int eventposn; /* the position this event has in the list of events. This
                     will be important to search dependencies at O(1) time. */
     CourtEventNode *nextevent; /* pointer to the next event */
-};
+} CourtEventNode;
 
-/****************************************************************************
-* Adjacency Matrix data type to store all the edge information and cross-   *
-* reference the edges to the event list.                                    *
-*                                                                           *
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Adjacency Matrix data type to store all the edge information and cross-
+ * reference the edges to the event list.
+ *----------------------------------------------------------------------------*/
 
-typedef struct Adjacencymatrix {
+typedef struct{
     int trigger_rows; /* rows = triggering dependencies */
     int triggeredby_cols; /* cols = triggered-by dependencies */
     /* rows and cols will be set at run-time after the number of events in the
@@ -361,12 +335,12 @@ typedef struct Adjacencymatrix {
     element of the matrix.  */
     Dependency *matrixptr; /* pointer to a Dependency-struct, which will
     point to entire contiguous block of memory.  I.e., the simulated array. */
-};
+} Adjacencymatrix;
 
-/****************************************************************************
-* Graph Data Type re Court Events.                                          *
-*                                                                           *
-****************************************************************************/
+
+/*-----------------------------------------------------------------------------
+ * Graph Data Type re Court Events. 
+ *----------------------------------------------------------------------------*/
 
 typedef struct EventGraph {
     CourtEventNode *eventlist;
@@ -376,226 +350,119 @@ typedef struct EventGraph {
 };
 
 
-/****************************************************************************
-*****************************************************************************
-** Function prototypes -- graph manager                                    **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Function prototypes -- graph manager 
+ *----------------------------------------------------------------------------*/
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: init_eventgraph                                                     *
-*                                                                           *
-* Description: Initializes the vertex list (court events).                  *
-*                                                                           *
-* Arguments: Takes a pointer to EventGraph.                                 *
-*                                                                           *
-* Returns: No return value.  This function initializes the court events     *
-* list only.  It does not need to initialize the matrix because entries are *
-* irrelevant until vertices have been inserted into the graph.              *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Initializes the vertex list (court events).
+ *
+ * Parameters: Takes a pointer to EventGraph.
+ *
+ * Returns: No return value.  This function initializes the court events
+ * list only.  It does not need to initialize the matrix because entries are 
+ * irrelevant until vertices have been inserted into the graph.
+ */
 
 void init_eventgraph(EventGraph* graph);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: isemptycourtevents                                                  *
-*                                                                           *
-* Description: Determines whether the vertex list contains values or is     *
-* empty.                                                                    *
-*                                                                           *
-* Arguments: Takes a pointer to EventGraph.                                 *
-*                                                                           *
-* Returns: If the vertex list is empty, function returns zero.  Otherwise,  *
-* it returns a nonnegative number.                                          *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Determines whether the vertex list contains values or is
+ * empty
+ *
+ * Parameters: Takes a pointer to EventGraph.
+ *
+ * Returns: If the vertex list is empty, function returns zero.  Otherwise,
+ * it returns a nonnegative number.
+ */
 
 int isemptygraph(EventGraph* graph);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: copyeventgraph                                                      *
-*                                                                           *
-* Description: Copies the graph of court events into a new EventGraph.      *
-* copyto graph contains a distinct copy of the graph.                       *
-*                                                                           *
-* Arguments: Takes pointers to two EventGraphs: one existing; the other     *
-* empty.                                                                    *
-*                                                                           *
-* Returns: 1 if the copy is successful, zero if it fails.                   *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Copies the graph of court events into a new EventGraph.
+ * copyto graph contains a distinct copy of the graph.
+ *
+ * Parameters: Takes pointers to two EventGraphs: one existing; the other
+ * empty.
+ *
+ * Returns: 1 if the copy is successful, zero if it fails.
+ */
 
 int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: numberofevents                                                      *
-*                                                                           *
-* Description: Counts the number of events in the event list.               *
-*                                                                           *
-* Arguments: Takes a pointer to an EventGraph.                              *
-*                                                                           *
-* Returns: The number of events in the EventGraph.                          *
-*                                                                           *
-****************************************************************************/
-
-int numberofevents (CourtEventNode *list);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: numberofdependencies                                                *
-*                                                                           *
-* Description: Counts the number of dependencies in the Adjacencymatrix.    *
-*                                                                           *
-* Arguments: Takes a pointer to an adjacency matris.                        *
-*                                                                           *
-* Returns: The number of dependencies (arcs) in the EventGraph.             *
-*                                                                           *
-****************************************************************************/
-
-int numberofdependencies (Adjacencymatrix* dependencies);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: searchforevent                                                      *
-*                                                                           *
-* Description: Determines whether a particular event (vertex) is in the     *
-* event list.                                                               *
-*                                                                           *
-* Arguments: Takes a string pointer containing the vertex to search for,    *
-* and pointer to the court event list to search.                             *
-*                                                                           *
-* Returns: If the graph contains a vertex that is equal to the serch string,*
-* the function returns a pointer to the position of the event. Otherwise,   *
-* function returns NULL.                                                    *
-*                                                                           *
-* Note: function is currently keyed to search only the shorttitle member of *
-* the eventnode.                                                            *
-****************************************************************************/
-
-CourtEventNode* searchforevent (char *eventname, CourtEventNode* list);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: searchfordependency                                                 *
-*                                                                           *
-* Description: Determines whether a particular dependency relationship      *
-* exists.                                                                   *
-*                                                                           *
-* Arguments: Takes pointers to two vertices and a pointer to the EventGraph *
-* to search.                                                                *
-*                                                                           *
-* Returns: If the graph contains an a dependency relationship between       *
-* event1 and event2, the function returns a pointer to the position of the  *
-* dependency. Otherwise, function returns NULL.                             *
-*                                                                           *
-* Note: The order of vertices is important. It will determine whether       *
-* vertex1 (event1) is triggeredby vertex2 (event2).                         *
-****************************************************************************/
-
-Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode *event2,
-                                 EventGraph *graph);
-
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: insertevent                                                         *
-*                                                                           *
-* Description: Adds new court event (vertex) to the list of events.         *
-*                                                                           *
-* Arguments: Takes a pointer to CourtEvent and a pointer to the EventGraph  *
-* in which the new event is to be added.                                    *
-*                                                                           *
-* Returns: Zero if the insert fails, or a nonnegative number if the insert  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Adds new court event (vertex) to the list of events.
+ *
+ * Parameters: Takes a pointer to CourtEvent and a pointer to the EventGraph
+ * in which the new event is to be added.
+ *
+ * Returns: Zero if the insert fails, or a nonnegative number if the insert
+ * is successful.
+ */
 
 CourtEventNode* insertevent (CourtEvent* eventinfo, CourtEventNode *eventlist);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: insertdependency                                                    *
-*                                                                           *
-* Description: Adds new Dependency between two events to the Dependency     *
-* matrix.                                                                   *
-*                                                                           *
-* Arguments: Takes a pointer to Dependency and a pointer to the EventGraph  *
-* in which the new Dependency is to be added.                               *
-*                                                                           *
-* Returns: Zero if the insert fails, or a nonnegative number if the insert  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Adds new Dependency between two events to the Dependency
+ * matrix.
+ *
+ * Parameters: Takes a pointer to Dependency and a pointer to the EventGraph
+ * in which the new Dependency is to be added.
+ *
+ * Returns: Zero if the insert fails, or a nonnegative number if the insert
+ * is successful.
+ */
 
 int insertdependency (Dependency newdep, EventGraph* graph);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: deleteevent                                                         *
-*                                                                           *
-* Description: Removes a court event (vertex) from the list of events.      *
-*                                                                           *
-* Arguments: Takes a pointer to CourtEvent that is already in the list and  *
-* a pointer to the EventGraph itself.                                       *
-*                                                                           *
-* Returns: Zero if the delete fails, or a nonnegative number if the delete  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Removes a court event (vertex) from the list of events.
+ *
+ * Parameters: Takes a pointer to CourtEvent that is already in the list and
+ * a pointer to the EventGraph itself.
+ *
+ * Returns: Zero if the delete fails, or a nonnegative number if the delete
+ * is successful.
+ */
 
 int deleteevent  (CourtEvent* delevent, EventGraph* graph);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: deletedependency                                                    *
-*                                                                           *
-* Description: Removes a Dependency (edge) from the list of events.         *
-*                                                                           *
-* Arguments: Takes a pointer to Dependency that is already in the matrix    *
-* and a pointer to the EventGraph itself.                                   *
-*                                                                           *
-* Returns: Zero if the delete fails, or a nonnegative number if the delete  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Removes a Dependency (edge) from the list of events.
+ *
+ * Parameters: Takes a pointer to Dependency that is already in the matrix
+ * and a pointer to the EventGraph itself.
+ *
+ * Returns: Zero if the delete fails, or a nonnegative number if the delete
+ * is successful.
+ */
 
 int deletedependency (Dependency* deldep, EventGraph* graph);
 
 /* consider adding: findneighbors */
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: replaceevent                                                        *
-*                                                                           *
-* Description: Replaces one event already in this list of events with a     *
-* different event.                                                          *
-*                                                                           *
-* Arguments: Takes a pointer to CourtEvent to be added to the EventGraph    *
-* and a pointer to the old event to be replaced.                            *
-*                                                                           *
-* Returns: Zero if the replace fails, or a nonnegative number if the        *
-* replace is successful.                                                    *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Replaces one event already in this list of events with a
+ * different event.
+ *
+ * Parameters: Takes a pointer to CourtEvent to be added to the EventGraph
+ * and a pointer to the old event to be replaced.
+ *
+ * Returns: Zero if the replace fails, or a nonnegative number if the
+ * replace is successful.                                                    
+ *
+ */
 
 int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex);
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: traverse                                                            *
-*                                                                           *
-* Description: Function visits all the nodes in the EventGraph in a breadth *
-* first manner. [WHAT WILL FUNCTION DO WHEN IT VISITS THE NODES?]           *
-*                                                                           *
-* Arguments: Takes a pointer to the EventGraph                              *
-*                                                                           *
-* Returns: None.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Function visits all the nodes in the EventGraph in a breadth
+ * first manner. [WHAT WILL FUNCTION DO WHEN IT VISITS THE NODES?]
+ *
+ * Parameters: Takes a pointer to the EventGraph
+ *
+ * Returns: None.
+ */
 
 void traverse (EventGraph* graph); /* breadth first */
 
@@ -603,67 +470,37 @@ void traverse (EventGraph* graph); /* breadth first */
 
 /* consider adding: findshortestpath */
 
-/****************************************************************************
-*************************   FUNCTION DECLARATION   **************************
-* Name: followchain                                                         *
-*                                                                           *
-* Description: Function starts at a certain vertex and traverses through    *
-* all events along the chain.  In the context of the CourtEvents, it starts *
-* with a triggering event and visits all the events triggered by that event.*
-*                                                                           *
-* Arguments: Takes a pointer to the starting vertex and the EventGraph      *
-*                                                                           *
-* Returns: None.                                                            *
-*                                                                           *
-****************************************************************************/
-
-void followchain (CourtEvent* startingvertex, EventGraph* graph);
-
-/****************************************************************************
-*****************************************************************************
-** Function prototypes -- matrix manager                                   **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
-
+/*-----------------------------------------------------------------------------
+ * Function prototypes -- matrix manager 
+ *----------------------------------------------------------------------------*/
 int initializeadjacencymatrix (EventGraph* graph);
 void closeadjacencymatrix (void);
 
 
-/****************************************************************************
-*****************************************************************************
-** Function prototypes -- utility functions                                **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Function prototypes -- utility functions 
+ *----------------------------------------------------------------------------*/
 
-/****************************************************************************
-*************************  FUNCTION DECLARATION    **************************
-* Name: eventcmp                                                             *
-*                                                                           *
-* Description: Compares two character strings and returns negative, zero,   *
-* or positive if s1 is lexicographically less than, equal to, or greater    *
-* than s2.  The value is obtained by subtracting the characters at the      *
-* first position where s1 and s2 disagree. Function copied from K&R 2d at   *
-* 106.                                                                      *
-*                                                                           *
-* Arguments: Two character strings                  .                       *
-*                                                                           *
-* Returns: See description.                                                 *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Compares two character strings and returns negative, zero,
+ * or positive if s1 is lexicographically less than, equal to, or greater
+ * than s2.  The value is obtained by subtracting the characters at the
+ * first position where s1 and s2 disagree. Function copied from K&R 2d at
+ * 106.
+ *
+ * Parameters: Two character strings
+ *
+ * Returns: See description.
+ */
 
 int eventcmp (const char *s1, const char *s2);
 
 #ifdef UNDEF /* presently the remainder of source file has been removed from
     compilation for testing. */
 
-/****************************************************************************
-*****************************************************************************
-** Function prototypes -- list manager                                     **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
+/*-----------------------------------------------------------------------------
+ * Function prototypes -- list manager 
+ *----------------------------------------------------------------------------*/
 
 initializeorderedlist
 isempty

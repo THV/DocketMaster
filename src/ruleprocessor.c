@@ -1,45 +1,43 @@
 /*
- * =============================================================================
+ * File: rule processor
  *
- *       Filename: rule processor
- *    Description: This module processes the court holiday rules, and
- *                 litigation events.  It creates two balanced binary search
- *                 trees to hold the data for the court rules and court events.
+ * Description: This module processes the court holiday rules, and litigation
+ * events.  It creates two balanced binary search trees to hold the data 
+ * for the court rules and court events.
  *
- *        Version: 1.0.20
- *        Created: 08/18/2011
- *  Last Modified: Sat Nov 28 22:33:32 2020
- *       Compiler: gcc
- * 
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
+ * Version: 1.0.20
+ * Created: 
+ * Last Modified: Sun Dec 13 21:30:30 2020
+ *
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
  *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ * License: This file is part of DocketMaster.
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *	        Usage:  
- *    File Format: 
- *   Restrictions: 
- * Error Handling: 
- *     References: 
- *          Notes: 
- * 
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ *
+ * File Formats: 
+ * Restrictions:
+ * Error Handling:
+ * Notes:
+ *
  * SPDX-License-Identifier: GPL-2.0-only
- ===============================================================================
  */
 
 #include <stdio.h>
@@ -239,27 +237,20 @@ void printholidayrules(struct holidaynode *holidayhashtable[])
     return;
 }
 
-/****************************************************************************
-***************************   FUNCTION DEFINITION   *************************
-* Name: processhrule                                                        *
-*                                                                           *
-* Description: describe what the function does.                             *
-*                                                                           *
-* Arguments: Describe the parameters of the function.                       *
-*                                                                           *
-* Returns: describe the return value of the function                        *
-*                                                                           *
-* File Format: Comma Separated Values.  Fields: Type, Rule, Holiday,        *
-*   Source. The rule field is organized as Month-DayOfWeek-Number.  The     *
-*   "number" sub-field of the rule can contain (1) the week number          *
-*   e.g., 4 for the 4th week, (2) the word "all" for every week-            *
-*   day of the month (e.g., all Saturdays), (3) "last" for the              *
-*   last week-day (e.g., last Monday), or (4) "first" for the               *
-*   first week-day (e.g., first Tuesday).                                   *
-*                                                                           *
-* Other sections. algorithms, file formats, references, notes, etc.         *
-*****************************************************************************
-****************************************************************************/
+/*
+ * Description: describe what the function does.
+ *
+ * Arguments: Describe the parameters of the function.
+ *
+ * Returns: describe the return value of the function
+ *
+ * File Format: Comma Separated Values.  Fields: Type, Rule, Holiday, Source.
+ * The rule field is organized as Month-DayOfWeek-Number.  The "number"
+ * sub-field of the rule can contain (1) the week number e.g., 4 for the 4th
+ * week, (2) the word "all" for every week- day of the month (e.g., all
+ * Saturdays), (3) "last" for the last week-day (e.g., last Monday), or (4)
+ * "first" for the first week-day (e.g., first Tuesday).
+ */
 
 int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
 {
@@ -307,27 +298,20 @@ int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
     return 0;
 }
 
-/****************************************************************************
-***************************   FUNCTION DEFINITION   *************************
-* Name: Name of function                                                    *
-*                                                                           *
-* Description: describe what the function does.                             *
-*                                                                           *
-* Arguments: Describe the parameters of the function.                       *
-*                                                                           *
-* Returns: describe the return value of the function                        *
-*                                                                           *
-* File Format: Comma Separated Values.  Fields: Type, Rule, Holiday,        *
-*   Source. The rule field is organized as Month-DayOfWeek-Number.  The     *
-*   "number" sub-field of the rule can contain (1) the week number          *
-*   e.g., 4 for the 4th week, (2) the word "all" for every week-            *
-*   day of the month (e.g., all Saturdays), (3) "last" for the              *
-*   last week-day (e.g., last Monday), or (4) "first" for the               *
-*   first week-day (e.g., first Tuesday).                                   *
-*                                                                           *
-* Other sections. algorithms, file formats, references, notes, etc.         *
-*****************************************************************************
-****************************************************************************/
+/*
+ * Description: describe what the function does.
+ *
+ * Arguments: Describe the parameters of the function.
+ *
+ * Returns: describe the return value of the function
+ *
+ * File Format: Comma Separated Values.  Fields: Type, Rule, Holiday, Source.
+ * The rule field is organized as Month-DayOfWeek-Number.  The "number"
+ * sub-field of the rule can contain (1) the week number e.g., 4 for the 4th
+ * week, (2) the word "all" for every week- day of the month (e.g., all
+ * Saturdays), (3) "last" for the last week-day (e.g., last Monday), or (4)
+ * "first" for the first week-day (e.g., first Tuesday).
+ */
 
 int isholiday (struct DATETIME *dt)
 {
@@ -390,12 +374,12 @@ int loadholidays (struct holidaynode current_holidays, char holiday_file[])
     if (isempty(current_holidays) !=0)
         return -1; /* indicates holidays already loaded */
 
-    /*------------------>            WARNING                  <---------------*/
-    /*  this function does not does not re-read the file if the binary tree   */
-    /*  for current_holidays contains data.  If the court or jurisdiction     */
-    /*  changes and the holidays need to be re-read and processed, the binary */
-    /*  tree must be initialized before calling this function.                */
-    /*------------------------------------------------------------------------*/
+    /*------------------>            WARNING                  <---------------
+     *  this function does not does not re-read the file if the binary tree  
+     *  for current_holidays contains data.  If the court or jurisdiction   
+     *  changes and the holidays need to be re-read and processed, the binary
+     *  tree must be initialized before calling this function.
+     */
 
     /* TODO (Thomas#1#): Address the issue of re-reading the file
     if the court jurisdiction changes, etc. */

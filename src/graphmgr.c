@@ -1,80 +1,68 @@
 /*
- * =============================================================================
+ * Filename: graphmgr.c
  *
- *       Filename: graphmgr.c
+ * Description: This is the module manages the data type that handles
+ * processing the court events for the DocketMaster application program for
+ * attorneys.  The events are stored in a directed network graph type.
+ * This module and the associated header file contain the various functions
+ * required to create, maintain, modify, and search the database of court
+ * events.  
  *
- *    Description: This is the module manages the data type that handles
- *    		       processing the court events for the DocketMaster application
- *    		       program for attorneys.  The events are stored in a directed
- *    		       network graph type.  This module and the associated header
- *    		       file contain the various functions required to create,
- *    		       maintain, modify, and search the database of court events.  
+ * Version: 1.0.20
+ * Created: 10/24/2011
+ * Last Modified: Sun Dec 13 20:21:25 2020
  *
- *        Version: 1.0.20
- *        Created: 10/24/2011
- *  Last Modified: Sat Nov 28 22:32:06 2020
- *       Compiler: gcc
- *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
  *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ * License: This file is part of DocketMaster.
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
  *
- *	        Usage: Used by the DocketMaster application to create a searchable
- *	               database of court events and dependencies that can be
- *	               scheduled on a trial calendar. 
- *    File Format: 
- *   Restrictions: 
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: Used by the DocketMaster application to create a searchable database
+ * of court events and dependencies that can be scheduled on a trial calendar. 
+ *
+ * File Format: 
+ * Restrictions: 
  * Error Handling: 
- *     References: 
- *          Notes: [no notes as of 10/24/2011]. 
- * 
+ * References: 
+ * Notes: [no notes as of 10/24/2011]. 
+ *
  * SPDX-License-Identifier: GPL-2.0-only
- * =============================================================================
  */
 
 #include "graphmgr.h"
 #include <stdlib.h>
 #include <string.h>
 
+/*-----------------------------------------------------------------------------
+ * Function definitions -- graph manager 
+ *----------------------------------------------------------------------------*/
 
-/****************************************************************************
-*****************************************************************************
-** Function definitions -- graph manager                                   **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
-
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: init_eventgraph                                                     *
-*                                                                           *
-* Description: Initializes the vertex list (court events).                  *
-*                                                                           *
-* Arguments: Takes a pointer to EventGraph.                                 *
-*                                                                           *
-* Returns: No return value.  This function initializes the court events     *
-* list only.  It does not need to initialize the matrix because entries are *
-* irrelevant until vertices have been inserted into the graph.              *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Initializes the vertex list (court events).
+ *
+ * Arguments: Takes a pointer to EventGraph.
+ *
+ * Returns: No return value.  This function initializes the court events
+ * list only.  It does not need to initialize the matrix because entries are
+ * irrelevant until vertices have been inserted into the graph.
+ */
 
 void init_eventgraph(EventGraph* graph, int numofevents)
 {
@@ -95,19 +83,15 @@ void init_eventgraph(EventGraph* graph, int numofevents)
     return;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: isemptycourtevents                                                  *
-*                                                                           *
-* Description: Determines whether the vertex list contains values or is     *
-* empty.                                                                    *
-*                                                                           *
-* Arguments: Takes a pointer to EventGraph.                                 *
-*                                                                           *
-* Returns: If the vertex list is empty, function returns zero.  Otherwise,  *
-* it returns a nonnegative number.                                          *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Determines whether the vertex list contains values or is
+ * empty.
+ *
+ * Arguments: Takes a pointer to EventGraph.
+ *
+ * Returns: If the vertex list is empty, function returns zero.  Otherwise,
+ * it returns a nonnegative number.
+ */
 
 int isemptygraph(EventGraph* graph)
 {
@@ -117,194 +101,30 @@ int isemptygraph(EventGraph* graph)
         return 0;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: copyeventgraph                                                      *
-*                                                                           *
-* Description: Copies the graph of court events into a new EventGraph.      *
-* copyto graph contains a distinct copy of the graph.                       *
-*                                                                           *
-* Arguments: Takes pointers to two EventGraphs: one existing; the other     *
-* empty.                                                                    *
-*                                                                           *
-* Returns: 1 if the copy is successful, zero if it fails.                   *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Copies the graph of court events into a new EventGraph.
+ * copyto graph contains a distinct copy of the graph.
+ *
+ * Arguments: Takes pointers to two EventGraphs: one existing; the other     
+ * empty.
+ *
+ * Returns: 1 if the copy is successful, zero if it fails.
+ */
 
 int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto)
 {
     return 0;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: numberofevents                                                      *
-*                                                                           *
-* Description: Counts the number of events in the event list.               *
-*                                                                           *
-* Arguments: Takes a pointer to an EventGraph.                              *
-*                                                                           *
-* Returns: The number of events in the EventGraph.                          *
-*                                                                           *
-****************************************************************************/
-
-int numberofevents (CourtEventNode* list)
-{
-    CourtEventNode *cur_pos; /* current position */
-    int count = 0; /* the count */
-
-    cur_pos = list;
-
-    while (cur_pos != NULL)
-    {
-        count++;
-        cur_pos = cur_pos->nextevent;
-    }
-
-    return count;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: numberofdependencies                                                *
-*                                                                           *
-* Description: Counts the number of dependencies in the AdjacencyMatrix.    *
-*                                                                           *
-* Arguments: Takes a pointer to an EventGraph.                              *
-*                                                                           *
-* Returns: The number of dependencies (arcs) in the EventGraph.             *
-*                                                                           *
-* Note: currently this only counts the TRIGGERING dependencies, not the     *
-* triggered dependencies.  The triggering dependencies are the "true"       *
-* dependencies.                                                             *
-****************************************************************************/
-
-int numberofdependencies (AdjacencyMatrix* dependencies)
-{
-    int row, col, count;
-
-    count = 0;
-    for (row = 0; row < dependencies->trigger_rows; row++)
-    {
-        for (col = 0; col < dependencies->triggeredby_cols; col++)
-        {
-            if (dependencies->rowptr[row][col].dependencyhandle != NULL  &&
-                TEST_FLAG(dependencies->rowptr[row][col].dependencyflag,
-                          TRIGGERS))
-                    count++;
-        }
-    }
-
-    return count;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: searchforevent                                                      *
-*                                                                           *
-* Description: Determines whether a particular event (vertex) is in the     *
-* event list.                                                               *
-*                                                                           *
-* Arguments: Takes a string pointer containing the vertex to search for,    *
-* and pointer to the court event list to search.                             *
-*                                                                           *
-* Returns: If the graph contains a vertex that is equal to the serch string,*
-* the function returns a pointer to the position of the event. Otherwise,   *
-* function returns NULL.                                                    *
-*                                                                           *
-* Note: function is currently keyed to search only the shorttitle member of *
-* the eventnode.                                                            *
-****************************************************************************/
-
-CourtEventNode* searchforevent (char *eventname,CourtEventNode* list)
-{
-
-    CourtEventNode *cur_pos; /* current position */
-    char *searchstring, *eventstring;
-
-    cur_pos = list;
-    searchstring = eventname;
-    eventstring = list->eventdata.shorttitle;
-
-    while (cur_pos != NULL)
-    {
-        if (searchstring != NULL && eventstring != NULL &&
-               *searchstring == *eventstring)
-        {
-            searchstring++;
-            eventstring++;
-        }
-        else if (searchstring == NULL && eventstring == NULL)
-        {
-            return cur_pos; /* found a match */
-        }
-        else
-        {
-                cur_pos = cur_pos->nextevent;
-                searchstring = eventname;
-                eventstring = list->eventdata.shorttitle;
-                continue;
-        }
-    }
-
-    return cur_pos;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: searchfordependency                                                 *
-*                                                                           *
-* Description: Determines whether a particular Dependency relationship      *
-* exists.                                                                   *
-*                                                                           *
-* Arguments: Takes pointers to two vertices and a pointer to the EventGraph *
-* to search.                                                                *
-*                                                                           *
-* Returns: If the graph contains an a Dependency relationship between       *
-* event1 and event2, the function returns a pointer to the position of the  *
-* Dependency. Otherwise, function returns NULL.                             *
-*                                                                           *
-* Note: The order of vertices is important. It will determine whether       *
-* vertex1 (event1) is triggeredby vertex2 (event2).                         *
-****************************************************************************/
-
-Dependency* searchfordependency (CourtEventNode *event1,
-                                       CourtEventNode *event2,
-                                        EventGraph* graph)
-{
-    Dependency* dependencyfound;
-
-    if (graph->dependencymatrix.rowptr[event1->eventposn][event2->eventposn].dependencyhandle
-        != NULL)
-    {
-        dependencyfound = &graph->dependencymatrix.rowptr[event1->eventposn][event2->eventposn];
-        /* SYNTAX QUESTION: I am not sure if the & gives me the addres of graph,
-        or the address of the Dependency, like I believe it should.  Must
-        test. */
-    }
-    else if (graph->dependencymatrix.rowptr[event2->eventposn][event1->eventposn].dependencyhandle
-             != NULL)
-    {
-        dependencyfound = &graph->dependencymatrix.rowptr[event2->eventposn][event1->eventposn];
-    } else
-        dependencyfound = NULL;
-
-    return dependencyfound;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: insertevent                                                         *
-*                                                                           *
-* Description: Adds new court event (vertex) to the list of events.         *
-*                                                                           *
-* Arguments: Takes a pointer to CourtEvent and a pointer to the EventGraph  *
-* in which the new event is to be added.                                    *
-*                                                                           *
-* Returns: Zero if the insert fails, or a nonnegative number if the insert  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Adds new court event (vertex) to the list of events.
+ *
+ * Arguments: Takes a pointer to CourtEvent and a pointer to the EventGraph  
+ * in which the new event is to be added.
+ *
+ * Returns: Zero if the insert fails, or a nonnegative number if the insert
+ * is successful.
+ */
 
 CourtEventNode* insertevent (CourtEvent* eventinfo,
                                 CourtEventNode *eventlist)
@@ -366,58 +186,46 @@ CourtEventNode* insertevent (CourtEvent* eventinfo,
     return temphead;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: insertdependency                                                    *
-*                                                                           *
-* Description: Adds new Dependency between two events to the Dependency     *
-* matrix.                                                                   *
-*                                                                           *
-* Arguments: Takes a pointer to Dependency and a pointer to the EventGraph  *
-* in which the new Dependency is to be added.                               *
-*                                                                           *
-* Returns: Zero if the insert fails, or a nonnegative number if the insert  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Adds new Dependency between two events to the Dependency
+ * matrix.
+ *
+ * Arguments: Takes a pointer to Dependency and a pointer to the EventGraph
+ * in which the new Dependency is to be added.
+ *
+ * Returns: Zero if the insert fails, or a nonnegative number if the insert
+ * is successful.
+ */
 
 int insertdependency (Dependency newdep, EventGraph* graph)
 {
     return 0;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: deleteevent                                                         *
-*                                                                           *
-* Description: Removes a court event (vertex) from the list of events.      *
-*                                                                           *
-* Arguments: Takes a pointer to CourtEvent that is already in the list and  *
-* a pointer to the EventGraph itself.                                       *
-*                                                                           *
-* Returns: Zero if the delete fails, or a nonnegative number if the delete  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Removes a court event (vertex) from the list of events.
+ *
+ * Arguments: Takes a pointer to CourtEvent that is already in the list and
+ * a pointer to the EventGraph itself.
+ *
+ * Returns: Zero if the delete fails, or a nonnegative number if the delete
+ * is successful.
+ */
 
 int deleteevent  (CourtEvent* delevent, EventGraph* graph)
 {
     return 0;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: deletedependency                                                    *
-*                                                                           *
-* Description: Removes a Dependency (edge) from the list of events.         *
-*                                                                           *
-* Arguments: Takes a pointer to Dependency that is already in the matrix    *
-* and a pointer to the EventGraph itself.                                   *
-*                                                                           *
-* Returns: Zero if the delete fails, or a nonnegative number if the delete  *
-* is successful.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Removes a Dependency (edge) from the list of events.
+ *
+ * Arguments: Takes a pointer to Dependency that is already in the matrix
+ * and a pointer to the EventGraph itself.
+ *
+ * Returns: Zero if the delete fails, or a nonnegative number if the delete
+ * is successful.
+ */
 
 int deletedependency (Dependency* deldep, EventGraph* graph)
 {
@@ -426,38 +234,31 @@ int deletedependency (Dependency* deldep, EventGraph* graph)
 
 /* consider adding: findneighbors */
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: replaceevent                                                        *
-*                                                                           *
-* Description: Replaces one event already in this list of events with a     *
-* different event.                                                          *
-*                                                                           *
-* Arguments: Takes a pointer to CourtEvent to be added to the EventGraph    *
-* and a pointer to the old event to be replaced.                            *
-*                                                                           *
-* Returns: Zero if the replace fails, or a nonnegative number if the        *
-* replace is successful.                                                    *
-*                                                                           *
-****************************************************************************/
+ /*
+ * Description: Replaces one event already in this list of events with a
+ * different event.
+ *
+ * Arguments: Takes a pointer to CourtEvent to be added to the EventGraph
+ * and a pointer to the old event to be replaced.
+ *
+ * Returns: Zero if the replace fails, or a nonnegative number if the
+ * replace is successful.
+ */
 
 int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex)
 {
     return 0;
 }
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: traverse                                                            *
-*                                                                           *
-* Description: Function visits all the nodes in the EventGraph in a breadth *
-* first manner. [WHAT WILL FUNCTION DO WHEN IT VISITS THE NODES?]           *
-*                                                                           *
-* Arguments: Takes a pointer to the EventGraph                              *
-*                                                                           *
-* Returns: None.                                                            *
-*                                                                           *
-****************************************************************************/
+/*
+
+ * Description: Function visits all the nodes in the EventGraph in a breadth
+ * first manner. [WHAT WILL FUNCTION DO WHEN IT VISITS THE NODES?]
+ *
+ * Arguments: Takes a pointer to the EventGraph
+ *
+ * Returns: None.
+ */
 
 void traverse (EventGraph* graph)
 {
@@ -468,38 +269,16 @@ void traverse (EventGraph* graph)
 
 /* consider adding: findshortestpath */
 
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: followchain                                                         *
-*                                                                           *
-* Description: Function starts at a certain vertex and traverses through    *
-* all events along the chain.  In the context of the CourtEvents, it starts *
-* with a triggering event and visits all the events triggered by that event.*
-*                                                                           *
-* Arguments: Takes a pointer to the starting vertex and the EventGraph      *
-*                                                                           *
-* Returns: None.                                                            *
-*                                                                           *
-****************************************************************************/
 
-void followchain (CourtEvent* startingvertex, EventGraph* graph)
-{
-
-}
-
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: initializeadjacencymatrix                                           *
-*                                                                           *
-* Description: describe what the function does.                             *
-*                                                                           *
-* Arguments: Describe the parameters of the function.                       *
-*                                                                           *
-* Returns: describe the return value of the function                        *
-*                                                                           *
-* Other sections. algorithms, file formats, references, notes, etc.         *
-****************************************************************************/
+/*
+ * Description: describe what the function does.
+ *
+ * Arguments: Describe the parameters of the function.
+ *
+ * Returns: describe the return value of the function
+ *
+ * Other sections. algorithms, file formats, references, notes, etc.
+ */
 
 int initializeadjacencymatrix (EventGraph* graph)
 {
@@ -537,29 +316,21 @@ of each row. Note the simple pointer arithmetic. */
     return 0;
 }
 
+/*-----------------------------------------------------------------------------
+ * Function Definitions -- utility functions
+ *----------------------------------------------------------------------------*/
 
-/****************************************************************************
-*****************************************************************************
-** Function Definitions -- utility functions                               **
-**                                                                         **
-*****************************************************************************
-****************************************************************************/
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: eventrcmp                                                           *
-*                                                                           *
-* Description: Compares two character strings and returns negative, zero,   *
-* or positive if s1 is lexicographically less than, equal to, or greater    *
-* than s2.  The value is obtained by subtracting the characters at the      *
-* first position where s1 and s2 disagree. Function copied from K&R 2d at   *
-* 106.                                                                      *
-*                                                                           *
-* Arguments: Two character strings                  .                       *
-*                                                                           *
-* Returns: See description.                                                 *
-*                                                                           *
-****************************************************************************/
+/*
+ * Description: Compares two character strings and returns negative, zero,
+ * or positive if s1 is lexicographically less than, equal to, or greater
+ * than s2.  The value is obtained by subtracting the characters at the
+ * first position where s1 and s2 disagree. Function copied from K&R 2d at
+ * 106.
+ *
+ * Arguments: Two character strings
+ *
+ * Returns: See description.
+ */
 
 int eventcmp (const char *s1, const char *s2)
 {

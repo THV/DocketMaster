@@ -1,47 +1,46 @@
 /*
  * =============================================================================
  *
- *       Filename: main.c
+ *       Filename:  main.c
  *
  *    Description:  
  *
- *        Version: 1.0.20
- *        Created: August 2011
- *  Last Modified: Sat Nov 28 22:33:18 2020
- *       Compiler: gcc
+ * Version: 1.0.20
+ * Created: 8/18/2011
+ * Last Modified: Sun Dec 13 21:18:47 2020
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
+ * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ * Organization: Dark Matter Computing
  *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ * License: This file is part of DocketMaster.
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ * DocketMaster is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation,
+ * version 2 of the License.
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
+ * DocketMaster is distributed in the hope that it will be
+ * useful,but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for
+ * more details.
  *
- *	        Usage:
- *    File Format:
- *   Restrictions:
- * Error Handling:
- *     References:
- *          Notes:
+ * You should have received a copy of the GNU General Public
+ * License along with DocketMaster.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ *
+ * Usage: 
+ *
+ * File Format: 
+ * Restrictions: 
+ * Error Handling: 
+ * References: 
+ * Notes:
  *
  * SPDX-License-Identifier: GPL-2.0-only
- * =============================================================================
  */
-
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 
@@ -66,13 +65,13 @@
 
 FILE *HOLIDAY_FILE;
 
-/* struct holidaynode *holidayhashtable[13]; !VARIABLE DEFINITION! This is THE
+struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
 					      instance of the jurisdiction's set
 					      of holiday rules. */
 
-/* EventGraph jurisdevents;  !VARIABLE DEFINITION! This is THE instance of the
-			    EventGraph for the particular jurisdiction's list
-			    of events.  */ 
+EventNode eventlist; /* !VARIABLE DEFINITION! This is THE instance ofthe Event
+			list for a federal class action settlement list of
+			events.  */ 
 
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ####################### */
@@ -84,15 +83,9 @@ void usage(char *);
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  main
- *   Description:  
- *     Arguments:  Commandline arguments: argc, *argv[] 
- *       Returns:  0 on success, error otherwise 
- *     Algorithm:  
- *    References:  
- *  	   Notes:  
- * =============================================================================
+ * Description:  
+ * Arguments:  Commandline arguments: argc, *argv[] 
+ * Returns:  0 on success, error otherwise 
  */
 
 int main(int argc, char *argv[])
@@ -143,15 +136,12 @@ int main(int argc, char *argv[])
 
 
 /* 
- * ===  FUNCTION  ==============================================================
- *          Name:  usage
- *   Description:  Called when there is an error on the commandline
- *     Arguments:  Char pointer to the program's name
- *       Returns:  Exit 8
- *     Algorithm:  
- *    References:   
- *  	   Notes:   
- * =============================================================================
+ * Description:  Called when there is an error on the commandline
+ * Arguments:  Char pointer to the program's name
+ * Returns:  Exit 8
+ * Algorithm:  
+ * References:   
+ * Notes:   
  */
 
 void usage(char *program_name)
