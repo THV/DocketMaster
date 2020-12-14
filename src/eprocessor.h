@@ -2,7 +2,6 @@
  * =============================================================================
  *
  *       Filename: eprocessor.h / "Event Processor Module"
-
  *
  *    Description: Processes court events. (1) this module takes input from
  *    		   the lexical analyzer to build the EventGraph.  (2) it takes
@@ -13,7 +12,7 @@
  *
  *        Version: 1.0
  *        Created: 02/03/2012 07:05:40 AM
- *  Last Modified: Fri 03 Feb 2012 08:27:49 AM PST
+ *  Last Modified: Fri 03 Feb 2012 08:31:55 AM PST
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com

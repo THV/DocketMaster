@@ -2,45 +2,30 @@
  * =============================================================================
  *
  *       Filename: ruleprocessor.h
- *    Description: This module processes the court holiday rules, and
- *                 litigation events.  It creates two balanced binary search
- *                 trees to hold the data for the court rules and court events.
  *
- *        Version: 1.0.20
- *        Created: 08/18/2011
- *  Last Modified: Sat Nov 28 22:42:22 2020
+ *    Description: This header file provides the api for the data types and
+ *    		   functions used to manage court holidays, court rules, and
+ *    		   court events.
+ *
+ *        Version: 1.0
+ *        Created: 02/16/2012 08:46:39 PM
+ *  Last Modified: Thu 23 Feb 2012 11:06:35 PM PST
  *       Compiler: gcc
- * 
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
- *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
+ *   Organization: Dark Matter Software
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
+ *      Copyright: Copyright (c) 2011, Thomas H. Vidal
  *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *	        Usage:  
- *    File Format: 
+ *	    Usage: 
+ *    File Format: None.
  *   Restrictions: 
  * Error Handling: 
  *     References: 
  *          Notes: 
- * 
- * SPDX-License-Identifier: GPL-2.0-only
- ===============================================================================
+ * =============================================================================
  */
+
 
 #ifndef _RULEPROCESSOR_H_INCLUDED_
 #define _RULEPROCESSOR_H_INCLUDED_
@@ -118,12 +103,35 @@ extern struct holidaynode *holidayhashtable[13];
   * THE holidayhashtable IS ONLY ACCESSIBLE TO FUNCTIONS THAT HAVE A RIGHT
   * TO ACCESS IT.  AS DECLARED HERE, IT MAY BE ACCESSIBLE EVERYWHERE. */
 
-/****************************************************************************
-* Data Type Definitions                                                     *
-*                                                                           *
-****************************************************************************/
 
-/* define the graph type for court events? see graphmgr.c */
+/*------------------------------------------------------------------------------
+ *  Data Type Definitions - Court Events
+ *----------------------------------------------------------------------------*/
+
+/* This data type is to store the class action settlement events.  The data
+ * type is a simple linked list.
+ */
+
+typedef struct CourtEvent
+{
+    int event_id; /* Holds the event id number */
+    int event_text[200]; /* Holds the name/text of the event */
+    int trigger_event; /* Holds the event id number of the triggering event */
+    int count; /*  Number to count. Positive means it comes AFTER the trigger,
+   		   negative means it comes BEFORE the trigger. */
+    enum units {days, weeks, months, quarters, years} count_pd;
+    		/* The interval to count */
+    char authority[100]; /* the authority for the event */
+};
+
+/* structure for linked list to hold court events */
+typedef struct EventNode
+{
+    CourtEvent event; /* the event contained in this node */
+    struct DATETIME event_date; /* the date of the event */
+    struct EventNode *nextevent; /* pointer to the next item in the list */
+};
+
 
 /****************************************************************************
 *****************************************************************************
@@ -147,6 +155,32 @@ int processhrule (struct DATETIME *dt, struct holidaynode *rulenode);
 int isholiday (struct DATETIME *dt);
 
 
+/* 
+ * ===  FUNCTION  ==============================================================
+ *          Name:  processevent
+ *   Description:  
+ *     Arguments:  
+ *       Returns:  
+ *     Algorithm:  
+ *    References:  
+ * 	   Notes:  
+ * =============================================================================
+ */
+int processevent(struct DATETIME *dt, struct *eventnode);
+
+/* 
+ * ===  FUNCTION  ==============================================================
+ *          Name:  displayschedule
+ *   Description:  displays the scheduled chain of events
+ *     Arguments:  pointer to eventnode
+ *       Returns:  No return value
+ *     Algorithm:  --
+ *    References:  --
+ * 	   Notes:  --
+ * =============================================================================
+ */
+
+void displayschedule(struct *eventnode)
 
 #ifdef UNDEF /* presently the remainder of this source file is removed from
 compilation for testing. */

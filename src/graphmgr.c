@@ -12,7 +12,7 @@
  *
  *        Version: 1.0
  *        Created: 10/24/2011
- *  Last Modified: Wed 01 Feb 2012 09:19:18 PM PST
+ *  Last Modified: Fri 03 Feb 2012 08:28:08 AM PST
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -115,162 +115,6 @@ int isemptygraph(EventGraph* graph)
 int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto)
 {
     return 0;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: numberofevents                                                      *
-*                                                                           *
-* Description: Counts the number of events in the event list.               *
-*                                                                           *
-* Arguments: Takes a pointer to an EventGraph.                              *
-*                                                                           *
-* Returns: The number of events in the EventGraph.                          *
-*                                                                           *
-****************************************************************************/
-
-int numberofevents (CourtEventNode* list)
-{
-    CourtEventNode *cur_pos; /* current position */
-    int count = 0; /* the count */
-
-    cur_pos = list;
-
-    while (cur_pos != NULL)
-    {
-        count++;
-        cur_pos = cur_pos->nextevent;
-    }
-
-    return count;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: numberofdependencies                                                *
-*                                                                           *
-* Description: Counts the number of dependencies in the AdjacencyMatrix.    *
-*                                                                           *
-* Arguments: Takes a pointer to an EventGraph.                              *
-*                                                                           *
-* Returns: The number of dependencies (arcs) in the EventGraph.             *
-*                                                                           *
-* Note: currently this only counts the TRIGGERING dependencies, not the     *
-* triggered dependencies.  The triggering dependencies are the "true"       *
-* dependencies.                                                             *
-****************************************************************************/
-
-int numberofdependencies (AdjacencyMatrix* dependencies)
-{
-    int row, col, count;
-
-    count = 0;
-    for (row = 0; row < dependencies->trigger_rows; row++)
-    {
-        for (col = 0; col < dependencies->triggeredby_cols; col++)
-        {
-            if (dependencies->rowptr[row][col].dependencyhandle != NULL  &&
-                TEST_FLAG(dependencies->rowptr[row][col].dependencyflag,
-                          TRIGGERS))
-                    count++;
-        }
-    }
-
-    return count;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: searchforevent                                                      *
-*                                                                           *
-* Description: Determines whether a particular event (vertex) is in the     *
-* event list.                                                               *
-*                                                                           *
-* Arguments: Takes a string pointer containing the vertex to search for,    *
-* and pointer to the court event list to search.                             *
-*                                                                           *
-* Returns: If the graph contains a vertex that is equal to the serch string,*
-* the function returns a pointer to the position of the event. Otherwise,   *
-* function returns NULL.                                                    *
-*                                                                           *
-* Note: function is currently keyed to search only the shorttitle member of *
-* the eventnode.                                                            *
-****************************************************************************/
-
-CourtEventNode* searchforevent (char *eventname,CourtEventNode* list)
-{
-
-    CourtEventNode *cur_pos; /* current position */
-    char *searchstring, *eventstring;
-
-    cur_pos = list;
-    searchstring = eventname;
-    eventstring = list->eventdata.shorttitle;
-
-    while (cur_pos != NULL)
-    {
-        if (searchstring != NULL && eventstring != NULL &&
-               *searchstring == *eventstring)
-        {
-            searchstring++;
-            eventstring++;
-        }
-        else if (searchstring == NULL && eventstring == NULL)
-        {
-            return cur_pos; /* found a match */
-        }
-        else
-        {
-                cur_pos = cur_pos->nextevent;
-                searchstring = eventname;
-                eventstring = list->eventdata.shorttitle;
-                continue;
-        }
-    }
-
-    return cur_pos;
-}
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: searchfordependency                                                 *
-*                                                                           *
-* Description: Determines whether a particular Dependency relationship      *
-* exists.                                                                   *
-*                                                                           *
-* Arguments: Takes pointers to two vertices and a pointer to the EventGraph *
-* to search.                                                                *
-*                                                                           *
-* Returns: If the graph contains an a Dependency relationship between       *
-* event1 and event2, the function returns a pointer to the position of the  *
-* Dependency. Otherwise, function returns NULL.                             *
-*                                                                           *
-* Note: The order of vertices is important. It will determine whether       *
-* vertex1 (event1) is triggeredby vertex2 (event2).                         *
-****************************************************************************/
-
-Dependency* searchfordependency (CourtEventNode *event1,
-                                       CourtEventNode *event2,
-                                        EventGraph* graph)
-{
-    Dependency* dependencyfound;
-
-    if (graph->dependencymatrix.rowptr[event1->eventposn][event2->eventposn].dependencyhandle
-        != NULL)
-    {
-        dependencyfound = &graph->dependencymatrix.rowptr[event1->eventposn][event2->eventposn];
-        /* SYNTAX QUESTION: I am not sure if the & gives me the addres of graph,
-        or the address of the Dependency, like I believe it should.  Must
-        test. */
-    }
-    else if (graph->dependencymatrix.rowptr[event2->eventposn][event1->eventposn].dependencyhandle
-             != NULL)
-    {
-        dependencyfound = &graph->dependencymatrix.rowptr[event2->eventposn][event1->eventposn];
-    } else
-        dependencyfound = NULL;
-
-    return dependencyfound;
 }
 
 /****************************************************************************
@@ -448,25 +292,6 @@ void traverse (EventGraph* graph)
 /* consider adding: isconnected */
 
 /* consider adding: findshortestpath */
-
-/****************************************************************************
-**************************   FUNCTION DEFINITION   **************************
-* Name: followchain                                                         *
-*                                                                           *
-* Description: Function starts at a certain vertex and traverses through    *
-* all events along the chain.  In the context of the CourtEvents, it starts *
-* with a triggering event and visits all the events triggered by that event.*
-*                                                                           *
-* Arguments: Takes a pointer to the starting vertex and the EventGraph      *
-*                                                                           *
-* Returns: None.                                                            *
-*                                                                           *
-****************************************************************************/
-
-void followchain (CourtEvent* startingvertex, EventGraph* graph)
-{
-
-}
 
 
 /****************************************************************************
