@@ -4,24 +4,41 @@
  *       Filename: graphmgr.h
  *
  *    Description: This is the module manages the data type that handles
- *    		   processing the court events for the DocketMaster application
- *    		   program for attorneys.  The events are stored in a directed
- *    		   network graph type.  This module and the associated header
- *    		   file contain the various functions required to create,
- *    		   maintain, modify, and search the database of court events.  
+ *    		       processing the court events for the DocketMaster application
+ *    		       program for attorneys.  The events are stored in a directed
+ *    		       network graph type.  This module and the associated header
+ *    		       file contain the various functions required to create,
+ *    		       maintain, modify, and search the database of court events.  
  *
- *        Version: 1.0
+ *        Version: 1.0.20
  *        Created: 10/24/2011
- *  Last Modified: Fri 03 Feb 2012 08:28:12 AM PST
+ *  Last Modified: Sun Dec 13 17:55:25 2020
  *       Compiler: gcc
  *
- *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
- *   Organization: Dark Matter Software
- *      Copyright: Copyright (c) 2012, Thomas H. Vidal
+ *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
+ *   Organization: Dark Matter Computing
+ *  
+ *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
+ *        License: This file is part of DocketMaster.
  *
- *	    Usage: Used by the DocketMaster application to create a searchable
- *	           database of court events and dependencies that can be
- *	           scheduled on a trial calendar. 
+ *                 DocketMaster is free software: you can redistribute it
+ *                 and/or modify it under the terms of the GNU General
+ *                 Public License as published by the Free Software Foundation,
+ *                 version 2 of the License.
+ *
+ *                 DocketMaster is distributed in the hope that it will be
+ *                 useful,but WITHOUT ANY WARRANTY; without even the implied
+ *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *                 PURPOSE.  See the GNU General Public License for
+ *                 more details.
+ *
+ *                 You should have received a copy of the GNU General Public
+ *                 License along with DocketMaster.  If not, see
+ *                 <https://www.gnu.org/licenses/>.
+ *
+ *	        Usage: Used by the DocketMaster application to create a searchable
+ *	               database of court events and dependencies that can be
+ *	               scheduled on a trial calendar. 
  *    File Format: 
  *   Restrictions: 
  * Error Handling: 
@@ -32,14 +49,15 @@
  *          	   scheduling rules) and manage information.  All calculations
  *          	   performed on the court event information are declared in the
  *          	   eprocessor.h file.
+ * 
+ * SPDX-License-Identifier: GPL-2.0-only
  * =============================================================================
  */
 
 #ifndef _GRAPHMGR_H_INCLUDED_
 #define _GRAPHMGR_H_INCLUDED_
 
-/* #include "../rule processor/ruleprocessor.h"
- */
+#include "ruleprocessor.h"
 
 /****************************************************************************
 * Macros                                                                    *
@@ -182,8 +200,7 @@ const unsigned char EXPRESS_MAIL_COURT = (1<<3);
 const unsigned char FAX_SERVICE_COURT = (1<<4);
 const unsigned char ELECTRONIC_SERVICE_COURT = (1<<5);
 
-typedef struct ExtraServiceDays
-{
+typedef struct {
     unsigned char counttypeflags; /* count type is a series of flags that
     indicate whether the particular service-type's extra days are calendar days
     or court days. */
@@ -193,7 +210,7 @@ typedef struct ExtraServiceDays
     unsigned char express_mail_days;
     unsigned char fax_servicedays;
     unsigned char electronic_servicedays;
-};
+} ExtraServiceDays;
 
 
 /****************************************************************************
@@ -226,7 +243,7 @@ typedef struct ExtraServiceDays
 *                                                                           *
 ****************************************************************************/
 
-typedef struct CourtEvent {
+typedef struct{
     unsigned char eventflags; /* the possible values are defined above as
     symbolic flag constants. */
 
@@ -280,14 +297,14 @@ typedef struct CourtEvent {
                             and changed to be an edge of the directed graph data
                             type.  MAY NOT BE NECESSARY BECAUSE THIS INFORMATION
                             MAY BE STORED IN THE MATRIX ALREADY.  */
-};
+} CourtEvent;
 
 /****************************************************************************
 * Edge data type - Dependency Events.                                       *
 *                                                                           *
 ****************************************************************************/
 
-typdef struct Dependency {
+typedef struct {
     CourtEvent *dependencyhandle; /* pointer to dependent event */
 
     CourtEvent *dependencyhandle_deft; /* pointer to dependent event if
@@ -312,20 +329,20 @@ typdef struct Dependency {
     LAWSUITS? ADD MEMBERS TO ADDRESS THAT ISSUE. IN THE CASE OF MULTIPLE
     DEPENDENCIES, SHOULD THIS HAVE A POINTER OR A LINKED LIST TO ALL OF THEM...
     OR WILL IT BE COVERED "ORGANICALLY" BY THE MATRIX OF DEPENDENCIES? */
-};
+} Dependency;
 
 /****************************************************************************
 * List data type to store all the verticies (court events)                  *
 *                                                                           *
 ****************************************************************************/
 
-typedef struct CourtEventNode {
+typedef struct {
     CourtEvent eventdata; /* the event information contained in this
                                     node */
     int eventposn; /* the position this event has in the list of events. This
                     will be important to search dependencies at O(1) time. */
     CourtEventNode *nextevent; /* pointer to the next event */
-};
+} CourtEventNode;
 
 /****************************************************************************
 * Adjacency Matrix data type to store all the edge information and cross-   *
@@ -333,7 +350,7 @@ typedef struct CourtEventNode {
 *                                                                           *
 ****************************************************************************/
 
-typedef struct Adjacencymatrix {
+typedef struct {
     int trigger_rows; /* rows = triggering dependencies */
     int triggeredby_cols; /* cols = triggered-by dependencies */
     /* rows and cols will be set at run-time after the number of events in the
@@ -343,19 +360,19 @@ typedef struct Adjacencymatrix {
     element of the matrix.  */
     Dependency *matrixptr; /* pointer to a Dependency-struct, which will
     point to entire contiguous block of memory.  I.e., the simulated array. */
-};
+} Adjacencymatrix;
 
 /****************************************************************************
 * Graph Data Type re Court Events.                                          *
 *                                                                           *
 ****************************************************************************/
 
-typedef struct EventGraph {
+typedef struct {
     CourtEventNode *eventlist;
     Adjacencymatrix dependencymatrix;
     int listsize; /* number of vertices */
     int numedges; /* number of edges */
-};
+} EventGraph;
 
 
 /****************************************************************************
@@ -412,6 +429,75 @@ int isemptygraph(EventGraph* graph);
 ****************************************************************************/
 
 int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: numberofevents                                                      *
+*                                                                           *
+* Description: Counts the number of events in the event list.               *
+*                                                                           *
+* Arguments: Takes a pointer to an EventGraph.                              *
+*                                                                           *
+* Returns: The number of events in the EventGraph.                          *
+*                                                                           *
+****************************************************************************/
+
+int numberofevents (CourtEventNode *list);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: numberofdependencies                                                *
+*                                                                           *
+* Description: Counts the number of dependencies in the Adjacencymatrix.    *
+*                                                                           *
+* Arguments: Takes a pointer to an adjacency matris.                        *
+*                                                                           *
+* Returns: The number of dependencies (arcs) in the EventGraph.             *
+*                                                                           *
+****************************************************************************/
+
+int numberofdependencies (Adjacencymatrix* dependencies);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: searchforevent                                                      *
+*                                                                           *
+* Description: Determines whether a particular event (vertex) is in the     *
+* event list.                                                               *
+*                                                                           *
+* Arguments: Takes a string pointer containing the vertex to search for,    *
+* and pointer to the court event list to search.                             *
+*                                                                           *
+* Returns: If the graph contains a vertex that is equal to the serch string,*
+* the function returns a pointer to the position of the event. Otherwise,   *
+* function returns NULL.                                                    *
+*                                                                           *
+* Note: function is currently keyed to search only the shorttitle member of *
+* the eventnode.                                                            *
+****************************************************************************/
+
+CourtEventNode* searchforevent (char *eventname, CourtEventNode* list);
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: searchfordependency                                                 *
+*                                                                           *
+* Description: Determines whether a particular dependency relationship      *
+* exists.                                                                   *
+*                                                                           *
+* Arguments: Takes pointers to two vertices and a pointer to the EventGraph *
+* to search.                                                                *
+*                                                                           *
+* Returns: If the graph contains an a dependency relationship between       *
+* event1 and event2, the function returns a pointer to the position of the  *
+* dependency. Otherwise, function returns NULL.                             *
+*                                                                           *
+* Note: The order of vertices is important. It will determine whether       *
+* vertex1 (event1) is triggeredby vertex2 (event2).                         *
+****************************************************************************/
+
+Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode *event2,
+                                 EventGraph *graph);
 
 /****************************************************************************
 *************************   FUNCTION DECLARATION   **************************
@@ -515,6 +601,22 @@ void traverse (EventGraph* graph); /* breadth first */
 /* consider adding: isconnected */
 
 /* consider adding: findshortestpath */
+
+/****************************************************************************
+*************************   FUNCTION DECLARATION   **************************
+* Name: followchain                                                         *
+*                                                                           *
+* Description: Function starts at a certain vertex and traverses through    *
+* all events along the chain.  In the context of the CourtEvents, it starts *
+* with a triggering event and visits all the events triggered by that event.*
+*                                                                           *
+* Arguments: Takes a pointer to the starting vertex and the EventGraph      *
+*                                                                           *
+* Returns: None.                                                            *
+*                                                                           *
+****************************************************************************/
+
+void followchain (CourtEvent* startingvertex, EventGraph* graph);
 
 /****************************************************************************
 *****************************************************************************
