@@ -4,48 +4,29 @@
  *       Filename: graphmgr.c
  *
  *    Description: This is the module manages the data type that handles
- *    		       processing the court events for the DocketMaster application
- *    		       program for attorneys.  The events are stored in a directed
- *    		       network graph type.  This module and the associated header
- *    		       file contain the various functions required to create,
- *    		       maintain, modify, and search the database of court events.  
+ *    		   processing the court events for the DocketMaster application
+ *    		   program for attorneys.  The events are stored in a directed
+ *    		   network graph type.  This module and the associated header
+ *    		   file contain the various functions required to create,
+ *    		   maintain, modify, and search the database of court events.  
  *
- *        Version: 1.0.20
+ *        Version: 1.0
  *        Created: 10/24/2011
- *  Last Modified: Sat Nov 28 22:32:06 2020
+ *  Last Modified: Wed 01 Feb 2012 09:19:18 PM PST
  *       Compiler: gcc
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
- *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
+ *   Organization: Dark Matter Software
+ *      Copyright: Copyright (c) 2012, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
- *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
- *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *
- *	        Usage: Used by the DocketMaster application to create a searchable
- *	               database of court events and dependencies that can be
- *	               scheduled on a trial calendar. 
+ *	    Usage: Used by the DocketMaster application to create a searchable
+ *	           database of court events and dependencies that can be
+ *	           scheduled on a trial calendar. 
  *    File Format: 
  *   Restrictions: 
  * Error Handling: 
  *     References: 
  *          Notes: [no notes as of 10/24/2011]. 
- * 
- * SPDX-License-Identifier: GPL-2.0-only
  * =============================================================================
  */
 
