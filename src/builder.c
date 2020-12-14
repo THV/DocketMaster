@@ -4,44 +4,26 @@
  *       Filename: builder.c
  *
  *    Description: This module manages the opening, verifying, and closing of
- *                 rule and event files.
+ *    		   rule and event files.
  *
- *        Version: 1.0.20
- *        Created: 08/18/2011
- *  Last Modified: Sat Nov 28 22:29:56 2020
+ *        Version: 1.0
+ *        Created: 01/29/2012 01:07:58 PM
+ *  Last Modified: Sun 04 Mar 2012 10:48:06 AM PST
  *       Compiler: gcc
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
- *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
+ *   Organization: Dark Matter Software
+ *      Copyright: Copyright (c) 2012, Thomas H. Vidal
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
- *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
- *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *
- *	        Usage:  
+ *	    Usage: 
  *    File Format: 
  *   Restrictions: 
  * Error Handling: 
  *     References: 
  *          Notes: 
- * 
- * SPDX-License-Identifier: GPL-2.0-only
- ===============================================================================
+ * =============================================================================
  */
+
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
 #include <stdio.h>
@@ -59,7 +41,9 @@
 
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ######################## */
 
-extern EventGraph jurisdevents; /* declared in build.h */
+EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
+			    EventGraph for the particular jurisdiction's list
+			    of events.  */ 
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ####################### */
 
@@ -89,29 +73,27 @@ extern EventGraph jurisdevents; /* declared in build.h */
 
 int buildre(char *holiday, char *events, char *extras)
 {
-    enum FILETYPE filetype;
+    enum FILETYPE filetype; /* variable to store the type of file being read */
+    char fields[MAXNUMFIELDS][MAXFIELDLEN]; /* the list of field names */
     extern FILE *HOLIDAY_FILE;
     extern FILE *EVENT_FILE;
-
+    
     /* Build Holiday Rules */
 
-    HOLIDAY_FILE = getfile(holiday); /* open the holiday file */
+    /* open the holiday file */
+    HOLIDAY_FILE = getfile(holiday);  
+
     /* check filetype, version, and row headers */
-    if (checkfile(HOLIDAY_FILE) == H_FILE) {
-     	
-    	/* initialize the array of linked lists for the holidays */
-	initializelist(holidayhashtable);
-	
-	/* Parse the holiday rules */
-    	parseholidays(HOLIDAY_FILE); 	
-	
-	/* close the file */
+    ftype = checkfile(infile, filename, fields);
+
+    /* initialize the array of linked lists for the holidays */
+    initializelist(holidayhashtable);
+
+    /* lexically analyze the rules and build the array of linked lists. */
+    parsefile(HOLIDAY_FILE, holiday, ftype, fields, holidayhashtable);
+
+    /* close the file */
 	closefile(HOLIDAY_FILE); 
-    } else {
-
-    	/* TODO: code what happens on failure */
-
-    }
 
     /*  Build the Court Events */
     EVENT_FILE = getfile(events); /* open the events file */
@@ -158,7 +140,8 @@ FILE * getfile(char *file_name)
  * ===  FUNCTION  ==============================================================
  *          Name:  checkfile
  *   Description:  Verifies the name and version of an opened file.
- *     Arguments:  File handle.
+ *     Arguments:  File handle, name of the file, and char * which the field
+ *     		   names will be copied into.
  *       Returns:  Returns an enum FILETYPE, which is an integer whose value is
  *       	   0 if the file is a holiday rules file, 1 if the file is an
  *       	   events file, and a 2 if the file is a local rules file.
@@ -168,9 +151,10 @@ FILE * getfile(char *file_name)
  * =============================================================================
  */
 
-enum FILETYPE checkfile (FILE *in_file, char *filename)
+enum FILETYPE checkfile (FILE *in_file, const char *filename,
+                         char *fields[MAXNUMFIELDS][])
 {
-    char headers[500]; /* buffer to read the file headers */
+    char headers[MAXRECORDLENGTH]; /* buffer to read the file headers */
     char *name = NULL; /* pointer to file name */
     char *vers = NULL; /* pointer to file version */
     int index = 0; /* loop counter */
@@ -188,10 +172,10 @@ enum FILETYPE checkfile (FILE *in_file, char *filename)
         index = 1;
         while (headers[index] != '\n')
         {
-            if (headers[index] == ',')
+            if (headers[index] == FIELDDELIM)
             {
-                headers[index] = '\0'; /* file is CSV, to covert comma to
-                                        end of string character */
+                headers[index] = '\0'; /* file is CSV, to covert field delimiter
+                                          to end of string character */
                 if (vers == NULL)
                 {
                     vers = &headers[index+1];
@@ -199,7 +183,8 @@ enum FILETYPE checkfile (FILE *in_file, char *filename)
                 }
             }
             index++; /* increase the index */
-            if ((headers[index] == ',') && (headers[index+1] == ','))
+            if ((headers[index] == FIELDDELIM) &&
+                    (headers[index+1] == FIELDDELIM))
                 headers[index] = '\0';
         }
         /* printf("## DEBUG ## Version = %s\n",vers); */
@@ -220,9 +205,20 @@ enum FILETYPE checkfile (FILE *in_file, char *filename)
             exit(8);
         }
     }
+
+    /*  Get the field names and store them in the fields array of strings */
+
     fgets(headers, sizeof(headers), in_file); /* gets the next line of the file
-            which should contain the CSV headers. Right now nothing happens
-            with data.  It is read and discarded. */
+            which should contain the CSV field names. */
+    
+    strcpy(fields[index], ftotok(headers, FIELDDELIM, TDELIM));
+    index++;
+
+    while(headers) { /* When headers = NULL then loop terminates */
+        strcpy(fields[index], ftotok('\0', FIELDDELIM, TDELIM));
+        index++;
+    }
+
     return 0;
 }
 
@@ -266,5 +262,4 @@ void resetfile (FILE *infile)
   clearerr(infile);
 
   return;
-    
 }		/* -----  end of function resetfile  ----- */
