@@ -8,7 +8,7 @@
  *
  *        Version: 1.0
  *        Created: 03/11/2012 12:33:51 PM
- *  Last Modified: Sun 11 Mar 2012 12:43:39 PM PDT
+ *  Last Modified: Sun 11 Mar 2012 01:01:54 PM PDT
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -58,6 +58,9 @@
 /* #####   EXPORTED VARIABLES   ############################################# */
 
 /* #####   EXPORTED FUNCTION DECLARATIONS   ################################# */
+
+void usage(char *);
+void errorprocessor(int errcode);
 
 
 #endif	/* _ERRORHANDLER_H_INCLUDED_ */

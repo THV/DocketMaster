@@ -9,7 +9,7 @@
  *
  *        Version: 1.0
  *        Created: 02/16/2012 08:46:39 PM
- *  Last Modified: Thu 23 Feb 2012 11:06:35 PM PST
+ *  Last Modified: Sat 03 Mar 2012 12:54:29 PM PST
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -33,10 +33,7 @@
 #include "datetools.h"
 
 
-/****************************************************************************
-* Symbolic Constants                                                        *
-*                                                                           *
-****************************************************************************/
+/* #####   EXPORTED SYMBOLIC CONSTANTS   #################################### */
 
 #define MONTHS 13 /* Month is defined as 13 to account for the code for a
                     holiday that applies to all months, e.g., Sundays. */
