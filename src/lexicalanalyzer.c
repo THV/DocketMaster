@@ -9,7 +9,7 @@
  *
  *        Version: 1.0
  *        Created: 0x/xx/2011 09:56:56 PM
- *  Last Modified: Sat 02 Jun 2012 09:38:43 AM PDT
+ *  Last Modified: Tue 28 Aug 2012 08:23:40 AM PDT
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -118,13 +118,17 @@ char * ftotok (char *string, char fdelim, char tdelim);
  */
 
 
-int parsefile (FILE *infile, const char *filename, FILETYPE ftype, const
-               char *fields[MAXNUMFIELDS][], void *datastruct)
+int parsefile (FILE *infile, const char *filename,
+        const char *fields[MAXNUMFIELDS][], void *datastruct)
 {
     char currecord[MAXRECORDLENGTH]; /* single record input buffer */
     int curfield = 0; /* index to current field name */
 
+    /* check filetype, version, and row headers */
+    ftype = checkfile(infile, filename, fields);
+ 
    if (ftype == H_FILE) {
+       
     /* lexically analyze the rules and build the array of linked lists.
         After running the checkfile function, the file should be
         on the line with the first rule.  */

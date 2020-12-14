@@ -8,7 +8,7 @@
  *
  *        Version: 1.0
  *        Created: 01/29/2012 01:07:58 PM
- *  Last Modified: Sun 04 Mar 2012 10:48:06 AM PST
+ *  Last Modified: Tue 28 Aug 2012 08:24:03 AM PDT
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -83,10 +83,7 @@ int buildre(char *holiday, char *events, char *extras)
     /* open the holiday file */
     HOLIDAY_FILE = getfile(holiday);  
 
-    /* check filetype, version, and row headers */
-    ftype = checkfile(infile, filename, fields);
-
-    /* initialize the array of linked lists for the holidays */
+   /* initialize the array of linked lists for the holidays */
     initializelist(holidayhashtable);
 
     /* lexically analyze the rules and build the array of linked lists. */
