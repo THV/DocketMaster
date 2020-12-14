@@ -7,7 +7,7 @@
  *
  *        Version:  1.0
  *        Created:  August 2011
- *  Last Modified: Wed 01 Feb 2012 09:19:18 PM PST
+ *  Last Modified: Thu 23 Feb 2012 11:07:07 PM PST
  *       Compiler:  gcc
  *
  *         Author:  Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -52,9 +52,9 @@ struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
 					      instance of the jurisdiction's set
 					      of holiday rules. */
 
-EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
-			    EventGraph for the particular jurisdiction's list
-			    of events.  */ 
+EventNode eventlist; /* !VARIABLE DEFINITION! This is THE instance ofthe Event
+			list for a federal class action settlement list of
+			events.  */ 
 
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ####################### */

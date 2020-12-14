@@ -3,45 +3,28 @@
  *
  *       Filename: builder.h
  *
- *    Description: This module manages the opening, verifying, and closing of
- *                 rule and event files.
+ *    Description: This module manages the opening, verifying, and closing
+ *    		   of rule and event files.
  *
- *        Version: 1.0.20
- *        Created: 08/18/2011
- *  Last Modified: Sat Nov 28 22:51:45 2020
+ *        Version: 1.0
+ *        Created: 01/29/2012 01:01:11 PM
+ *  Last Modified: Thu 23 Feb 2012 10:14:06 PM PST
  *       Compiler: gcc
  *
- *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
- *   Organization: Dark Matter Computing
- *  
- *      Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *        License: This file is part of DocketMaster.
+ *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
+ *   Organization: Dark Matter Software
  *
- *                 DocketMaster is free software: you can redistribute it
- *                 and/or modify it under the terms of the GNU General
- *                 Public License as published by the Free Software Foundation,
- *                 version 2 of the License.
+ *      Copyright: Copyright (c) 2012, Thomas H. Vidal
  *
- *                 DocketMaster is distributed in the hope that it will be
- *                 useful,but WITHOUT ANY WARRANTY; without even the implied
- *                 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *                 PURPOSE.  See the GNU General Public License for
- *                 more details.
- *
- *                 You should have received a copy of the GNU General Public
- *                 License along with DocketMaster.  If not, see
- *                 <https://www.gnu.org/licenses/>.
- *
- *	        Usage:  
+ *	    Usage: 
  *    File Format: 
  *   Restrictions: 
  * Error Handling: 
  *     References: 
  *          Notes: 
- * 
- * SPDX-License-Identifier: GPL-2.0-only
- ===============================================================================
+ * =============================================================================
  */
+
 
 #ifndef  _BUILDER_H__INC
 #define  _BUILDER_H__INC
@@ -115,7 +98,8 @@ FILE * getfile(char *file_name);
  * ===  FUNCTION  ==============================================================
  *          Name:  checkfile
  *   Description:  Verifies the name and version of an opened file.
- *     Arguments:  File handle.
+ *     Arguments:  File handle, name of the file, and char * which the field
+ *     		   names will be copied into.
  *       Returns:  Returns an enum FILETYPE, which is an integer whose value is
  *       	   0 if the file is a holiday rules file, 1 if the file is an
  *       	   events file, and a 2 if the file is a local rules file.
@@ -125,7 +109,8 @@ FILE * getfile(char *file_name);
  * =============================================================================
  */
 
-enum FILETYPE checkfile (FILE *in_file, char *filename);
+enum FILETYPE checkfile (FILE *in_file, const char *filename, char *fields);
+
 
 /****************************************************************************
 **************************   FUNCTION DECLARATION   *************************
