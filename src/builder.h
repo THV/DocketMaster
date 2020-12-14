@@ -8,7 +8,7 @@
  *
  *        Version: 1.0
  *        Created: 01/29/2012 01:01:11 PM
- *  Last Modified: Thu 23 Feb 2012 10:14:06 PM PST
+ *  Last Modified: Tue 28 Feb 2012 11:42:42 PM PST
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomasvidal@hotmail.com
@@ -49,11 +49,6 @@ FILE *HOLIDAY_FILE;
 struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
 					      instance of jurisdictions' set
 					      of holiday rules. */
-
-EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
-			    EventGraph for the particular jurisdiction's list
-			    of events.  */ 
-
 
 /* #####   EXPORTED FUNCTION DECLARATIONS   ################################# */
 
