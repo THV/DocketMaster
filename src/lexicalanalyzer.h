@@ -1,5 +1,6 @@
 /*
  * Filename: lexicalanalyzer.h
+ * Project: DocketMaster
  *
  * Description: The lexical analyzer module reads a data file and adds the
  * tokens derived from the file into the rules, holidays, and events data
@@ -7,29 +8,13 @@
  *
  * Version: 1.0.20
  * Created: 10/24/2011
- * Last Modified: Sun Dec 13 22:14:50 2020
+ * Last Modified: Mon Dec 14 00:36:54 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
  *  
  * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *
- * License: This file is part of DocketMaster.
- *
- * DocketMaster is free software: you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation,
- * version 2 of the License.
- *
- * DocketMaster is distributed in the hope that it will be
- * useful,but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- * PURPOSE.  See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public
- * License along with DocketMaster.  If not, see
- * <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: GPL-2.0-only
  *
  * Usage: The calling module kicks off the routines in this module by sending
  * the data file, file name, filetype, field names, and the appropriate data
@@ -46,8 +31,6 @@
  *
  * Notes: TODO Instead of passing one data structure type, pass a
  *                 a void pointer to the data type??? 
- *
- * SPDX-License-Identifier: GPL-2.0-only
  */
 
 #ifndef _LEXICALANALYZER_H_INCLUDED_

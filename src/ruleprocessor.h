@@ -1,34 +1,19 @@
 /*
  * Filename: ruleprocessor.h
+ * Project: DocketMaster
  *
  * Description: This header file provides the api for the data types and
  * functions used to manage court holidays, court rules, and court events.
  *
  * Version: 1.0.20
  * Created: 02/16/2012 08:46:39 PM
- * Last Modified: Mon Dec 14 00:06:46 2020
+ * Last Modified: Mon Dec 14 00:35:16 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
  *  
  * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *
- * License: This file is part of DocketMaster.
- *
- * DocketMaster is free software: you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation,
- * version 2 of the License.
- *
- * DocketMaster is distributed in the hope that it will be
- * useful,but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- * PURPOSE.  See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public
- * License along with DocketMaster.  If not, see
- * <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: GPL-2.0-only
  *
  * Usage: 
  * File Format: 
@@ -36,8 +21,6 @@
  * Error Handling: 
  * References: 
  * Notes:
- *
- * SPDX-License-Identifier: GPL-2.0-only
  */
 
 #ifndef _RULEPROCESSOR_H_INCLUDED_

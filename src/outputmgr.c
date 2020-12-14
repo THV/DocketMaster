@@ -1,34 +1,19 @@
 /*
  * Filename:  outputmgr.c
+ * Project: DocketMaster
  *
  * Description:  This module contains the functions that control output of data
  * to data files or the printer.
  *
  * Version: 1.0.20
  * Created:  01/14/2012 08:40:58 PM
- * Last Modified: Sun Dec 13 21:20:16 2020
+ * Last Modified: Mon Dec 14 00:38:26 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
  *  
  * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
- *
- * License: This file is part of DocketMaster.
- *
- * DocketMaster is free software: you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation,
- * version 2 of the License.
- *
- * DocketMaster is distributed in the hope that it will be
- * useful,but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- * PURPOSE.  See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public
- * License along with DocketMaster.  If not, see
- * <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: GPL-2.0-only
  *
  * Usage: Used by DocketMaster Program
  *
@@ -39,8 +24,6 @@
  * Error Handling: 
  * References: 
  * Notes: [no notes as of 10/24/2011]. 
- *
- * SPDX-License-Identifier: GPL-2.0-only
  */
 
 /* #####   HEADER FILE INCLUDES   ################################################### */
