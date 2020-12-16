@@ -8,7 +8,7 @@
  *
  * Version: 1.0.20
  * Created: 0x/xx/2011 09:56:56 PM
- * Last Modified: Mon Dec 14 00:34:16 2020
+ * Last Modified: Wed Dec 16 14:48:18 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -39,7 +39,7 @@
 void gettokens (char *record, (*tokenize)(void *, void *, void *));
     /* Parses record into fields */
 
-void gethtokens (char *r, char *f, struct holidayrule *hstruct);
+void gethtokens (char *r, char *f, struct HolidayRule *hstruct);
     /* Populates holiday rule structure with fields extracted from the record */
 
 void getevtokens (char *r, char *f, struct courtevent *estruct);
@@ -175,9 +175,9 @@ void gettokens (char *record, char* fieldn, (*tokenize)(void *, void *, void *))
         }
     }
 }
-    struct holidayrule temprule; /* store data for the rule until it is
+    struct HolidayRule temprule; /* store data for the rule until it is
                                     inserted into the binary tree */
-    struct holidayrule *tempptr; /* pointer to the temprule */
+    struct HolidayRule *tempptr; /* pointer to the temprule */
 
      char *token;
 
@@ -339,7 +339,7 @@ return tokenptr;
  * Notes:  
  */
 
-void gethtokens (char *field, char *fieldname, struct holidayrule *hstruct) {
+void gethtokens (char *field, char *fieldname, struct HolidayRule *hstruct) {
 
     char *posn; /* the current position of the string */
 
@@ -424,7 +424,7 @@ void gethtokens (char *field, char *fieldname, struct holidayrule *hstruct) {
 
 }
 
-void getevtokens (char *r, struct holidayrule *hstruct); 
+void getevtokens (char *r, struct HolidayRule *hstruct); 
 {
     return 0;
 }

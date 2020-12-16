@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: 01/29/2012 01:01:11 PM
- * Last Modified: Mon Dec 14 00:30:48 2020
+ * Last Modified: Wed Dec 16 14:27:55 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -42,7 +42,7 @@ enum FILETYPE {H_FILE, E_FILE, LOCAL_RUL_FILE};
 
 FILE *HOLIDAY_FILE;
 
-struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
+struct HolidayNode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
 					      instance of jurisdictions' set
 					      of holiday rules. */
 

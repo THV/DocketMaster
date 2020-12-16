@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created:  01/29/2012 11:13:22 AM
- * Last Modified: Mon Dec 14 00:38:54 2020
+ * Last Modified: Wed Dec 16 14:28:24 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -44,7 +44,7 @@
 
 void testsuite_dates(void)
 {
-    struct DATETIME testdate;
+    struct DateTime testdate;
     int truefalse;
 
     testdate.day = 22;
@@ -307,9 +307,9 @@ void testsuite_dates(void)
 
 void testsuite_checkholidays(void)
 {
-    struct DATETIME begin_date; /* date to begin date calculations */
-    struct DATETIME end_date; /* date to use for end calculations */
-    struct DATETIME result_date; /* used to hold new dates resulting from
+    struct DateTime begin_date; /* date to begin date calculations */
+    struct DateTime end_date; /* date to use for end calculations */
+    struct DateTime result_date; /* used to hold new dates resulting from
                                     calculations */
     int day_count; /* number of days before or after a particular deadline */
     char dateinput[11]; /*used to get data from the keyboard */
@@ -385,7 +385,7 @@ void testsuite_checkholidays(void)
     return;
 }
 
-void holidayprinttest(struct DATETIME *dt)
+void holidayprinttest(struct DateTime *dt)
 {
     printf("%d/%d/%d ", dt->month, dt->day, dt->year);
     if (isholiday(dt) !=0)
@@ -399,9 +399,9 @@ void holidayprinttest(struct DATETIME *dt)
 
 void testsuite_courtdays(void)
 {
-    struct DATETIME begin_date; /* date to begin date calculations */
-    struct DATETIME end_date; /* date to use for end calculations */
-    struct DATETIME result_date; /* used to hold new dates resulting from
+    struct DateTime begin_date; /* date to begin date calculations */
+    struct DateTime end_date; /* date to use for end calculations */
+    struct DateTime result_date; /* used to hold new dates resulting from
                                     calculations */
     int day_count; /* number of days before or after a particular deadline */
     char dateinput[11]; /*used to get data from the keyboard */
@@ -488,9 +488,9 @@ To check if a date is on the calendar:
 /* date test */
 
 /* variable declarations */
-    struct DATETIME begin_date; /* date to begin date calculations */
-    struct DATETIME end_date; /* date to use for end calculations */
-    struct DATETIME result_date; /* used to hold new dates resulting from
+    struct DateTime begin_date; /* date to begin date calculations */
+    struct DateTime end_date; /* date to use for end calculations */
+    struct DateTime result_date; /* used to hold new dates resulting from
                                     calculations */
     int day_count; /* number of days before or after a particular deadline */
     char dateinput[11]; /*used to get data from the keyboard */
@@ -518,9 +518,9 @@ To check if a date is on the calendar:
 
 void testsuite (void)
 {
-    struct DATETIME date1; /* variable to test date calculations */
-    struct DATETIME date2; /* second variable to test date calculations */
-    struct DATETIME date3; /* third test variable to use for date  */
+    struct DateTime date1; /* variable to test date calculations */
+    struct DateTime date2; /* second variable to test date calculations */
+    struct DateTime date3; /* third test variable to use for date  */
     int numdays = 35; /* this is a variable to test the date offset function.
                          35 is because the difference between 8/18/11 and
                          9/22/11 = 25 days. */

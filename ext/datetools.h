@@ -7,7 +7,7 @@
  *
  *        Version: 0.0
  *        Created: 08/18/2011 14:24:55
- *  Last Modified: Sat Dec 12 15:00:07 2020
+ *  Last Modified: Wed Dec 16 14:29:26 2020
  *       Compiler: gcc
  *
  *         Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
@@ -117,7 +117,7 @@ static int daysinmonths[2][13] = {{0, 31, 28, 31, 30, 31,
          *  then combine them.
          */
 
-struct DATETIME
+struct DateTime
 {
     int year;
     int month;
@@ -141,7 +141,7 @@ struct DATETIME
  *
  */
 
-int wkday_sakamoto (struct DATETIME *dt);
+int wkday_sakamoto (struct DateTime *dt);
 
 /*
  * Name: printwkday
@@ -165,14 +165,14 @@ void printwkday (int day);
  * used.  The weeked rules are simply part of the Holiday rules processing
  * tools
  *
- * Parameters: Takes a pointer to a DATETIME structure.
+ * Parameters: Takes a pointer to a DateTime structure.
  *
  * Return: Returns an integer equal to zero if the date is NOT a weekend, or
  * a 1 if the date IS a weekend.
  *
  */
 
-int isweekend (struct DATETIME *dt);
+int isweekend (struct DateTime *dt);
 
 
 /*
@@ -180,14 +180,14 @@ int isweekend (struct DATETIME *dt);
  *
  * Description: calculates whether a year is a leap year or not
  *
- * Parameters: Takes a pointer to a DATETIME structure.
+ * Parameters: Takes a pointer to a DateTime structure.
  *
  * Return: Returns an integer equal to zero if the year is NOT a leap year,
  *  or a 1 if the year IS a leap year.
  *
  */
 
-int isleapyear(struct DATETIME *dt);
+int isleapyear(struct DateTime *dt);
 
 
 /*
@@ -200,7 +200,7 @@ int isleapyear(struct DATETIME *dt);
  * specified date. This function does the opposite of the jdn2greg
  * function.
  *
- * Parameters: Takes a pointer to a DATETIME structure.
+ * Parameters: Takes a pointer to a DateTime structure.
  *
  * Return: Returns an integer with the Julian Date.  Usually this number is
  * not stored for "permanent use" but is used as an argument for
@@ -208,7 +208,7 @@ int isleapyear(struct DATETIME *dt);
  *
  */
 
-int jdncnvrt (struct DATETIME *dt);
+int jdncnvrt (struct DateTime *dt);
 
 /*
  * Name: jdn2greg
@@ -220,11 +220,11 @@ int jdncnvrt (struct DATETIME *dt);
  *   date. This function does the opposite of the jdncvrt function.
  *
  * Parameters:  Takes an integer representing a JDN and a pointer to a
- *   DATETIME structure.
+ *   DateTime structure.
  *
  */
 
-void jdn2greg (int jdn, struct DATETIME *calc_date);
+void jdn2greg (int jdn, struct DateTime *calc_date);
 
 /*
  * Name: date_difference
@@ -232,14 +232,14 @@ void jdn2greg (int jdn, struct DATETIME *calc_date);
  * Description: calculates the number of calendar days between two dates.
  *
  * Parameters: The starting date and ending date, both in the form of
- *   pointers to a DATETIME struct.
+ *   pointers to a DateTime struct.
  *
  * Return: Returns an integer which is the result of calculating the number
  *   of calendar days between the two dates.
  *
  */
 
-int date_difference (struct DATETIME *date1, struct DATETIME *date2);
+int date_difference (struct DateTime *date1, struct DateTime *date2);
 
 /*
  * Description: calculates the date after adding or subtracting a specified
@@ -248,14 +248,14 @@ int date_difference (struct DATETIME *date1, struct DATETIME *date2);
  * Usage: The algorithm EXCLUDES the first date, but counts the end date.
  *
  * Parameters: The starting date, the number of calender days to count, and a
- *   pointer to another DATETIME struct to store the result.
+ *   pointer to another DateTime struct to store the result.
  *
  * Return: No return, but the function changes the value of the variable
  *   calc_date (the resulting date) through use of the pointer. The return
  *   value is positive if date1 is before date 2, and negative otherwise.
  */
  
-void date_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
+void date_offset (struct DateTime *orig_date, struct DateTime *calc_date,
                   int numdays);
 
 /*
@@ -266,7 +266,7 @@ void date_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
  *   days.
  *
  * Parameters: The starting date, the number of court days to count, and a
- *   pointer to another DATETIME struct to store the result.
+ *   pointer to another DateTime struct to store the result.
  *
  * Return: No return, but the function changes the value of the variable
  *   calc_date (the resulting date) through use of the pointer.
@@ -274,7 +274,7 @@ void date_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
  */
 
 
-void courtday_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
+void courtday_offset (struct DateTime *orig_date, struct DateTime *calc_date,
                   int numdays);
 
 /*
@@ -283,7 +283,7 @@ void courtday_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
  * Description: Counts court days between two dates.
  *
  * Parameters: The starting date and ending date, both in the form of
- *   pointers to a DATETIME struct.
+ *   pointers to a DateTime struct.
  *
  * Return: Returns an integer which is the result of calculating the number
  *   of court days between the two dates. Recall cour days exclude weekends
@@ -292,7 +292,7 @@ void courtday_offset (struct DATETIME *orig_date, struct DATETIME *calc_date,
  *
  */
 
-int courtday_difference (struct DATETIME *date1, struct DATETIME *date2);
+int courtday_difference (struct DateTime *date1, struct DateTime *date2);
 
 /*
  * Name: islastxdom
@@ -300,13 +300,13 @@ int courtday_difference (struct DATETIME *date1, struct DATETIME *date2);
  * Description: calculates whether a particular date is in the last x day
  *               of the month.  (E.g., the last Tuesday of February.)
  *
- * Parameters: Takes a DATETIME struct.
+ * Parameters: Takes a DateTime struct.
  *
  * Returns: An integer 0 = not in last week; 1 = is in last week
  *
  */
 
-int islastxdom (struct DATETIME *dt);
+int islastxdom (struct DateTime *dt);
 
 /*
  * Name: islastweek
@@ -314,11 +314,11 @@ int islastxdom (struct DATETIME *dt);
  * Description: calculates whether a particular date is in the last week
  *               of the month.
  *
- * Parameters: Takes a DATETIME struct.
+ * Parameters: Takes a DateTime struct.
  *
  * Returns: An integer 0 = not in last week; 1 = is in last week
  *
  */
 
-int islastweek (struct DATETIME *dt);
+int islastweek (struct DateTime *dt);
 #endif	/* _DATETOOLS_H_INCLUDED_ */

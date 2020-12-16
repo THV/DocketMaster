@@ -4,7 +4,7 @@
  *
  * Version: 1.0.20
  * Created: 8/18/2011
- * Last Modified: Mon Dec 14 00:37:48 2020
+ * Last Modified: Wed Dec 16 14:28:20 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -44,7 +44,7 @@
 
 FILE *HOLIDAY_FILE;
 
-struct holidaynode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
+struct HolidayNode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
 					      instance of the jurisdiction's set
 					      of holiday rules. */
 

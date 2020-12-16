@@ -8,7 +8,7 @@
  *
  * Version: 1.0.20
  * Created: 
- * Last Modified: Mon Dec 14 00:36:06 2020
+ * Last Modified: Wed Dec 16 14:28:23 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -28,7 +28,7 @@
 
 #include "ruleprocessor.h"
 
-void initializelist(struct holidaynode *holidayhashtable[])
+void initializelist(struct HolidayNode *holidayhashtable[])
 {
     int monthctr; /* counter to loop through months */
 
@@ -38,12 +38,12 @@ void initializelist(struct holidaynode *holidayhashtable[])
     }
     return;
 }
-struct holidaynode * addholidayrule(struct holidaynode *list,
-                                    struct holidayrule *holiday)
+struct HolidayNode * addholidayrule(struct HolidayNode *list,
+                                    struct HolidayRule *holiday)
 {
-    struct holidaynode *new_hrule; /* pointer to new holiday rule */
+    struct HolidayNode *new_hrule; /* pointer to new holiday rule */
 
-    new_hrule = malloc(sizeof(struct holidaynode)); /* creates a new node */
+    new_hrule = malloc(sizeof(struct HolidayNode)); /* creates a new node */
 
     /* copy the data into the new node */
     new_hrule->rule.month = holiday->month;
@@ -59,9 +59,9 @@ struct holidaynode * addholidayrule(struct holidaynode *list,
 
     return list;
 }
-void closerules(struct holidaynode *holidayhashtable[])
+void closerules(struct HolidayNode *holidayhashtable[])
 {
-    struct holidaynode *tempnode;
+    struct HolidayNode *tempnode;
     int monthctr; /* counter to loop through months */
 
     for(monthctr = 0; monthctr < MONTHS; monthctr++)
@@ -81,9 +81,9 @@ void closerules(struct holidaynode *holidayhashtable[])
     return;
 }
 
-void printholidayrules(struct holidaynode *holidayhashtable[])
+void printholidayrules(struct HolidayNode *holidayhashtable[])
 {
-    struct holidaynode *tempnode;
+    struct HolidayNode *tempnode;
     int monthctr; /* counter to loop through months */
 
     for(monthctr = 0; monthctr < MONTHS; monthctr++)
@@ -234,7 +234,7 @@ void printholidayrules(struct holidaynode *holidayhashtable[])
  * "first" for the first week-day (e.g., first Tuesday).
  */
 
-int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
+int processhrule (struct DateTime *dt, struct HolidayNode *rulenode)
 {
 
     switch (rulenode->rule.ruletype)
@@ -295,9 +295,9 @@ int processhrule (struct DATETIME *dt, struct holidaynode *rulenode)
  * "first" for the first week-day (e.g., first Tuesday).
  */
 
-int isholiday (struct DATETIME *dt)
+int isholiday (struct DateTime *dt)
 {
-    struct holidaynode *tempnode;
+    struct HolidayNode *tempnode;
 
     /* First, calculate whether an ALLMONTHS rule applies and whether this date
     falls on a weekend */
@@ -329,7 +329,7 @@ int isholiday (struct DATETIME *dt)
     compilation for testing. */
 
 
-int loadholidays (struct holidaynode current_holidays, char holiday_file[])
+int loadholidays (struct HolidayNode current_holidays, char holiday_file[])
 {
     FILE *holiday_file; /* file with court holidays */
     unsigned char file_buffer[100]; /*file input buffer */

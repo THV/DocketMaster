@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created:  01/29/2012 11:10:47 AM
- * Last Modified: Mon Dec 14 00:39:22 2020
+ * Last Modified: Wed Dec 16 14:28:05 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -28,7 +28,7 @@
 
 void testsuite_dates(void);
 void testsuite_checkholidays(void);
-void holidayprinttest(struct DATETIME *dt);
+void holidayprinttest(struct DateTime *dt);
 void testsuite_courtdays(void);
 
 #endif	/* _TESTSUITE_H_INCLUDED_ */

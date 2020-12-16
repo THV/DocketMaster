@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 10/24/2011
- * Last Modified: Mon Dec 14 00:33:43 2020
+ * Last Modified: Wed Dec 16 14:28:01 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -36,29 +36,9 @@
 #ifndef _GRAPHMGR_H_INCLUDED_
 #define _GRAPHMGR_H_INCLUDED_
 
+#include "utilities.h"
 /* #include "../rule processor/ruleprocessor.h"
  */
-
-/*-----------------------------------------------------------------------------
- * Parameterized macros 
- *----------------------------------------------------------------------------*/
-
-#define SET_FLAG(x,y) ((x) |= (y))
-    /* SET_BIT sets the bit in x corresponding to the event flag passed by
-    the y parameter. Intended to be used with the flag constants declared
-    below. */
-
-#define CLEAR_FLAG(x,y) ((x) &= ~(y))
-    /* CLEAR_BIT takes x and clears from x ALL the bits that are set in y.
-    Intended to be used with the flag constants declared below. */
-
-#define TEST_FLAG(x,y) ((x) & (y))
-    /* TEST_BIT tests a single bit to see if it's "on." This will not test to
-    see if MULTIPLE bits are set. */
-
-#define TEST_MULTIPLEFLAGS(x,y) ((x) & ~(y))
-    /* TEST_MULTIPLEFLAGS tests whether bits IN ADDITION TO the relevant bit
-    are set */
 
 /*-----------------------------------------------------------------------------
  * Symbolic Constants 
@@ -319,7 +299,7 @@ typedef struct{
     element of the matrix.  */
     Dependency *matrixptr; /* pointer to a Dependency-struct, which will
     point to entire contiguous block of memory.  I.e., the simulated array. */
-} Adjacencymatrix;
+} AdjacencyMatrix;
 
 
 /*-----------------------------------------------------------------------------
@@ -328,7 +308,7 @@ typedef struct{
 
 typedef struct EventGraph {
     CourtEventNode *eventlist;
-    Adjacencymatrix dependencymatrix;
+    AdjacencyMatrix dependencymatrix;
     int listsize; /* number of vertices */
     int numedges; /* number of edges */
 };

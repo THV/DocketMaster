@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 02/03/2012 07:05:40 AM
- * Last Modified: Mon Dec 14 00:31:58 2020
+ * Last Modified: Wed Dec 16 14:27:56 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -46,7 +46,7 @@ extern int numberofevents (CourtEventNode *list);
 
 
 /* 
- * Description:  Counts the number of dependencies in the Adjacencymatrix.
+ * Description:  Counts the number of dependencies in the AdjacencyMatrix.
  *
  * Parameters:  Takes a pointer to an adjacency matrix.
  *
@@ -57,7 +57,7 @@ extern int numberofevents (CourtEventNode *list);
  * dependencies.
  */
 
-extern int numberofdependencies (Adjacencymatrix* dependencies);
+extern int numberofdependencies (AdjacencyMatrix* dependencies);
 
 
 /* 

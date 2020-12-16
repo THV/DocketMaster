@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: 02/16/2012 08:46:39 PM
- * Last Modified: Mon Dec 14 00:35:16 2020
+ * Last Modified: Wed Dec 16 14:48:47 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -61,13 +61,13 @@
  * to hold data for a court holiday rule.  The second piece is a node to create
  * the linked list of holiday rules.  The third piece is an array of nodes
  * indexed to the months of the year.  Each pointer is the first node of a
- * linked list of holidaynodes.  Each element holds the rules for the
+ * linked list of HolidayNodes.  Each element holds the rules for the
  * applicable month.  There are 13 elements in the array becaues the final
  * element applies to the linked lists of rules that apply to every month, like
  * weekend rules.  The hash function is thus the months of the year. 
  */
 
-struct holidayrule
+struct HolidayRule
 {
     int month;
     char ruletype; /* holds one of three possible values: 'w' for a weekend
@@ -83,15 +83,15 @@ struct holidayrule
 };
 
 /* structure for linked list to hold court holidays */
-struct holidaynode
+struct HolidayNode
 {
-    struct holidayrule rule; /* the rule contained in this node */
-    struct holidaynode *nextrule; /* pointer to the next item in the list */
+    struct HolidayRule rule; /* the rule contained in this node */
+    struct HolidayNode *nextrule; /* pointer to the next item in the list */
 };
 
 /* The hash table itself: an array to hold an individual holiday-node linked
 list for each month of the year + the ALLMONTHS rules */
-extern struct holidaynode *holidayhashtable[13];
+extern struct HolidayNode *holidayhashtable[13];
 
  /* :WARNING:01/29/2012 02:19:07 PM:THV: FOR DATA-HIDING PURPOSES MAKE SURE
   * THE holidayhashtable IS ONLY ACCESSIBLE TO FUNCTIONS THAT HAVE A RIGHT
@@ -120,7 +120,7 @@ typedef struct{
 /* structure for linked list to hold court events */
 typedef struct{
     CourtEvent event; /* the event contained in this node */
-    struct DATETIME event_date; /* the date of the event */
+    struct DateTime event_date; /* the date of the event */
     struct EventNode *nextevent; /* pointer to the next item in the list */
 } EventNode;
 
@@ -129,22 +129,22 @@ typedef struct{
  * Function prototypes 
  *----------------------------------------------------------------------------*/
 
-void initializelist(struct holidaynode *holidayhashtable[]);
-struct holidaynode * addholidayrule(struct holidaynode *list,
-                                    struct holidayrule *holiday);
-void closerules(struct holidaynode *holidayhashtable[]);
-void printholidayrules(struct holidaynode *holidayhashtable[]);
+void initializelist(struct HolidayNode *holidayhashtable[]);
+struct HolidayNode * addholidayrule(struct HolidayNode *list,
+                                    struct HolidayRule *holiday;
+void closerules(struct HolidayNode *holidayhashtable[]);
+void printHolidayRules(struct HolidayNode *holidayhashtable[]);
 
 /* process holiday rule function: no comment block for this function yet. */
 
-int processhrule (struct DATETIME *dt, struct holidaynode *rulenode);
+int processhrule (struct DateTime *dt, struct HolidayNode *rulenode);
 
 /* search holiday rules function */
 
-int isholiday (struct DATETIME *dt);
+int isholiday (struct DateTime *dt);
 
 
-int processevent(struct DATETIME *dt, struct *eventnode);
+int processevent(struct DateTime *dt, EventNode  *eventnode);
 
 /* 
  * Description:  displays the scheduled chain of events
@@ -152,7 +152,7 @@ int processevent(struct DATETIME *dt, struct *eventnode);
  * Returns:  No return value
  */
 
-void displayschedule(struct *eventnode)
+void displayschedule(EventNode *eventnodenode);
 
 #ifdef UNDEF /* presently the remainder of this source file is removed from
 compilation for testing. */
@@ -170,8 +170,8 @@ enum bf /* bf = balance factor */
                   of the tree's left subtree. */
 };
 
-
-initialize_tree(struct holidaynode);
+#define UNDEF
+initialize_tree(struct HolidayNode);
 isempty (use a different name)
 SizeofResource
 retrieveroot
