@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 02/03/2012 07:26:12 AM
- * Last Modified: Mon Dec 14 00:31:31 2020
+ * Last Modified: Wed Dec 16 16:56:07 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -48,9 +48,9 @@
  * be accessible to the "public" without making the entire graph manager public.
  */
 
-int numberofevents (CourtEventNode* list)
+int numberofevents (struct CourtEventNode* list)
 {
-    CourtEventNode *cur_pos; /* current position */
+    struct CourtEventNode *cur_pos; /* current position */
     int count = 0; /* the count */
 
     cur_pos = list;
@@ -65,7 +65,7 @@ int numberofevents (CourtEventNode* list)
 }
 
 /* 
- * Description:  Counts the number of dependencies in the Adjacencymatrix.
+ * Description:  Counts the number of dependencies in the AdjacencyMatrix.
  *
  * Parameters:  Takes a pointer to an adjacency matrix.
  * Returns:  The number of dependencies (arcs) in the EventGraph.
@@ -85,7 +85,7 @@ int numberofevents (CourtEventNode* list)
  * this function declaration in the graphmgr.h file.
  */
 
-int numberofdependencies (AdjacencyMatrix* dependencies)
+int numberofdependencies (struct AdjacencyMatrix* dependencies)
 {
     int row, col, count;
 
@@ -131,10 +131,11 @@ int numberofdependencies (AdjacencyMatrix* dependencies)
  */
 
 
-CourtEventNode* searchforevent (char *eventname,CourtEventNode* list)
+struct CourtEventNode* searchforevent (char *eventname,
+                                       struct CourtEventNode* list)
 {
 
-    CourtEventNode *cur_pos; /* current position */
+    struct CourtEventNode *cur_pos; /* current position */
     char *searchstring, *eventstring;
 
     cur_pos = list;
@@ -188,24 +189,27 @@ CourtEventNode* searchforevent (char *eventname,CourtEventNode* list)
  * declaration in the graphmgr.h file.
  */
 
-Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode *event2,
-				 EventGraph* graph)
+struct Dependency* searchfordependency (struct CourtEventNode *event1,
+                                        struct CourtEventNode *event2,
+                                        struct EventGraph* graph)
 {
-    Dependency* dependencyfound;
+    struct Dependency* dependencyfound;
 
-    if (graph->dependencymatrix.rowptr[event1->eventposn][event2->eventposn].dependencyhandle
-        != NULL)
+    if (graph->dependencymatrix.rowptr[event1->eventposn]\
+        [event2->eventposn].dependencyhandle != NULL)
     {
-        dependencyfound = &graph->dependencymatrix.rowptr[event1->eventposn][event2->eventposn];
+        dependencyfound = &graph->dependencymatrix.rowptr[event1->eventposn]\
+                          [event2->eventposn];
         /* SYNTAX QUESTION: I am not sure if the & gives me the addres of graph,
          * or the address of the Dependency, like I believe it should.  Must 
          * test.
          */
     }
-    else if (graph->dependencymatrix.rowptr[event2->eventposn][event1->eventposn].dependencyhandle
-             != NULL)
+    else if (graph->dependencymatrix.rowptr[event2->eventposn]\
+             [event1->eventposn].dependencyhandle != NULL)
     {
-        dependencyfound = &graph->dependencymatrix.rowptr[event2->eventposn][event1->eventposn];
+        dependencyfound = &graph->dependencymatrix.rowptr[event2->eventposn]\
+                          [event1->eventposn];
     } else
         dependencyfound = NULL;
 
@@ -231,7 +235,7 @@ Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode *event2,
  * file) and keep this function declaration in the graphmgr.h file.
  */
 
-void followchain (CourtEvent* startingvertex, EventGraph* graph)
+void followchain (CourtEvent* startingvertex, struct EventGraph* graph)
 {
 
 }

@@ -1,5 +1,5 @@
 /*
- * Filename: builder.h
+ * Filename: rulebuilder.h
  * Project: DocketMaster
  *
  * Description: This module manages the opening, verifying, and closing of rule
@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: 01/29/2012 01:01:11 PM
- * Last Modified: Wed Dec 16 14:27:55 2020
+ * Last Modified: Fri Dec 18 23:52:08 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -29,6 +29,7 @@
 /*-----------------------------------------------------------------------------
  * HEADER FILE INCLUDES 
  *----------------------------------------------------------------------------*/
+#include "datetools.h"
 #include <stdio.h>
 
 /*-----------------------------------------------------------------------------
@@ -37,14 +38,21 @@
 enum FILETYPE {H_FILE, E_FILE, LOCAL_RUL_FILE};
 
 /*-----------------------------------------------------------------------------
- * EXPORTED VARIABLES 
+ * TYPE DEFINITIONS
  *----------------------------------------------------------------------------*/
 
 FILE *HOLIDAY_FILE;
 
-struct HolidayNode *holidayhashtable[13]; /* !VARIABLE DEFINITION! This is THE
-					      instance of jurisdictions' set
-					      of holiday rules. */
+struct HolidayNode *holidayhashtable[13];
+    /* !VARIABLE DEFINITION! This is THE instance of jurisdictions' set of
+     * holiday rules.
+     */
+
+         /* :WARNING:01/29/2012 02:19:07 PM:THV: FOR DATA-HIDING PURPOSES MAKE
+          * SURE THE holidayhashtable IS ONLY ACCESSIBLE TO FUNCTIONS THAT HAVE
+          * A RIGHT TO ACCESS IT.  AS DECLARED HERE, IT MAY BE ACCESSIBLE
+          * EVERYWHERE.
+          */
 
 /*-----------------------------------------------------------------------------
  * EXPORTED FUNCTION DECLARATIONS 
@@ -101,6 +109,46 @@ int closefile(FILE *close_file);
  * Returns:  Nothing
  */
 
-void resetfile (FILE *infile)
+void resetfile (FILE *infile);
+
+
+void initializelist(struct HolidayNode *holidayhashtable[]);
+struct HolidayNode * addholidayrule(struct HolidayNode *list,
+                                    struct HolidayRule *holiday);
+void closerules(struct HolidayNode *holidayhashtable[]);
+int processevent(struct DateTime *dt, struct CourtEventNode  *eventnode);
+
+#ifdef UNDEF 
+#define UNDEF /* presently the remainder of this source file is removed from
+compilation for testing. */
+
+/*  The following enum is to implement the AVL tree structures used in this
+    processing program. */
+
+enum bf /* bf = balance factor */
 {
+    equal = 0, /* Tree is empty or both left and right subtrees have same
+                height. */
+    left = 1, /* Left subtree has height that is one greater than the height
+                of the tree's right subtree. */
+    right = 2, /* Right subtree has height that is one greater than the height
+                  of the tree's left subtree. */
+};
+
+initialize_tree(struct HolidayNode);
+isempty (use a different name)
+SizeofResource
+retrieveroot
+retreieveleft
+retrieveright
+search
+insert
+deletenode
+height
+copyto
+traverseinorder
+rotation (left, right, dbl) /* dbl = double */
+
+#endif /* UNDEF */
+
 #endif   /* ----- #ifndef _BUILDER_H__INC  ----- */

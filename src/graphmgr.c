@@ -11,7 +11,7 @@
  *
  * Version: 1.0.20
  * Created: 10/24/2011
- * Last Modified: Mon Dec 14 00:33:22 2020
+ * Last Modified: Wed Dec 16 16:37:03 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -47,7 +47,7 @@
  * irrelevant until vertices have been inserted into the graph.
  */
 
-void init_eventgraph(EventGraph* graph, int numofevents)
+void init_eventgraph(struct EventGraph* graph, int numofevents)
 {
     graph->eventlist = NULL;
     graph->listsize = 0;
@@ -76,7 +76,7 @@ void init_eventgraph(EventGraph* graph, int numofevents)
  * it returns a nonnegative number.
  */
 
-int isemptygraph(EventGraph* graph)
+int isemptygraph(struct EventGraph* graph)
 {
     if (graph->eventlist == NULL)
         return 1;
@@ -94,7 +94,7 @@ int isemptygraph(EventGraph* graph)
  * Returns: 1 if the copy is successful, zero if it fails.
  */
 
-int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto)
+int copyeventgraph (struct EventGraph* copyfrom, struct EventGraph* copyto)
 {
     return 0;
 }
@@ -109,11 +109,11 @@ int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto)
  * is successful.
  */
 
-CourtEventNode* insertevent (CourtEvent* eventinfo,
-                                CourtEventNode *eventlist)
+struct CourtEventNode* insertevent (struct CourtEvent* eventinfo,
+                                struct CourtEventNode *eventlist)
 {
-    CourtEventNode *new_event; /* pointer to new court event */
-    CourtEventNode *temphead; /* pointer to head of event list */
+    struct CourtEventNode *new_event; /* pointer to new court event */
+    struct CourtEventNode *temphead; /* pointer to head of event list */
 
     /* Find the appropriate place in the ordered list to place the new node.
     if the list is presently NULL, then this item is added in first position. */
@@ -123,7 +123,7 @@ CourtEventNode* insertevent (CourtEvent* eventinfo,
         eventcmp(eventinfo->shorttitle, temphead->eventdata.shorttitle) <= 0)
     {
          /* create a new node */
-        new_event = malloc(sizeof(CourtEvent));
+        new_event = malloc(sizeof(struct CourtEvent));
 
         /* copy the data into the new node */
         new_event->eventdata.eventflags = eventinfo->eventflags;
@@ -180,7 +180,7 @@ CourtEventNode* insertevent (CourtEvent* eventinfo,
  * is successful.
  */
 
-int insertdependency (Dependency newdep, EventGraph* graph)
+int insertdependency (struct Dependency newdep, struct EventGraph* graph)
 {
     return 0;
 }
@@ -195,7 +195,7 @@ int insertdependency (Dependency newdep, EventGraph* graph)
  * is successful.
  */
 
-int deleteevent  (CourtEvent* delevent, EventGraph* graph)
+int deleteevent  (struct CourtEvent* delevent, struct EventGraph* graph)
 {
     return 0;
 }
@@ -210,7 +210,7 @@ int deleteevent  (CourtEvent* delevent, EventGraph* graph)
  * is successful.
  */
 
-int deletedependency (Dependency* deldep, EventGraph* graph)
+int deletedependency (struct Dependency* deldep, struct EventGraph* graph)
 {
     return 0;
 }
@@ -228,7 +228,7 @@ int deletedependency (Dependency* deldep, EventGraph* graph)
  * replace is successful.
  */
 
-int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex)
+int replaceevent (struct CourtEvent* newvertex, struct CourtEvent* oldvertex)
 {
     return 0;
 }
@@ -243,7 +243,7 @@ int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex)
  * Returns: None.
  */
 
-void traverse (EventGraph* graph)
+void traverse (struct EventGraph* graph)
 {
 
 }
@@ -263,7 +263,7 @@ void traverse (EventGraph* graph)
  * Other sections. algorithms, file formats, references, notes, etc.
  */
 
-int initializeadjacencymatrix (EventGraph* graph)
+int initializeadjacencymatrix (struct EventGraph* graph)
 {
         /* max_rows and max_columns must be passed as arguments to this function
         so it knows how big of an array to create. */
@@ -278,13 +278,13 @@ be stored.  It's the simulated array. */
     graph->dependencymatrix.matrixptr =
         malloc(graph->dependencymatrix.trigger_rows *
                graph->dependencymatrix.triggeredby_cols *
-               sizeof(Dependency));
+               sizeof(struct Dependency));
 
 /* Step 2. Allocate room for the pointers to the rows.  This sets the pointers
 to the rows of Dependency events. */
 
     graph->dependencymatrix.rowptr = malloc(graph->dependencymatrix.trigger_rows
-                                            * sizeof(Dependency *));
+                                            * sizeof(struct Dependency *));
 
 /* Step 3. 'Point' the pointers.  This points each row pointer to the beginning
 of each row. Note the simple pointer arithmetic. */

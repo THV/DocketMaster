@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: 01/14/2012 08:40:58 PM
- * Last Modified: Mon Dec 14 00:32:51 2020
+ * Last Modified: Wed Dec 16 16:56:57 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -15,7 +15,7 @@
  * Copyright: Copyright (c) 2011-2020, Thomas H. Vidal
  * SPDX-License-Identifier: GPL-2.0-only
  *
- * Usage:   Used by DocketMaster Program
+ * Usage: Used by DocketMaster Program
  *
  * File Format:   Saves calendar data in outlook iCalendar format.
  *

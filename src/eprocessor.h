@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 02/03/2012 07:05:40 AM
- * Last Modified: Wed Dec 16 14:27:56 2020
+ * Last Modified: Fri Dec 18 23:02:34 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -42,13 +42,13 @@
  * Returns:  The number of events in the EventGraph.
  */
 
-extern int numberofevents (CourtEventNode *list);
+extern int numberofevents (struct CourtEventNode *list);
 
 
 /* 
  * Description:  Counts the number of dependencies in the AdjacencyMatrix.
  *
- * Parameters:  Takes a pointer to an adjacency matrix.
+ * Parameters:  Takes a pointer to an AdjacencyMatrix.
  *
  * Returns:  The number of dependencies (arcs) in the EventGraph.
  *
@@ -57,7 +57,7 @@ extern int numberofevents (CourtEventNode *list);
  * dependencies.
  */
 
-extern int numberofdependencies (AdjacencyMatrix* dependencies);
+extern int numberofdependencies (struct AdjacencyMatrix* dependencies);
 
 
 /* 
@@ -75,7 +75,8 @@ extern int numberofdependencies (AdjacencyMatrix* dependencies);
  * of the eventnode.
  */
 
-extern CourtEventNode* searchforevent (char *eventname, CourtEventNode* list);
+extern struct CourtEventNode* searchforevent (char *eventname,
+                                              struct CourtEventNode* list);
 
 
 /* 
@@ -92,8 +93,9 @@ extern CourtEventNode* searchforevent (char *eventname, CourtEventNode* list);
  * vertex1 (event1) is triggeredby vertex2 (event2).
  */
 
-extern Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode
-					*event2, EventGraph *graph);
+extern struct Dependency* searchfordependency (struct CourtEventNode *event1,
+                                        struct CourtEventNode *event2,
+                                        struct EventGraph *graph);
 
 /* 
  * Description:  Function starts at a certain vertex and traverses through all
@@ -104,5 +106,15 @@ extern Dependency* searchfordependency (CourtEventNode *event1, CourtEventNode
  *
  */
 
-extern void followchain (CourtEvent* startingvertex, EventGraph* graph);
+extern void followchain (struct CourtEvent* startingvertex,
+                         struct EventGraph* graph);
 
+void printHolidayRules(struct HolidayNode *holidayhashtable[]);
+
+/* 
+ * Description:  displays the scheduled chain of events
+ * Parameters:  pointer to eventnode
+ * Returns:  No return value
+ */
+
+void displayschedule(struct CourtEventNode *eventnodenode);

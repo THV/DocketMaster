@@ -1,5 +1,5 @@
 /*
- * Filename: builder.c
+ * Filename: rulebuilder.c
  * Project: DocketMaster
  *
  * Description: This module manages the opening, verifying, and closing of rule
@@ -7,7 +7,7 @@
  *
  * Version: 1.0.20
  * Created: Created: 08/18/2011
- * Last Modified: Mon Dec 14 00:40:01 2020
+ * Last Modified: Sat Dec 19 00:01:16 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -24,16 +24,20 @@
  */
 
 /* #####   HEADER FILE INCLUDES   ########################################### */
-#include <stdio.h>
-#include "ruleprocessor.h"
+#include "builder.h"
 #include "graphmgr.h"
 #include "eprocessor.h"
+#include "lexicalanalyzer.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ######################## */
 
-EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
-			    EventGraph for the particular jurisdiction's list
-			    of events.  */ 
+struct EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance
+                                 * of the EventGraph for the particular
+                                 * jurisdiction's list of events.
+                                 */ 
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   #################### */
 
@@ -56,23 +60,15 @@ EventGraph jurisdevents; /* !VARIABLE DEFINITION! This is THE instance of the
 
 int buildre(char *holiday, char *events, char *extras)
 {
-    enum FILETYPE filetype; /* variable to store the type of file being read */
+    enum FILETYPE ftype; /* variable to store the type of file being read */
     char fields[MAXNUMFIELDS][MAXFIELDLEN]; /* the list of field names */
     extern FILE *HOLIDAY_FILE;
     extern FILE *EVENT_FILE;
     
     /* Build Holiday Rules */
-
-    /* open the holiday file */
     HOLIDAY_FILE = getfile(holiday);  
-
-    /* initialize the array of linked lists for the holidays */
     initializelist(holidayhashtable);
-
-    /* lexically analyze the rules and build the array of linked lists. */
     parsefile(HOLIDAY_FILE, holiday, ftype, fields, holidayhashtable);
-
-    /* close the file */
 	closefile(HOLIDAY_FILE); 
 
     /*  Build the Court Events */
@@ -239,3 +235,183 @@ void resetfile (FILE *infile)
 
   return;
 }		/* -----  end of function resetfile  ----- */
+
+
+#ifdef UNDEF
+#define UNDEF /* presently the remainder of source file has been removed from
+                 compilation for testing. */
+
+
+int loadholidays (struct HolidayNode current_holidays, char holiday_file[])
+{
+    FILE *holiday_file; /* file with court holidays */
+    unsigned char file_buffer[100]; /*file input buffer */
+    unsigned char headers[100];
+    unsigned char type; /* the type of rule, 'a' = actual, 'r' = relative */
+    unsigned char rule[25]; /* the rule itself */
+    unsigned char ruletype[15];
+    unsigned char holiday[50]; /* name of holiday */
+    unsigned char source[100]; /*statute or other rule declaring the Holiday */
+    unsigned char *linelocation; /* a variable that points to the current
+                                    position of a string */
+    int index; /* a variable that points to the current postion of a string */
+    /* holding variables for month, day, and year */
+    int month;
+    int day;
+    int year;
+    char dow[10];
+    char *endoffile;
+    int count; /* loop counter */
+    int count2;
+    /* enum days dow; */
+
+
+    if (isempty(current_holidays) !=0)
+        return -1; /* indicates holidays already loaded */
+
+    /*------------------>            WARNING                  <---------------
+     *  this function does not does not re-read the file if the binary tree  
+     *  for current_holidays contains data.  If the court or jurisdiction   
+     *  changes and the holidays need to be re-read and processed, the binary
+     *  tree must be initialized before calling this function.
+     */
+
+    /* TODO (Thomas#1#): Address the issue of re-reading the file
+    if the court jurisdiction changes, etc. */
+
+
+    holiday_file = fopen(holiday_file, "r"); /* open the holiday file to read */
+    if (holiday_file == NULL)
+    {
+        printf("Cannot open HOLIDAY_FILE\n");
+        exit(8);
+    }
+
+    fgets(file_buffer, sizeof(file_buffer), holiday_file);
+    if (file_buffer == NULL)
+    {
+        printf("ERROR: HOLIDAY_FILE is EMPTY\n");
+        exit(8);
+    }
+
+    /* check to see if we are reading the proper file type */
+    sscanf(file_buffer, "%s", headers);
+    index = 0;
+    do
+    {
+        if (headers[index] != ',' && headers[index] != '\0')
+        {
+
+        }
+    }
+
+    fgets(file_buffer, sizeof(file_buffer), holiday_file);
+
+
+    do
+    {
+        month = atoi(&file_buffer[0]);
+        if (month == 13)
+        {
+            for(count = 2; count < 100; count++)
+            {
+                if (file_buffer[count] != ',')
+                {
+                    rule[count] = file_buffer[count];
+                    rule[count+1] = '\0';
+                    count++;
+                }
+                else
+                {
+                    rule[count] = '\0';
+                    break;
+                }
+            }
+        }
+        else if (month == dt->month)
+        {
+            /* add instructions */
+            if (month > 10)
+                count = 2;
+            else
+                count = 1;
+            ruletype[0] = file_buffer[count];
+            ruletype[1] = '\0';
+            if (ruletype[0] == 'A')
+            {
+                day = atoi(&file_buffer[count+1])
+                      if (day == dt->day)
+                          return 1;
+
+            }
+            else
+            {
+                /* instructions */
+            }
+
+        }
+    }
+
+
+
+
+
+    count = 2;
+    for(count2 = 0; count < 100; count++)
+    {
+        if (file_buffer[count] != ',')
+        {
+            rule[count2] = file_buffer[count];
+            rule[count2+1] = '\0';
+            count2++;
+        }
+        else
+        {
+            rule[count2] = '\0';
+            break;
+        }
+    }
+    for(count2 = 0; count < 100; count++)
+    {
+        if (file_buffer[count] != ',')
+        {
+            holiday[count2] = file_buffer[count];
+            count2++;
+        }
+        else
+        {
+            rule[count2] = '\0';
+            break;
+        }
+    }
+    count2 = 0;
+    while (file_buffer[count] != '\0')
+    {
+        holiday[count2] = file_buffer[count];
+        count2++;
+        count++;
+    }
+    holiday[count2]='\0';
+    printf("The type is %c\n", type);
+    printf("The rule is: %s\n", rule);
+    printf("The Holiday is called: %s\n", holiday);
+    printf("The Holiday is set forth in %s\n\n", source);
+    if (type != 'a')
+    {
+        printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+        sscanf(rule, "%d-%s-%s", &month, dow, subrule);
+        printf("The Month of this Holiday is %d\n", month);
+        printf("The Day of the week of this Holiday is: %s\n", dow);
+        printf("The rule is: %s\n",subrule);
+        printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n");
+    }
+    endoffile = fgets(file_buffer, sizeof(file_buffer), holiday_file);
+        /* read next line */
+}
+while (endoffile != NULL);
+
+fclose(holiday_file);
+return 0;
+}
+
+#endif /* UNDEF */

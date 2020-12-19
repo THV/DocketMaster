@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 10/24/2011
- * Last Modified: Wed Dec 16 14:28:01 2020
+ * Last Modified: Wed Dec 16 17:24:47 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -146,7 +146,7 @@ const unsigned char EXPRESS_MAIL_COURT = (1<<3);
 const unsigned char FAX_SERVICE_COURT = (1<<4);
 const unsigned char ELECTRONIC_SERVICE_COURT = (1<<5);
 
-typedef struct{
+struct ExtraServiceDays {
     unsigned char counttypeflags; /* count type is a series of flags that
     indicate whether the particular service-type's extra days are calendar days
     or court days. */
@@ -156,7 +156,7 @@ typedef struct{
     unsigned char express_mail_days;
     unsigned char fax_servicedays;
     unsigned char electronic_servicedays;
-} ExtraServiceDays;
+};
 
 
 /*
@@ -186,7 +186,7 @@ typedef struct{
  * Vertex data type - Court Events. 
  *----------------------------------------------------------------------------*/
 
-typedef struct{
+struct CourtEvent{
     unsigned char eventflags; /* the possible values are defined above as
     symbolic flag constants. */
 
@@ -198,7 +198,7 @@ typedef struct{
      * pointer to the event itself.  E.g. struct CourtEvent *eventid ???
      */
 
-    ExtraServiceDays customservicerule; /* custom rule applicable to
+    struct ExtraServiceDays customservicerule; /* custom rule applicable to
     this event for extra service days applicable to the event */
 
     unsigned char countunits; /* counting period: days, weeks, months, quarters,
@@ -240,15 +240,15 @@ typedef struct{
                             and changed to be an edge of the directed graph data
                             type.  MAY NOT BE NECESSARY BECAUSE THIS INFORMATION
                             MAY BE STORED IN THE MATRIX ALREADY.  */
-} CourtEvent;
+};
 
 /*-----------------------------------------------------------------------------
  * Edge data type - Dependency Events. 
  *----------------------------------------------------------------------------*/
-typdef struct {
-    CourtEvent *dependencyhandle; /* pointer to dependent event */
+struct Dependency {
+    struct CourtEvent *dependencyhandle; /* pointer to dependent event */
 
-    CourtEvent *dependencyhandle_deft; /* pointer to dependent event if
+    struct CourtEvent *dependencyhandle_deft; /* pointer to dependent event if
     there is a separate dependency for defendants.  This will be NULL if the
     PARTYSENSITIVE flag is clear. */
 
@@ -270,45 +270,45 @@ typdef struct {
     LAWSUITS? ADD MEMBERS TO ADDRESS THAT ISSUE. IN THE CASE OF MULTIPLE
     DEPENDENCIES, SHOULD THIS HAVE A POINTER OR A LINKED LIST TO ALL OF THEM...
     OR WILL IT BE COVERED "ORGANICALLY" BY THE MATRIX OF DEPENDENCIES? */
-} Dependency;
+};
 
 /*-----------------------------------------------------------------------------
  * List data type to store all the verticies (court events) 
  *----------------------------------------------------------------------------*/
 
-typedef struct{
-    CourtEvent eventdata; /* the event information contained in this
+struct CourtEventNode {
+    struct CourtEvent eventdata; /* the event information contained in this
                                     node */
     int eventposn; /* the position this event has in the list of events. This
                     will be important to search dependencies at O(1) time. */
-    CourtEventNode *nextevent; /* pointer to the next event */
-} CourtEventNode;
+    struct CourtEventNode *nextevent; /* pointer to the next event */
+};
 
 /*-----------------------------------------------------------------------------
- * Adjacency Matrix data type to store all the edge information and cross-
+ * AdjacencyMatrix data type to store all the edge information and cross-
  * reference the edges to the event list.
  *----------------------------------------------------------------------------*/
 
-typedef struct{
+struct AdjacencyMatrix {
     int trigger_rows; /* rows = triggering dependencies */
     int triggeredby_cols; /* cols = triggered-by dependencies */
     /* rows and cols will be set at run-time after the number of events in the
     event list is determined. */
-    Dependency **rowptr; /* pointer to a pointer to a Dependency-struct,
+    struct Dependency **rowptr; /* pointer to a pointer to a Dependency-struct,
     which will be the rows of our 2D array. This will point to the [0][0]
     element of the matrix.  */
-    Dependency *matrixptr; /* pointer to a Dependency-struct, which will
+    struct Dependency *matrixptr; /* pointer to a Dependency-struct, which will
     point to entire contiguous block of memory.  I.e., the simulated array. */
-} AdjacencyMatrix;
+};
 
 
 /*-----------------------------------------------------------------------------
  * Graph Data Type re Court Events. 
  *----------------------------------------------------------------------------*/
 
-typedef struct EventGraph {
-    CourtEventNode *eventlist;
-    AdjacencyMatrix dependencymatrix;
+struct EventGraph {
+    struct CourtEventNode *eventlist;
+    struct AdjacencyMatrix dependencymatrix;
     int listsize; /* number of vertices */
     int numedges; /* number of edges */
 };
@@ -328,7 +328,7 @@ typedef struct EventGraph {
  * irrelevant until vertices have been inserted into the graph.
  */
 
-void init_eventgraph(EventGraph* graph);
+void init_eventgraph(struct EventGraph* graph);
 
 /*
  * Description: Determines whether the vertex list contains values or is
@@ -340,7 +340,7 @@ void init_eventgraph(EventGraph* graph);
  * it returns a nonnegative number.
  */
 
-int isemptygraph(EventGraph* graph);
+int isemptygraph(struct EventGraph* graph);
 
 /*
  * Description: Copies the graph of court events into a new EventGraph.
@@ -352,7 +352,7 @@ int isemptygraph(EventGraph* graph);
  * Returns: 1 if the copy is successful, zero if it fails.
  */
 
-int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto);
+int copyeventgraph (struct EventGraph* copyfrom, struct EventGraph* copyto);
 
 /*
  * Description: Adds new court event (vertex) to the list of events.
@@ -364,7 +364,8 @@ int copyeventgraph (EventGraph* copyfrom, EventGraph* copyto);
  * is successful.
  */
 
-CourtEventNode* insertevent (CourtEvent* eventinfo, CourtEventNode *eventlist);
+struct CourtEventNode* insertevent (struct CourtEvent* eventinfo, 
+                                    struct CourtEventNode *eventlist);
 
 /*
  * Description: Adds new Dependency between two events to the Dependency
@@ -377,7 +378,7 @@ CourtEventNode* insertevent (CourtEvent* eventinfo, CourtEventNode *eventlist);
  * is successful.
  */
 
-int insertdependency (Dependency newdep, EventGraph* graph);
+int insertdependency (struct Dependency newdep, struct EventGraph* graph);
 
 /*
  * Description: Removes a court event (vertex) from the list of events.
@@ -389,7 +390,7 @@ int insertdependency (Dependency newdep, EventGraph* graph);
  * is successful.
  */
 
-int deleteevent  (CourtEvent* delevent, EventGraph* graph);
+int deleteevent  (struct CourtEvent* delevent, struct EventGraph* graph);
 
 /*
  * Description: Removes a Dependency (edge) from the list of events.
@@ -401,7 +402,7 @@ int deleteevent  (CourtEvent* delevent, EventGraph* graph);
  * is successful.
  */
 
-int deletedependency (Dependency* deldep, EventGraph* graph);
+int deletedependency (struct Dependency* deldep, struct EventGraph* graph);
 
 /* consider adding: findneighbors */
 
@@ -417,7 +418,7 @@ int deletedependency (Dependency* deldep, EventGraph* graph);
  *
  */
 
-int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex);
+int replaceevent (struct CourtEvent* newvertex, struct CourtEvent* oldvertex);
 
 /*
  * Description: Function visits all the nodes in the EventGraph in a breadth
@@ -428,7 +429,7 @@ int replaceevent (CourtEvent* newvertex, CourtEvent* oldvertex);
  * Returns: None.
  */
 
-void traverse (EventGraph* graph); /* breadth first */
+void traverse (struct EventGraph* graph); /* breadth first */
 
 /* consider adding: isconnected */
 
@@ -437,7 +438,7 @@ void traverse (EventGraph* graph); /* breadth first */
 /*-----------------------------------------------------------------------------
  * Function prototypes -- matrix manager 
  *----------------------------------------------------------------------------*/
-int initializeadjacencymatrix (EventGraph* graph);
+int initializeadjacencymatrix (struct EventGraph* graph);
 void closeadjacencymatrix (void);
 
 
@@ -459,8 +460,41 @@ void closeadjacencymatrix (void);
 
 int eventcmp (const char *s1, const char *s2);
 
-#ifdef UNDEF /* presently the remainder of source file has been removed from
+#ifdef UNDEF 
+#define UNDEF /* presently the remainder of source file has been removed from
     compilation for testing. */
+
+
+/*------------------------------------------------------------------------------
+ *  Data Type Definitions - Court Events
+ *  THESE WERE USED IN THE RULEPROCESSOR MODULE WHEN THIS
+ *  WAS BROKEN OUT INTO THE TEST PROGRAME "CLASSACTCAL."
+ *  I NEED TO RECONCILE THE ITEMS IN HERE WITH THE MORE COMPLEX
+ *  STRUCTURE HERE.
+ *----------------------------------------------------------------------------*/
+
+/* FIXME This data type is to store the class action settlement events.  The data
+ * type is a simple linked list. 
+ */
+
+struct CourtEvent {
+    int event_id; /* Holds the event id number */
+    int event_text[200]; /* Holds the name/text of the event */
+    int trigger_event; /* Holds the event id number of the triggering event */
+    int count; /*  Number to count. Positive means it comes AFTER the trigger,
+   		   negative means it comes BEFORE the trigger. */
+    enum units {days, weeks, months, quarters, years} count_pd;
+    		/* The interval to count */
+    char authority[100]; /* the authority for the event */
+};
+
+/* structure for linked list to hold court events */
+struct EventNode {
+    struct CourtEvent event; /* the event contained in this node */
+    struct DateTime event_date; /* the date of the event */
+    struct EventNode *nextevent; /* pointer to the next item in the list */
+};
+
 
 /*-----------------------------------------------------------------------------
  * Function prototypes -- list manager 
