@@ -10,7 +10,7 @@
  *
  * Version: 1.0.20
  * Created: 02/03/2012 07:05:40 AM
- * Last Modified: Fri Dec 18 23:02:34 2020
+ * Last Modified: Sat Dec 19 00:17:27 2020
  *
  * Author: Thomas H. Vidal (THV), thomashvidal@gmail.com
  * Organization: Dark Matter Computing
@@ -108,8 +108,6 @@ extern struct Dependency* searchfordependency (struct CourtEventNode *event1,
 
 extern void followchain (struct CourtEvent* startingvertex,
                          struct EventGraph* graph);
-
-void printHolidayRules(struct HolidayNode *holidayhashtable[]);
 
 /* 
  * Description:  displays the scheduled chain of events
